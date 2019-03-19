@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Name">שם:</string>
+    <string name="Age">גיל:</string>
+    <string name="reset_history">אתחול היסטוריה</string>
+    <string name="Good_job_text">תשובה נכונה!</string>
+    <string name="mistake_text">תשובה שגויה..</string>
+    <string name="show_answer">התשובה היא:</string>
+    <string name="cancel">ביטול</string>
+    <string name="ok">כן</string>
+    <string name="start">התחל</string>
+    <string name="submit">שלח</string>
+    <string name="answer">תשובה</string>
+    <string name="seconds_remaining">שניות לסיום:</string>
+    <string name="start_training">החל מצב אימון</string>
+    <string name="about_to_start_training">האימון עומד להתחיל</string>
+    <string name="reset_warning">בטוח לאתחל היסטוריה?</string>
+    <string name="reset_notice">עומד לבצע אתחול</string>
+    <string name="session_done">סבב התרגילים הסתיים!</string>
+    <string name="hello">שלום</string>
+</resources>

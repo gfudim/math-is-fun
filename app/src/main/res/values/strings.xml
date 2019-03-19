@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name" translatable="false">Math is fun</string>
+    <string name="Name">Name:</string>
+    <string name="Age">Age:</string>
+    <string name="reset_history">reset_history</string>
+    <string name="Good_job_text">Good job!</string>;
+    <string name="mistake_text">Wrong answer...</string>;
+    <string name="finished_test_session_text" translatable="false">Finished test session</string>;
+    <string name="start_training">Started training mode</string>
+    <string name="seconds_remaining">seconds remaining:</string>;
+    <string name="session_done">Session done!</string>;
+    <string name="show_answer">The answer is:</string>;
+    <string name="reset_notice" >About to reset</string>;
+    <string name="reset_warning">Are you sure you want to reset history?</string>;
+    <string name="cancel">Cancel</string>;
+    <string name="ok">OK</string>;
+    <string name="start">Start</string>;
+    <string name="submit">Submit</string>;
+    <string name="answer">Answer</string>
+    <string name="about_to_start_training">About to start trainging</string>;
+    <string name="hello">Hi</string>;
+
+</resources>

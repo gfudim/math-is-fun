@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Name">اسم:</string>
+    <string name="Age">عمر:</string>
+    <string name="reset_history">إعادة ضبط التاريخ</string>
+    <string name="Good_job_text">إجابة صحيحة!</string>
+    <string name="mistake_text">"إجابة غير صحيحة .. "</string>
+    <string name="show_answer">" الجواب هو:"</string>
+    <string name="cancel">إلغاء</string>
+    <string name="ok">نعم</string>
+    <string name="start">بداية</string>
+    <string name="submit">خضع</string>
+    <string name="answer">إجابة</string>
+    <string name="seconds_remaining">ثواني متبقية:</string>
+    <string name="start_training">تطبيق وضع التدريب</string>
+    <string name="about_to_start_training">blabla</string>
+    <string name="reset_warning">هل أنت متأكد من أنك تريد إعادة ضبط السجل؟</string>
+    <string name="reset_notice">على وشك إعادة الضبط</string>
+    <string name="session_done">انتهينا من الجلسة!</string>
+    <string name="hello">مرحبا</string>
+</resources>

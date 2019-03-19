@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "280179002764",
+    "firebase_url": "https://math-if-fun.firebaseio.com",
+    "project_id": "math-if-fun",
+    "storage_bucket": "math-if-fun.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280179002764:android:7bf1e64dbd359b5c",
+        "android_client_info": {
+          "package_name": "com.gg.MathIsFun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "280179002764-tb79micrhr15e3mve7msc6r903f7h3ef.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gg.MathIsFun",
+            "certificate_hash": "a31fe4dd6f6a4ed9ead58f16023bc81735bab94c"
+          }
+        },
+        {
+          "client_id": "280179002764-10lilrb4d3fanmit722n3l66rsjoq3p7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXUAetTJPD4TRbFECf0MTEyAwC11BTljo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280179002764-10lilrb4d3fanmit722n3l66rsjoq3p7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
