@@ -46,7 +46,7 @@ public class MainMenuPage extends Utils {
         startBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
-                user.session_type = TRAIN_MODE; // TODO - remove!
+                // user.session_type = TRAIN_MODE; // TODO - remove!
                 if(user.session_type == SEARCH_MODE){
                     Log.e(TAG,"!!!!! TESTINGGN!!!!!!");
                     startActivity(new Intent(MainMenuPage.this, SearchPage.class));
