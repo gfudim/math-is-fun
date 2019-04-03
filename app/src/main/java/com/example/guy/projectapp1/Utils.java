@@ -36,6 +36,7 @@ public class Utils extends AppCompatActivity {
     final protected static int ENGLISH = 0;
     final protected static int HEBREW = 1;
     final protected static int ARABIC = 2;
+    final protected static int RUSSIAN = 3;
     protected static int PERFECT_TIME_FOR_ANSWER = 3;
     protected static int NUM_OF_EXERCISES_IN_SESSION = 4;
     protected static int MAX_TIME_TO_ANSWER = 60;

@@ -2,7 +2,7 @@
     <string name="app_name" translatable="false">Math is fun</string>
     <string name="Name">Name:</string>
     <string name="Age">Age:</string>
-    <string name="reset_history">reset_history</string>
+    <string name="reset_history">reset history</string>
     <string name="Good_job_text">Good job!</string>;
     <string name="mistake_text">Wrong answer...</string>;
     <string name="finished_test_session_text" translatable="false">Finished test session</string>;

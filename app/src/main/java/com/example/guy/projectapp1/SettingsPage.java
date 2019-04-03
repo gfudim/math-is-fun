@@ -102,6 +102,13 @@ public class SettingsPage extends Utils {
                 updateLanguage("ar", ARABIC);
             }
         });
+        Button setRussianBtn = (Button) findViewById(R.id.russian_btn);
+        setRussianBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateLanguage("ru", RUSSIAN);
+            }
+        });
     }
 
     private void updateLanguage(String lang, int lang_for_user) {

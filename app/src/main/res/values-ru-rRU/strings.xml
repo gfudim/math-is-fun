@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="Name">имя:</string>
+    <string name="Age">возраст:</string>
+    <string name="reset_history">сбросить историю</string>
+    <string name="Good_job_text">хорошая работа!</string>
+    <string name="mistake_text">неправильный ответ..</string>
+    <string name="start_training">начался режим обучения</string>
+    <string name="seconds_remaining">секунды осталось:</string>
+    <string name="session_done">сессия выполнена!</string>
+    <string name="show_answer">ответ:</string>
+    <string name="reset_notice">собирается сбросить</string>
+    <string name="reset_warning">Вы уверены, что хотите сбросить историю?</string>
+    <string name="cancel">отменить</string>
+    <string name="ok">да</string>
+    <string name="start">Начните</string>
+    <string name="submit">Отправить</string>
+    <string name="answer">ответ</string>
+    <string name="about_to_start_training">собирается начать обучение</string>
+    <string name="hello">Привет</string>
+</resources>
