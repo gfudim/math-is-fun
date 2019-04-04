@@ -50,35 +50,32 @@
 
     <Button
         android:id="@+id/singleBtn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="44dp"
         android:layout_marginBottom="8dp"
-        android:text="Single Mode"
+        android:background="@drawable/ic_single_mode"
         app:layout_constraintBottom_toTopOf="@+id/guideline_lang"
-        app:layout_constraintEnd_toStartOf="@+id/multiBtn2"
-        app:layout_constraintHorizontal_bias="0.947"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_add"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.203" />
 
     <Button
         android:id="@+id/multiBtn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="8dp"
-        android:text="Multi Mode"
+        android:background="@drawable/ic_multi_mode"
         app:layout_constraintBottom_toTopOf="@+id/guideline_lang"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@+id/singleBtn2"
         app:layout_constraintTop_toTopOf="@+id/guideline_add"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.19" />
 
     <EditText
         android:id="@+id/NameEditText"
