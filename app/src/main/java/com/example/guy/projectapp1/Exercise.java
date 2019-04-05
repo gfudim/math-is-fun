@@ -22,8 +22,10 @@ public class Exercise {
     public static int variance (Exercise exercise1, Exercise exercise2){
         // TODO: change to real calculation
         int count=0;
-        String string1= String.valueOf(exercise1.mul1)+String.valueOf(exercise1.mul2)+String.valueOf(exercise1.result());
-        String string2= String.valueOf(exercise2.mul1)+String.valueOf(exercise2.mul2)+String.valueOf(exercise2.result());
+        String string1= String.valueOf(exercise1.mul1)+String.valueOf(exercise1.mul2)
+                +String.valueOf(exercise1.result());
+        String string2= String.valueOf(exercise2.mul1)+String.valueOf(exercise2.mul2)
+                +String.valueOf(exercise2.result());
         for(int i=0; i<string1.length();i++){
             for(int j=i; j<string2.length();j++){
                 if(string1.charAt(i)==string2.charAt(j)){
