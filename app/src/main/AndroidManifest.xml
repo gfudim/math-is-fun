@@ -22,10 +22,7 @@
         </activity>
         <activity android:name=".TrainPage" />
         <activity android:name=".SearchPage" />
-        <activity android:name=".SettingsPage" />
         <activity android:name=".LoginPage" />
-        <activity android:name=".MainMenuPage" />
-        <activity android:name=".StatsPage" />
         <activity android:name=".FirstAppPage" />
     </application>
 
