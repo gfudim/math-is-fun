@@ -10,7 +10,7 @@
     <string name="seconds_remaining">seconds remaining:</string>;
     <string name="session_done">Session done!</string>;
     <string name="show_answer">The answer is:</string>;
-    <string name="reset_notice" >About to reset</string>;
+    <string name="reset_notice">About to reset</string>;
     <string name="reset_warning">Are you sure you want to reset history?</string>;
     <string name="cancel">Cancel</string>;
     <string name="ok">OK</string>;
@@ -18,6 +18,9 @@
     <string name="submit">Submit</string>;
     <string name="answer">Answer</string>
     <string name="about_to_start_training">About to start trainging</string>;
-    <string name="hello">Hi</string>;
-
+    <string name="hello">Hi</string>
+    <string name="title_activity_main" translatable="false">MainActivity</string>
+    <string name="Home" translatable="false">Home</string>
+    <string name="Settings" translatable="false">Settings</string>
+    <string name="Stats" translatable="false">Stats</string>
 </resources>

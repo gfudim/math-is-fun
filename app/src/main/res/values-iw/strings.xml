@@ -18,4 +18,7 @@
     <string name="reset_notice">עומד לבצע אתחול</string>
     <string name="session_done">סבב התרגילים הסתיים!</string>
     <string name="hello">שלום</string>
+    <string name="Home" translatable="false">בית</string>
+    <string name="Settings" translatable="false">הגדרות</string>
+    <string name="Stats" translatable="false">נתונים</string>
 </resources>

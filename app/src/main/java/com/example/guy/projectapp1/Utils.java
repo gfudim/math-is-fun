@@ -41,7 +41,7 @@ public class Utils extends AppCompatActivity {
     protected static int NUM_OF_EXERCISES_IN_SESSION = 4;
     protected static int MAX_TIME_TO_ANSWER = 60;
 
-    protected void saveUser(User user){
+    public void saveUser(User user){
         FileOutputStream fos;
         Gson gson = new Gson();
         String json = gson.toJson(user);

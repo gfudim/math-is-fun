@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:text="@string/Name" />
+        <EditText
+            android:id="@+id/nameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="text" />
+        <View style="@style/Divider" />
+        <TextView
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:text="@string/Age" />
+        <EditText
+            android:id="@+id/ageEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number" />
+        <View style="@style/Divider" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:text="Mode:" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/singleModeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Single"
+                android:drawableTop="@drawable/ic_person_black_24dp"
+                android:textSize="14sp" />
+            <Button
+                android:id="@+id/multiModeBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Multiple"
+                android:drawableTop="@drawable/ic_people_black_24dp"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <View style="@style/Divider" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:text="Language:" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <Button
+                android:id="@+id/hebrewBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hebrew"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/englishBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="English"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/arabicBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Arabic"
+                android:textSize="14sp" />
+            <Button
+                android:id="@+id/russianBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Russian"
+                android:textSize="14sp" />
+        </LinearLayout>
+        <View style="@style/Divider" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:text="Reset:" />
+
+        <Button
+            android:id="@+id/resetBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reset_history"
+            android:layout_gravity="center"/>
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

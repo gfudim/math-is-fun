@@ -86,7 +86,7 @@ public class LoginPage extends Utils {
             public void onClick(View view) {
                 user.mode = SINGLE_MODE;
                 saveUser(user);
-                Intent intent = new Intent(LoginPage.this, MainMenuPage.class);
+                Intent intent = new Intent(LoginPage.this, MainActivity.class);
                 intent.putExtra("new_connection",true);
                 startActivity(intent);
             }

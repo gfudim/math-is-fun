@@ -47,13 +47,19 @@ public class MainMenuPage extends Utils {
             @Override
             public void onClick(View view) {
                 user.session_type = TRAIN_MODE; // TODO - remove!
-                if(user.session_type == SEARCH_MODE){
-                    Log.e(TAG,"!!!!! TESTINGGN!!!!!!");
-                    startActivity(new Intent(MainMenuPage.this, SearchPage.class));
+                if(true){
+                    startActivity(new Intent(MainMenuPage.this,MainActivity.class));
                 }
-                else{ //user.session_type = TRAIN_MODE;
-                    startActivity(new Intent(MainMenuPage.this, TrainPage.class));
+                else{
+                    if(user.session_type == SEARCH_MODE){
+                        Log.e(TAG,"!!!!! TESTINGGN!!!!!!");
+                        startActivity(new Intent(MainMenuPage.this, SearchPage.class));
+                    }
+                    else{ //user.session_type = TRAIN_MODE;
+                        startActivity(new Intent(MainMenuPage.this, TrainPage.class));
+                    }
                 }
+
             }
         });
 

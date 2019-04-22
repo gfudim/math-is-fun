@@ -25,7 +25,7 @@ public class LoadApp extends Utils {
                startActivity(new Intent(LoadApp.this, LoginPage.class));
            }
            else{ // load FirstApp page
-               Intent intent = new Intent(LoadApp.this, MainMenuPage.class);
+               Intent intent = new Intent(LoadApp.this, MainActivity.class);
                intent.putExtra("new_connection",true);
                startActivity(intent);
            }

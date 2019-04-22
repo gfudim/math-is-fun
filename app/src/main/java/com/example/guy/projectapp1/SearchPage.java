@@ -48,7 +48,7 @@ public class SearchPage extends Utils {
                          if (user.session_type == TRAIN_MODE){
                              searchDoneToast();
                              saveUser(user);
-                             startActivity(new Intent(SearchPage.this, MainMenuPage.class));
+                             startActivity(new Intent(SearchPage.this, MainActivity.class));
                              finish();
                          }
                          else{
@@ -81,7 +81,7 @@ public class SearchPage extends Utils {
                 res.setText(context.getResources().getString(R.string.session_done));
                 res.setTextSize(20);
                 // summary of exercises -- TODO
-                startActivity(new Intent(SearchPage.this, MainMenuPage.class));
+                startActivity(new Intent(SearchPage.this, MainActivity.class));
                 finish();
             }
         }.start();
@@ -107,7 +107,7 @@ public class SearchPage extends Utils {
     @Override
     public void onBackPressed() {
         saveUser(user);
-        startActivity(new Intent(SearchPage.this, MainMenuPage.class));
+        startActivity(new Intent(SearchPage.this, MainActivity.class));
         finish();
     }
 }

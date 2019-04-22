@@ -1,0 +1,35 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <Preference
+        android:key="basic_preference"
+        android:title="title_basic_preference"
+        android:summary="summary_basic_preference" />
+
+    <Preference
+        android:key="stylish_preference"
+        android:title="title_stylish_preference"
+        android:summary="summary_stylish_preference" />
+
+    <Preference
+        android:key="preference_with_icon"
+        android:title="Preference with icon"
+        android:summary="This preference has an icon"
+        android:icon="@android:drawable/ic_menu_camera" />
+
+    <PreferenceCategory
+        android:title="inline_preferences">
+
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:title="title_checkbox_preference"
+            android:summary="summary_checkbox_preference" />
+
+        <SwitchPreference
+            android:key="switch_preference"
+            android:title="Switch preference"
+            android:summary="This is a switch" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
