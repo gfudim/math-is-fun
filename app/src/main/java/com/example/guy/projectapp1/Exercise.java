@@ -19,9 +19,8 @@ public class Exercise {
     public int result(){
         return mul1*mul2;
     }
-    public static int variance (Exercise exercise1, Exercise exercise2){
-        // TODO: change to real calculation
-        int count=0;
+    public static Double variance (Exercise exercise1, Exercise exercise2){
+        Double count=0.0;
         String string1= String.valueOf(exercise1.mul1)+String.valueOf(exercise1.mul2)
                 +String.valueOf(exercise1.result());
         String string2= String.valueOf(exercise2.mul1)+String.valueOf(exercise2.mul2)

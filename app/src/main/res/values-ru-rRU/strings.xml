@@ -18,4 +18,6 @@
     <string name="answer">ответ</string>
     <string name="about_to_start_training">собирается начать обучение</string>
     <string name="hello">Привет</string>
+    <string name="signout_notice">О выходе</string>
+    <string name="signout_warning">выходе</string>
 </resources>

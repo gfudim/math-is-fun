@@ -21,4 +21,6 @@
     <string name="Home" translatable="false">בית</string>
     <string name="Settings" translatable="false">הגדרות</string>
     <string name="Stats" translatable="false">נתונים</string>
+    <string name="signout_notice">עומדים להתנתק</string>
+    <string name="signout_warning">בטוח להתנתק?</string>
 </resources>

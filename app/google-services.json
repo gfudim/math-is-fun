@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "280179002764-msai3hgui7c3d4e083504e2h3vkek9m9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gg.MathIsFun",
+            "certificate_hash": "a593d6e6169b5768e3f463984c03d26d4084711f"
+          }
+        },
+        {
           "client_id": "280179002764-10lilrb4d3fanmit722n3l66rsjoq3p7.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -33,20 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "280179002764-10lilrb4d3fanmit722n3l66rsjoq3p7.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }

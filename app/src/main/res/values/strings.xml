@@ -11,7 +11,9 @@
     <string name="session_done">Session done!</string>;
     <string name="show_answer">The answer is:</string>;
     <string name="reset_notice">About to reset</string>;
+    <string name="signout_notice">About to sign out</string>;
     <string name="reset_warning">Are you sure you want to reset history?</string>;
+    <string name="signout_warning">Are you sure you want to sign out?</string>;
     <string name="cancel">Cancel</string>;
     <string name="ok">OK</string>;
     <string name="start">Start</string>;

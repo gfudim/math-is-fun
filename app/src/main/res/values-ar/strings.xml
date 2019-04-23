@@ -18,4 +18,6 @@
     <string name="reset_notice">على وشك إعادة الضبط</string>
     <string name="session_done">انتهينا من الجلسة!</string>
     <string name="hello">مرحبا</string>
+    <string name="signout_notice">بصدد الخروج</string>
+    <string name="signout_warning">هل أنت متأكد أنك تريد الخروج؟</string>
 </resources>

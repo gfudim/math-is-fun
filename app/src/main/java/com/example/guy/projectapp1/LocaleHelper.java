@@ -9,7 +9,6 @@ import android.os.Build;
 import android.preference.PreferenceManager;
 
 import java.util.Locale;
-import io.paperdb.Paper;
 
 public class LocaleHelper {
 

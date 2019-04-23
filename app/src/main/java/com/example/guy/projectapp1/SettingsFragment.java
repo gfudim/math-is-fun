@@ -9,13 +9,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import io.paperdb.Paper;
 
@@ -23,6 +31,7 @@ import static android.content.ContentValues.TAG;
 import static com.example.guy.projectapp1.Utils.ARABIC;
 import static com.example.guy.projectapp1.Utils.ENGLISH;
 import static com.example.guy.projectapp1.Utils.HEBREW;
+import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.RUSSIAN;
 import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
 import static com.example.guy.projectapp1.Utils.user;
@@ -31,20 +40,82 @@ public class SettingsFragment extends Fragment {
     TextView name;
     TextView age;
     TextView reset;
+
+    private DatabaseReference databaseReference;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View fragment_view = inflater.inflate(R.layout.fragment_settings, container, false);
         user.start_page = true;
-        updateView(fragment_view,(String)Paper.book().read("language"));
-        Button multiBtn = (Button) fragment_view.findViewById(R.id.multiModeBtn);
-        Button singleBtn = (Button) fragment_view.findViewById(R.id.singleModeBtn);
-        if (user.mode == SINGLE_MODE){
+        updateView(fragment_view, (String) Paper.book().read("language"));
+        final Button multiBtn = (Button) fragment_view.findViewById(R.id.multiModeBtn);
+        final Button singleBtn = (Button) fragment_view.findViewById(R.id.singleModeBtn);
+        final Button btn_sign_out = (Button) fragment_view.findViewById(R.id.signoutBtn);
+        if (user.mode == SINGLE_MODE) {
             singleBtn.setEnabled(false);
         }
         else{
+            btn_sign_out.setEnabled(true);
             multiBtn.setEnabled(false);
         }
+        singleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MainActivity.class));
+                user.mode = SINGLE_MODE;
+                singleBtn.setEnabled(false);
+                multiBtn.setEnabled(true);
+                // databaseReference = FirebaseDatabase.getInstance().getReference();
+                // FirebaseUser user_logged_in = FirebaseAuth.getInstance().getCurrentUser();
+                // databaseReference.child(user_logged_in.getUid()).setValue(user);
+            }
+        });
+
+        multiBtn.setOnClickListener(new View.OnClickListener() { // TODO - start new activity (cant start on this fragment..) - Fudim
+            @Override
+            public void onClick(View view) {
+                user.mode = MULTI_MODE;
+                startActivity(new Intent(getActivity(), LoginPage.class));
+            }
+        });
+
+        btn_sign_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setCancelable(true);
+                builder.setTitle(context.getString(R.string.signout_notice));
+                builder.setMessage(context.getString(R.string.signout_warning));
+                builder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        AuthUI.getInstance()
+                                .signOut(getActivity())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        btn_sign_out.setEnabled(false);
+                                        startActivity(new Intent(getActivity(), LoginPage.class));
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                builder.show();
+            }
+        });
+
         Button resetBtn = (Button) fragment_view.findViewById(R.id.resetBtn); // save the button for reference
         resetBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override

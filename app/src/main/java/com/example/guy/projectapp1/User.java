@@ -1,11 +1,8 @@
 package com.example.guy.projectapp1;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Random;
 
-import static android.content.ContentValues.TAG;
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
 import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
 import static com.example.guy.projectapp1.Utils.optional_exercises;
@@ -80,7 +77,12 @@ public class User{
     public Exercise getNextExercise(){
         Random rand = new Random();
         if (this.session_type == Utils.TRAIN_MODE) {
-            return current_exercises.get(rand.nextInt(current_exercises.size()));
+            if (current_exercises.size() > 0){
+                return current_exercises.get(rand.nextInt(current_exercises.size()));
+            }
+            if (undefined_exercises.size() > 0){ //TODO - remove after correct init (the current_exercises must be at least 1
+                return undefined_exercises.get(rand.nextInt(undefined_exercises.size()));
+            }
         }
         else if(this.session_type == Utils.SEARCH_MODE){
             if (rand.nextInt(100) < 25){
@@ -88,7 +90,12 @@ public class User{
                     return known_exercises.get(rand.nextInt(known_exercises.size()));
                 }
             }
-            return current_exercises.get(rand.nextInt(current_exercises.size()));
+            if (current_exercises.size() > 0){
+                return current_exercises.get(rand.nextInt(current_exercises.size()));
+            }
+            if (undefined_exercises.size() > 0){ //TODO - verify after setting the modes correct
+                return undefined_exercises.get(rand.nextInt(undefined_exercises.size()));
+            }
         }
         return null;
     }
@@ -111,7 +118,6 @@ public class User{
             setGroupTrainMode(exercise);
         }
         else if(this.session_type == Utils.SEARCH_MODE){
-            Log.e(TAG,"22222 in set answer");
             setGroupSearchMode(exercise);
             if (unknown_exercises.containsAll(current_exercises)){
                 user.session_type = TRAIN_MODE;
@@ -151,17 +157,13 @@ public class User{
         }
     }
     private void setGroupSearchMode(Exercise exercise) {
-        Log.e(TAG,"3333 in setGroupSearchMode");
         if(known_exercises.contains(exercise)){
-            Log.e(TAG,"In known");
             if(exercise.count_wrong_answers == 1){
                 moveExercise(known_exercises, undefined_exercises, exercise);
             }
         }
         else if(undefined_exercises.contains(exercise)){
-            Log.e(TAG,"!!!!! Should be here!!!!!!");
             if(exercise.count_wrong_answers == 1){
-                Log.e(TAG,"### in count wrong answers ###");
                 moveExercise(undefined_exercises, unknown_exercises, exercise);
             }
             else if(exercise.count_correct_answers == 1){
@@ -171,23 +173,21 @@ public class User{
                 moveExercise(undefined_exercises, known_exercises, exercise);
             }
         }
-        else if(unknown_exercises.contains(exercise)){
-            Log.e(TAG,"Last condition");
+        else if(unknown_exercises.contains(exercise)){ // TODO
         }
 
     }
     private void moveExercise(ArrayList<Exercise> src, ArrayList<Exercise> dst, Exercise exercise){
-        Log.e(TAG,"### in moveExercise ####");
         exercise.count_correct_answers = 0;
         exercise.count_wrong_answers = 0;
         dst.add(exercise);
         src.remove(exercise);
     }
 
-    private void exerciseGroupWithMaxVar(){
+    private void exerciseGroupWithMaxVar(){ // TODO - check this function returns the correct group
         Random rand = new Random();
-        int current_var;
-        int max_var = 0;
+        Double current_var;
+        Double max_var = Double.NEGATIVE_INFINITY;
         ArrayList <Exercise> candidates = new ArrayList<>();
         candidates.addAll(undefined_exercises);
         candidates.addAll(unknown_exercises);
@@ -199,13 +199,13 @@ public class User{
             current_var = calculateGroupVar(temp_group);
             if (current_var > max_var){
                 max_var = current_var;
-                this.current_exercises = temp_group;
+                this.current_exercises = temp_group; // here we init the current_exercises
             }
         }
     }
 
-    private static int calculateGroupVar(ArrayList<Exercise> current_exercises){
-        int sum_var = 0;
+    private static Double calculateGroupVar(ArrayList<Exercise> current_exercises){
+        Double sum_var = 0.0;
         for (int i=0; i< current_exercises.size(); i++){
             for(int j=i+1; j < current_exercises.size(); j++){
                 sum_var += Exercise.variance(current_exercises.get(i), current_exercises.get(j));
