@@ -12,11 +12,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import io.paperdb.Paper;
 
 public class SearchPage extends Utils {
     TextView submit;
     TextView answer;
+    private DatabaseReference databaseUsers;
     Exercise exercise = user.getNextExercise();
 
     @Override
@@ -79,6 +83,10 @@ public class SearchPage extends Utils {
                 user.session_done = true;
                 res.setText(context.getResources().getString(R.string.session_done));
                 res.setTextSize(20);
+                databaseUsers = FirebaseDatabase.getInstance().getReference("user");
+                String id = databaseUsers.push().getKey();
+                databaseUsers.child(id).setValue(user);
+
                 // summary of exercises -- TODO
                 startActivity(new Intent(SearchPage.this, MainActivity.class));
                 finish();

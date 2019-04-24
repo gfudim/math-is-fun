@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import io.paperdb.Paper;
 
 
@@ -108,6 +111,11 @@ public class TrainPage extends Utils {
     }
 
     public void testDoneToast(){
+        DatabaseReference databaseUsers;
+        databaseUsers = FirebaseDatabase.getInstance().getReference("user");
+        String id = databaseUsers.push().getKey();
+        databaseUsers.child(id).setValue(user);
+
         Toast.makeText(this, R.string.finished_test_session_text, Toast.LENGTH_SHORT).show();
     }
     private void updateView() {

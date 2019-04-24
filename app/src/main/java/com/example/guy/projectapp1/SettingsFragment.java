@@ -20,14 +20,11 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import io.paperdb.Paper;
 
-import static android.content.ContentValues.TAG;
 import static com.example.guy.projectapp1.Utils.ARABIC;
 import static com.example.guy.projectapp1.Utils.ENGLISH;
 import static com.example.guy.projectapp1.Utils.HEBREW;
@@ -41,7 +38,7 @@ public class SettingsFragment extends Fragment {
     TextView age;
     TextView reset;
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseUsers;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,9 +62,6 @@ public class SettingsFragment extends Fragment {
                 user.mode = SINGLE_MODE;
                 singleBtn.setEnabled(false);
                 multiBtn.setEnabled(true);
-                // databaseReference = FirebaseDatabase.getInstance().getReference();
-                // FirebaseUser user_logged_in = FirebaseAuth.getInstance().getCurrentUser();
-                // databaseReference.child(user_logged_in.getUid()).setValue(user);
             }
         });
 
@@ -101,6 +95,10 @@ public class SettingsFragment extends Fragment {
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
+                                        databaseUsers = FirebaseDatabase.getInstance().getReference("user");
+                                        String id = databaseUsers.push().getKey();
+                                        databaseUsers.child(id).setValue(user);
+                                        Toast.makeText(getActivity(),"Data saved in DB",Toast.LENGTH_SHORT).show();
                                         btn_sign_out.setEnabled(false);
                                         startActivity(new Intent(getActivity(), LoginPage.class));
                                     }
