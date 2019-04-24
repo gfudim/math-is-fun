@@ -37,8 +37,10 @@ public class MainActivity extends Utils {
         Paper.init(this);
         String language = Paper.book().read("language");
         if(language == null){
+            //default language english
             Paper.book().write("language", "en");
         }
+        // if it's the first time, print a welcome message
         if(user.name != "" && new_connection){
             showWelcomeMsg();
         }
