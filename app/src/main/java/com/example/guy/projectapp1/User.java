@@ -111,7 +111,9 @@ public class User{
         user.total_answers = user.correct_answers + user.wrong_answers;
         if(this.session_type == Utils.TRAIN_MODE){
             user_answer_time = (int)(((user.end_exercise - user.start_exercise)/1000));
-            user.current_count_points_per_day += calculate_points(user_answer_time);
+            if (exercise.result() == answer){
+                user.current_count_points_per_day += calculate_points(user_answer_time);
+            }
             setGroupTrainMode(exercise);
         }
         else if(this.session_type == Utils.SEARCH_MODE){
