@@ -85,16 +85,16 @@ public class TrainPage extends Utils {
                             Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
                         }
                         firstNum.setText("");
-                        exercise = user.getNextExercise();
-                        showExercise(exercise);
-                        if(user.current_exercises.size() == 0){
+                        if(user.session_type == SEARCH_MODE){
                             testDoneToast();
-                            user.session_type = SEARCH_MODE;
                             saveUser(user);
-                            //startActivity(new Intent(TrainPage.this, MainActivity.class));
                             finish();
                         }
-                    }
+                        else{
+                            exercise = user.getNextExercise();
+                            showExercise(exercise);
+                        }
+                                            }
                     catch(NumberFormatException ex){
                     }
                 }

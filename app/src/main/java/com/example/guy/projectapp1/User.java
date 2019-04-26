@@ -152,6 +152,7 @@ public class User{
                 moveExercise(current_exercises,known_exercises, current_exercises.get(i)); // TODO - check
             }
             this.session_type = Utils.SEARCH_MODE;
+            this.exerciseGroupWithMaxVar();
         }
     }
     private void setGroupSearchMode(Exercise exercise) {
