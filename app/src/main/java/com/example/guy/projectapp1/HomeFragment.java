@@ -40,7 +40,6 @@ public class HomeFragment extends Fragment {
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                user.session_type = TRAIN_MODE; // TODO - remove!
                 Intent in;
                 if(user.session_type == SEARCH_MODE){
                     Log.e(TAG,"Starting Search Activity");

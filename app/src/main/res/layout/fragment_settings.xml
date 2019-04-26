@@ -51,7 +51,7 @@
                 android:id="@+id/singleModeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_person_black_24dp"
+                android:drawableTop="@drawable/ic_single_mode"
                 android:text="Single"
                 android:textSize="14sp" />
 
@@ -59,7 +59,7 @@
                 android:id="@+id/multiModeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_people_black_24dp"
+                android:drawableTop="@drawable/ic_multi_mode"
                 android:text="Multiple"
                 android:textSize="14sp" />
         </LinearLayout>
@@ -81,6 +81,7 @@
                 android:id="@+id/hebrewBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_israel"
                 android:text="Hebrew"
                 android:textSize="14sp" />
 
@@ -88,6 +89,7 @@
                 android:id="@+id/englishBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_usa"
                 android:text="English"
                 android:textSize="14sp" />
 
@@ -95,6 +97,7 @@
                 android:id="@+id/arabicBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_palestine"
                 android:text="Arabic"
                 android:textSize="14sp" />
 
@@ -102,6 +105,7 @@
                 android:id="@+id/russianBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:drawableTop="@drawable/ic_russia"
                 android:text="Russian"
                 android:textSize="14sp" />
         </LinearLayout>

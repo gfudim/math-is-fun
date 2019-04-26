@@ -14,6 +14,7 @@
         android:layout_marginTop="176dp"
         android:layout_marginEnd="148dp"
         android:text="Single Mode"
+        android:drawableTop="@drawable/ic_single_mode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,10 +29,11 @@
         android:layout_marginEnd="148dp"
         android:layout_marginBottom="8dp"
         android:text="Multi Mode"
+        android:drawableTop="@drawable/ic_multi_mode"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.958"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/singleBtn"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintVertical_bias="0" />
 </android.support.constraint.ConstraintLayout>
