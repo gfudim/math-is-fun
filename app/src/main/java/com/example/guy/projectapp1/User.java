@@ -85,16 +85,13 @@ public class User{
             }
         }
         else if(this.session_type == Utils.SEARCH_MODE){
-            if (rand.nextInt(100) < 25){
+            if (rand.nextInt(100) < 25){  //from, group A
                 if (known_exercises.size() > 0) {
                     return known_exercises.get(rand.nextInt(known_exercises.size()));
                 }
             }
             if (current_exercises.size() > 0){
                 return current_exercises.get(rand.nextInt(current_exercises.size()));
-            }
-            if (undefined_exercises.size() > 0){ //TODO - verify after setting the modes correct
-                return undefined_exercises.get(rand.nextInt(undefined_exercises.size()));
             }
         }
         return null;
@@ -119,11 +116,12 @@ public class User{
         }
         else if(this.session_type == Utils.SEARCH_MODE){
             setGroupSearchMode(exercise);
-            if (unknown_exercises.containsAll(current_exercises)){
+            // check if need to remove exercise from C
+            if (checkAllExercisesInGroup(unknown_exercises,current_exercises)){
                 user.session_type = TRAIN_MODE;
             }
             for (int i=0; i<current_exercises.size(); i++){
-                if (known_exercises.contains(current_exercises.get(i))){
+                if (checkExerciseInGroup(known_exercises,current_exercises.get(i))){
                     this.exerciseGroupWithMaxVar();
                     break;
                 }
@@ -157,12 +155,12 @@ public class User{
         }
     }
     private void setGroupSearchMode(Exercise exercise) {
-        if(known_exercises.contains(exercise)){
+        if(checkExerciseInGroup(known_exercises,exercise)){
             if(exercise.count_wrong_answers == 1){
                 moveExercise(known_exercises, undefined_exercises, exercise);
             }
         }
-        else if(undefined_exercises.contains(exercise)){
+        else if(checkExerciseInGroup(undefined_exercises,exercise)){
             if(exercise.count_wrong_answers == 1){
                 moveExercise(undefined_exercises, unknown_exercises, exercise);
             }
@@ -173,15 +171,48 @@ public class User{
                 moveExercise(undefined_exercises, known_exercises, exercise);
             }
         }
-        else if(unknown_exercises.contains(exercise)){ // TODO
-        }
-
     }
+
+    private Boolean checkExerciseInGroup(ArrayList<Exercise> group, Exercise exercise){
+        Exercise temp_exercise;
+        for(int i=0; i<group.size();i++){
+            temp_exercise = group.get(i);
+            if(temp_exercise.mul1 == exercise.mul1 && temp_exercise.mul2 == exercise.mul2){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Boolean checkAllExercisesInGroup(ArrayList<Exercise> group, ArrayList<Exercise> exercises){
+        int count_exercises = 0;
+        for(int i=0; i<exercises.size();i++) {
+            for (int j = 0; j < group.size(); j++) {
+                if (group.get(j) == exercises.get(i)) {
+                    count_exercises++;
+                    break;
+                }
+            }
+        }
+        return count_exercises == exercises.size();
+    }
+
+    private void removeExerciseFromGroup(ArrayList<Exercise> group, Exercise exercise){
+        Exercise temp_exercise;
+        for(int i=0; i<group.size();i++){
+            temp_exercise = group.get(i);
+            if(temp_exercise.mul1 == exercise.mul1 && temp_exercise.mul2 == exercise.mul2){
+                group.remove(i);
+                break;
+            }
+        }
+    }
+
     private void moveExercise(ArrayList<Exercise> src, ArrayList<Exercise> dst, Exercise exercise){
         exercise.count_correct_answers = 0;
         exercise.count_wrong_answers = 0;
         dst.add(exercise);
-        src.remove(exercise);
+        removeExerciseFromGroup(src,exercise);
     }
 
     private void exerciseGroupWithMaxVar(){ // TODO - check this function returns the correct group
