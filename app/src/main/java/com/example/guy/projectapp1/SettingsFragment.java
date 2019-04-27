@@ -96,9 +96,8 @@ public class SettingsFragment extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
-                                        String id = databaseUsers.push().getKey();
-                                        databaseUsers.child(id).setValue(user);
-                                        Toast.makeText(getActivity(),"Data saved in DB",Toast.LENGTH_SHORT).show();
+                                        databaseUsers.child(user.id_data_base).setValue(user);
+                                        Toast.makeText(getActivity(),String.format("Data saved in DB for user %s", user.id_data_base),Toast.LENGTH_SHORT).show(); // TODO - remove (only for debug)
                                         btn_sign_out.setEnabled(false);
                                         startActivity(new Intent(getActivity(), LoginPage.class));
                                     }

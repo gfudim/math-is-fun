@@ -30,6 +30,7 @@ public class User{
     boolean session_done;
     boolean start_page;  //true if last page was the main menu - for the "back" option
     String name;
+    String id_data_base;
     ArrayList<Exercise> known_exercises;
     ArrayList<Exercise> unknown_exercises;
     ArrayList<Exercise> undefined_exercises;
@@ -43,6 +44,7 @@ public class User{
         this.last_login = first_login;
         this.session_done = false;
         this.name = "";
+        this.id_data_base = "";
         this.age = 0;
         this.start_page = true;
         init();

@@ -67,6 +67,8 @@ public class LoginPage extends Utils {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if(resultCode == RESULT_OK){
                 FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
+                String user_id = user_loggin.getUid();
+                user.id_data_base = user_id;
                 Toast.makeText(this,""+user_loggin.getEmail(), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginPage.this, MainActivity.class));
                 finish();
