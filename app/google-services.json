@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "280179002764-f0kre4c09c4m48pvtiepdeibi0e41mf7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gg.MathIsFun",
+            "certificate_hash": "a12fdf6e3f35bea586b498f40d7ed9b2d2a26fc9"
+          }
+        },
+        {
           "client_id": "280179002764-10lilrb4d3fanmit722n3l66rsjoq3p7.apps.googleusercontent.com",
           "client_type": 3
         }
