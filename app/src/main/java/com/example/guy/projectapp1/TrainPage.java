@@ -35,7 +35,7 @@ public class TrainPage extends Utils {
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.start_training));
-        builder.setMessage(context.getResources().getString(R.string.about_to_start_training));
+        builder.setMessage(context.getResources().getString(R.string.start_training));
         builder.setCancelable(false);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
