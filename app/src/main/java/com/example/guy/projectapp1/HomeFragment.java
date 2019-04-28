@@ -13,16 +13,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+//import android.widget.Toast;
+//
+//import com.google.firebase.auth.FirebaseAuth;
+//import com.google.firebase.database.DataSnapshot;
+//import com.google.firebase.database.DatabaseError;
+//import com.google.firebase.database.DatabaseReference;
+//import com.google.firebase.database.FirebaseDatabase;
+//import com.google.firebase.database.ValueEventListener;
+//
+//import java.util.ArrayList;
 
 import io.paperdb.Paper;
 
 import static android.content.ContentValues.TAG;
+//import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
 import static com.example.guy.projectapp1.Utils.user;
 
 public class HomeFragment extends Fragment {
     TextView start;
+//    private FirebaseDatabase mFirebaseDatabse;
+//    private FirebaseAuth mAuth;
+//    private FirebaseAuth.AuthStateListener mAuthListener;
+//    private DatabaseReference myRef;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,6 +49,21 @@ public class HomeFragment extends Fragment {
         start = (TextView) view.findViewById(R.id.StartBtn);
         updateView((String) Paper.book().read("language"));
         //
+//        mAuth = FirebaseAuth.getInstance();
+//        mFirebaseDatabse = FirebaseDatabase.getInstance();
+//        myRef = mFirebaseDatabse.getReference();
+//
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                updateUser(dataSnapshot);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
         Button startBtn = (Button) view.findViewById(R.id.StartBtn);
         //A button to start a new session
@@ -54,6 +84,41 @@ public class HomeFragment extends Fragment {
         });
         return view;
     }
+//
+//    private void updateUser(DataSnapshot dataSnapshot) {
+//        for(DataSnapshot ds: dataSnapshot.getChildren()){
+//            User temp_user = new User(MULTI_MODE);
+//            temp_user.setCorrectAnswers(ds.child(user.id_data_base).getValue(User.class).correct_answers);
+//            temp_user.setWrongAnswers(ds.child(user.id_data_base).getValue(User.class).wrong_answers);
+//            temp_user.setTotalAnswers(ds.child(user.id_data_base).getValue(User.class).total_answers);
+//            temp_user.setMode(ds.child(user.id_data_base).getValue(User.class).mode);
+//            temp_user.setLang(ds.child(user.id_data_base).getValue(User.class).lang);
+//            temp_user.setAge(ds.child(user.id_data_base).getValue(User.class).age);
+//            temp_user.setSessionType(ds.child(user.id_data_base).getValue(User.class).session_type);
+//            temp_user.setMaxCorrectTestsInRow(ds.child(user.id_data_base).getValue(User.class).max_correct_tests_in_row);
+//            temp_user.setCurrentCorrectTestsInRow(ds.child(user.id_data_base).getValue(User.class).current_correct_tests_in_row);
+//            temp_user.setCountTests(ds.child(user.id_data_base).getValue(User.class).count_tests);
+//            temp_user.setCurrentCountPointsPerDay(ds.child(user.id_data_base).getValue(User.class).current_count_points_per_day);
+//            temp_user.setMaxPointsPerDay(ds.child(user.id_data_base).getValue(User.class).max_points_per_day);
+//            temp_user.setFirstLogin(ds.child(user.id_data_base).getValue(User.class).first_login);
+//            temp_user.setLastLogin(ds.child(user.id_data_base).getValue(User.class).last_login);
+//            temp_user.setStartSessionTime(ds.child(user.id_data_base).getValue(User.class).start_session_time);
+//            temp_user.setStartExercise(ds.child(user.id_data_base).getValue(User.class).start_exercise);
+//            temp_user.setEndExercise(ds.child(user.id_data_base).getValue(User.class).end_exercise);
+//            temp_user.setSessionDone(ds.child(user.id_data_base).getValue(User.class).session_done);
+//            temp_user.setStartPage(ds.child(user.id_data_base).getValue(User.class).start_page);
+//            temp_user.setName(ds.child(user.id_data_base).getValue(User.class).name);
+//            temp_user.setName(ds.child(user.id_data_base).getValue(User.class).name);
+//            temp_user.setIdDataBase(ds.child(user.id_data_base).getValue(User.class).id_data_base);
+//            temp_user.setKnownExercises(ds.child(user.id_data_base).getValue(User.class).known_exercises);
+//            temp_user.setUnknownExercises(ds.child(user.id_data_base).getValue(User.class).unknown_exercises);
+//            temp_user.setUndefinedExercises(ds.child(user.id_data_base).getValue(User.class).undefined_exercises);
+//            temp_user.setCurrentExercises(ds.child(user.id_data_base).getValue(User.class).current_exercises);
+//            // user = temp_user;
+//            Toast.makeText(getActivity(),String.format("total_answers%s", temp_user.total_answers),Toast.LENGTH_LONG).show(); // TODO - remove (only for debug)
+//        }
+//    }
+//
     private void updateView(String language) {
         Context context = LocaleHelper.setLocale(getActivity(), language);
         Resources resources = context.getResources();

@@ -51,12 +51,12 @@ public class SearchPage extends Utils {
                          if (user.session_type == TRAIN_MODE){
                              searchDoneToast();
                              saveUser(user);
-                             //startActivity(new Intent(SearchPage.this, MainActivity.class));
                              finish();
                          }
                          else{
-                             if (user.total_answers % 4 == 0)
+                             if (user.total_answers % 4 == 0) {
                                  saveUser(user);
+                             }
                              firstNum.setText("");
                              exercise = user.getNextExercise();
                              showExercise(exercise);
@@ -83,12 +83,19 @@ public class SearchPage extends Utils {
                 user.session_done = true;
                 res.setText(context.getResources().getString(R.string.session_done));
                 res.setTextSize(20);
-                databaseUsers = FirebaseDatabase.getInstance().getReference("user");
-                String id = databaseUsers.push().getKey();
-                databaseUsers.child(id).setValue(user);
 
+
+                user.session_type = TRAIN_MODE;
+                searchDoneToast();
+                databaseUsers = FirebaseDatabase.getInstance().getReference("user");
+                if (user.mode == MULTI_MODE){
+                    databaseUsers.child(user.id_data_base).setValue(user);
+                }
+                else{
+                    String id = databaseUsers.push().getKey();
+                    databaseUsers.child(id).setValue(user);
+                }
                 // summary of exercises -- TODO
-                //startActivity(new Intent(SearchPage.this, MainActivity.class));
                 finish();
             }
         }.start();

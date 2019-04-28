@@ -16,6 +16,8 @@ public class Exercise {
         count_wrong_answers = 0;
         displayed_today = false;
     }
+    // Exercise(){}
+
     public int result(){
         return mul1*mul2;
     }

@@ -12,6 +12,107 @@ import static com.example.guy.projectapp1.Utils.NUM_OF_EXERCISES_IN_SESSION;
 public class User{
     int correct_answers;
     int wrong_answers;
+//
+//    public void setCorrectAnswers(int correct_answers) {
+//        this.correct_answers = correct_answers;
+//    }
+//
+//    public void setWrongAnswers(int wrong_answers) {
+//        this.wrong_answers = wrong_answers;
+//    }
+//
+//    public void setTotalAnswers(int total_answers) {
+//        this.total_answers = total_answers;
+//    }
+//
+//    public void setMode(int mode) {
+//        this.mode = mode;
+//    }
+//
+//    public void setLang(int lang) {
+//        this.lang = lang;
+//    }
+//
+//    public void setAge(int age) {
+//        this.age = age;
+//    }
+//
+//    public void setSessionType(int session_type) {
+//        this.session_type = session_type;
+//    }
+//
+//    public void setMaxCorrectTestsInRow(int max_correct_tests_in_row) {
+//        this.max_correct_tests_in_row = max_correct_tests_in_row;
+//    }
+//
+//    public void setCurrentCorrectTestsInRow(int current_correct_tests_in_row) {
+//        this.current_correct_tests_in_row = current_correct_tests_in_row;
+//    }
+//
+//    public void setCountTests(int count_tests) {
+//        this.count_tests = count_tests;
+//    }
+//
+//    public void setCurrentCountPointsPerDay(int current_count_points_per_day) {
+//        this.current_count_points_per_day = current_count_points_per_day;
+//    }
+//
+//    public void setMaxPointsPerDay(int max_points_per_day) {
+//        this.max_points_per_day = max_points_per_day;
+//    }
+//
+//    public void setFirstLogin(long first_login) {
+//        this.first_login = first_login;
+//    }
+//
+//    public void setLastLogin(long last_login) {
+//        this.last_login = last_login;
+//    }
+//
+//    public void setStartSessionTime(long start_session_time) {
+//        this.start_session_time = start_session_time;
+//    }
+//
+//    public void setStartExercise(long start_exercise) {
+//        this.start_exercise = start_exercise;
+//    }
+//
+//    public void setEndExercise(long end_exercise) {
+//        this.end_exercise = end_exercise;
+//    }
+//
+//    public void setSessionDone(boolean session_done) {
+//        this.session_done = session_done;
+//    }
+//
+//    public void setStartPage(boolean start_page) {
+//        this.start_page = start_page;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public void setIdDataBase(String id_data_base) {
+//        this.id_data_base = id_data_base;
+//    }
+//
+//    public void setKnownExercises(ArrayList<Exercise> known_exercises) {
+//        this.known_exercises = known_exercises;
+//    }
+//
+//    public void setUnknownExercises(ArrayList<Exercise> unknown_exercises) {
+//        this.unknown_exercises = unknown_exercises;
+//    }
+//
+//    public void setUndefinedExercises(ArrayList<Exercise> undefined_exercises) {
+//        this.undefined_exercises = undefined_exercises;
+//    }
+//
+//    public void setCurrentExercises(ArrayList<Exercise> current_exercises) {
+//        this.current_exercises = current_exercises;
+//    }
+//
     int total_answers;
     int mode; //single or multi
     int lang;
@@ -29,6 +130,7 @@ public class User{
     long end_exercise;
     boolean session_done;
     boolean start_page;  //true if last page was the main menu - for the "back" option
+    boolean search_exercises_done;
     String name;
     String id_data_base;
     ArrayList<Exercise> known_exercises;
@@ -47,8 +149,11 @@ public class User{
         this.id_data_base = "";
         this.age = 0;
         this.start_page = true;
+        this.search_exercises_done = false;
         init();
     }
+
+    // User() {}
 
     private void init(){
         this.correct_answers = 0;
@@ -63,7 +168,7 @@ public class User{
         this.unknown_exercises = new ArrayList<Exercise>();
         this.undefined_exercises = new ArrayList<Exercise>();
         this.current_exercises = new ArrayList<Exercise>();
-        for (int i = 1; i <= MAX_NUMBER; i++){
+        for (int i = 2; i <= MAX_NUMBER; i++){
             for( int j = i; j<= MAX_NUMBER; j++){
                 Exercise exercise = new Exercise(i, j);
                 this.undefined_exercises.add(exercise);
@@ -78,6 +183,7 @@ public class User{
 
     public Exercise getNextExercise(){
         Random rand = new Random();
+        Exercise exercise;
         if (this.session_type == Utils.TRAIN_MODE) {
             if (current_exercises.size() > 0){
                 return current_exercises.get(rand.nextInt(current_exercises.size()));
@@ -87,13 +193,18 @@ public class User{
             }
         }
         else if(this.session_type == Utils.SEARCH_MODE){
-            if (rand.nextInt(100) < 25){  //from, group A
+            if (rand.nextInt(100) < 25 || user.search_exercises_done){  //from, group A
                 if (known_exercises.size() > 0) {
                     return known_exercises.get(rand.nextInt(known_exercises.size()));
                 }
             }
             if (current_exercises.size() > 0){
-                return current_exercises.get(rand.nextInt(current_exercises.size()));
+                exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
+                while (checkExerciseInGroup(user.known_exercises, exercise)){ // show user only exercises from group C in search mode
+                    exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
+                }
+                // TODO - take care of case that all are from B
+                return exercise;
             }
         }
         return null;
@@ -120,7 +231,8 @@ public class User{
             setGroupSearchMode(exercise);
             // check if need to remove exercise from C
             if (checkAllExercisesInGroup(unknown_exercises,current_exercises)){
-                user.session_type = TRAIN_MODE;
+                user.search_exercises_done = true;
+                // user.session_type = TRAIN_MODE; // Only after 3 Minutes!!
             }
             for (int i=0; i<current_exercises.size(); i++){
                 if (checkExerciseInGroup(known_exercises,current_exercises.get(i))){
@@ -247,4 +359,7 @@ public class User{
         }
         return sum_var;
     }
+//    protected void setUserInformation(User user){
+//
+//    }
 }

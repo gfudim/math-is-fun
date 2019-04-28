@@ -54,7 +54,6 @@ public class TrainPage extends Utils {
                         res.setText(context.getResources().getString(R.string.session_done));
                         res.setTextSize(20);
                         // summary of exercises -- TODO
-                        //startActivity(new Intent(TrainPage.this, MainActivity.class));
                         finish();
                     }
                 }.start();

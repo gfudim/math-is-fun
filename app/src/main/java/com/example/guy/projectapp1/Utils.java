@@ -24,7 +24,7 @@ import io.paperdb.Paper;
 public class Utils extends AppCompatActivity {
 
     protected static final String FILE_NAME = "APP_DATA.txt";
-    public static int MAX_NUMBER = 10;
+    public static int MAX_NUMBER = 9;
     public static int SINGLE_MODE = 0;
     public static int MULTI_MODE = 1;
     public static int DEFAULT_LANG = 0;
