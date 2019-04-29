@@ -45,6 +45,7 @@ public class StatsFragment extends Fragment {
                 }
             }
         });
+        // TODO - switch to correct strings
         connectButton(view,R.id.sevenDaysBtn,R.string.start_training,R.string.start_training);
         connectButton(view,R.id.fourteenDaysBtn,R.string.start_training,R.string.start_training);
         connectButton(view,R.id.thirtyDaysBtn,R.string.start_training,R.string.start_training);

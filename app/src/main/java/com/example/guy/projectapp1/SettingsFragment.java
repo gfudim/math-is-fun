@@ -65,7 +65,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        multiBtn.setOnClickListener(new View.OnClickListener() { // TODO - start new activity (cant start on this fragment..) - Fudim
+        multiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 user.mode = MULTI_MODE;
@@ -97,7 +97,6 @@ public class SettingsFragment extends Fragment {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
                                         databaseUsers.child(user.id_data_base).setValue(user);
-                                        Toast.makeText(getActivity(),String.format("Data saved in DB for user %s", user.id_data_base),Toast.LENGTH_SHORT).show(); // TODO - remove (only for debug)
                                         btn_sign_out.setEnabled(false);
                                         startActivity(new Intent(getActivity(), LoginPage.class));
                                     }

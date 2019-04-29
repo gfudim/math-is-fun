@@ -188,9 +188,6 @@ public class User{
             if (current_exercises.size() > 0){
                 return current_exercises.get(rand.nextInt(current_exercises.size()));
             }
-            if (undefined_exercises.size() > 0){ //TODO - remove after correct init (the current_exercises must be at least 1
-                return undefined_exercises.get(rand.nextInt(undefined_exercises.size()));
-            }
         }
         else if(this.session_type == Utils.SEARCH_MODE){
             if (rand.nextInt(100) < 25 || user.search_exercises_done){  //from, group A
@@ -263,9 +260,10 @@ public class User{
             }
             // test done!
             for (i=0; i< current_exercises.size(); i++){
-                moveExercise(current_exercises,known_exercises, current_exercises.get(i)); // TODO - check
+                moveExercise(current_exercises,known_exercises, current_exercises.get(i));
             }
             this.session_type = Utils.SEARCH_MODE;
+            this.session_done = true;
             this.exerciseGroupWithMaxVar();
         }
     }
@@ -330,7 +328,7 @@ public class User{
         removeExerciseFromGroup(src,exercise);
     }
 
-    private void exerciseGroupWithMaxVar(){ // TODO - check this function returns the correct group
+    private void exerciseGroupWithMaxVar(){
         Random rand = new Random();
         Double current_var;
         Double max_var = Double.NEGATIVE_INFINITY;

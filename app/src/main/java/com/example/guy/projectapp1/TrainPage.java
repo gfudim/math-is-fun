@@ -8,12 +8,17 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -51,6 +56,7 @@ public class TrainPage extends Utils {
                     public void onFinish() {
                         TextView res = (TextView) findViewById(R.id.ResultTextView);
                         user.session_done = true;
+                        saveUser(user);
                         res.setText(context.getResources().getString(R.string.session_done));
                         res.setTextSize(20);
                         // summary of exercises -- TODO
@@ -125,9 +131,26 @@ public class TrainPage extends Utils {
     }
 
     @Override
-    public void onBackPressed() { // TODO - add toast for conformation if user wants to exit test
-        saveUser(user);
-        //startActivity(new Intent(TrainPage.this, MainActivity.class));
-        finish();
+    public void onBackPressed() { // TODO - add toast for conformation if user wants to exit test - need to check
+        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        // TODO - switch to correct strings
+        builder.setTitle(context.getString(R.string.reset_notice));
+        builder.setMessage(context.getString(R.string.reset_warning));
+        builder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                saveUser(user);
+                finish();
+            }
+        });
+        builder.show();
     }
 }

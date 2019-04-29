@@ -10,6 +10,7 @@
     <string name="seconds_remaining">seconds remaining:</string>;
     <string name="session_done">Session done!</string>;
     <string name="show_answer">The answer is:</string>;
+    <string name="training_over_today">Training is over for today</string>;
     <string name="reset_notice">About to reset</string>;
     <string name="signout_notice">About to sign out</string>;
     <string name="reset_warning">Are you sure you want to reset history?</string>;

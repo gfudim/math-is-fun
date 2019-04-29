@@ -23,4 +23,5 @@
     <string name="Stats" translatable="false">נתונים</string>
     <string name="signout_notice">עומדים להתנתק</string>
     <string name="signout_warning">בטוח להתנתק?</string>
+    <string name="training_over_today">האימון הסתיים להיום</string>
 </resources>

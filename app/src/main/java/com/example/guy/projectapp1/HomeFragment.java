@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 //import android.widget.Toast;
 //
 //import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +24,11 @@ import android.widget.TextView;
 //import com.google.firebase.database.ValueEventListener;
 //
 //import java.util.ArrayList;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Date;
 
 import io.paperdb.Paper;
 
@@ -45,9 +51,11 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
 
         // changes the language
-        // TODO - maybe change the logic
         start = (TextView) view.findViewById(R.id.StartBtn);
         updateView((String) Paper.book().read("language"));
+        FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
+        long user_last_login = user_loggin.getMetadata().getLastSignInTimestamp();
+        // TODO - need to switch the user.session_done flag to false at a new day
         //
 //        mAuth = FirebaseAuth.getInstance();
 //        mFirebaseDatabse = FirebaseDatabase.getInstance();
@@ -71,15 +79,21 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in;
-                if(user.session_type == SEARCH_MODE){
-                    Log.e(TAG,"Starting Search Activity");
-                    in = new Intent(getActivity(), SearchPage.class);
+                if(user.session_done && false){ // TODO - remove second condition(only for debug)
+                    Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                    Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
                 }
-                else{ //user.session_type = TRAIN_MODE;
-                    Log.e(TAG,"Starting Training Activity");
-                    in = new Intent(getActivity(), TrainPage.class);
+                else{
+                    if(user.session_type == SEARCH_MODE){
+                        Log.e(TAG,"Starting Search Activity");
+                        in = new Intent(getActivity(), SearchPage.class);
+                    }
+                    else{ //user.session_type = TRAIN_MODE;
+                        Log.e(TAG,"Starting Training Activity");
+                        in = new Intent(getActivity(), TrainPage.class);
+                    }
+                    startActivity(in);
                 }
-                startActivity(in);
             }
         });
         return view;

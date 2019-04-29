@@ -80,7 +80,6 @@ public class SearchPage extends Utils {
             }
             public void onFinish() {
                 TextView res = (TextView) findViewById(R.id.ResultTextView);
-                user.session_done = true;
                 res.setText(context.getResources().getString(R.string.session_done));
                 res.setTextSize(20);
 
