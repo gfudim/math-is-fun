@@ -7,6 +7,8 @@ public class Exercise {
     int mul2;
     int count_correct_answers;
     int count_wrong_answers;
+    long time_displayed; // for calculating the time for answers
+    long time_answered;
     boolean displayed_today;
 
     Exercise(int i, int j){
@@ -14,6 +16,8 @@ public class Exercise {
         mul2 = j;
         count_correct_answers = 0;
         count_wrong_answers = 0;
+        time_displayed = 0;
+        time_answered = 0;
         displayed_today = false;
     }
     // Exercise(){}

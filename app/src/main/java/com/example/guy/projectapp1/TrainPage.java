@@ -29,6 +29,7 @@ public class TrainPage extends Utils {
     TextView submit;
     TextView answer;
     Exercise exercise = user.getNextExercise();
+    long start_input_answer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,35 +73,41 @@ public class TrainPage extends Utils {
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
-                EditText firstNum = (EditText) findViewById(R.id.InputEditText);
-                if (firstNum != null){
-                    int input_num;
-                    try{
-                        input_num = Integer.parseInt(firstNum.getText().toString());
-                        user.setAnswer(exercise, input_num);
-                        if (input_num == (exercise.result())) { /*correct answer*/
-                            toastAfterAnswer(true, true, exercise);
+                if ((System.currentTimeMillis() - start_input_answer)/1000 > 10){
+                    Toast.makeText(TrainPage.this, "To long (10 seconds..)", Toast.LENGTH_SHORT).show();
+                    // TODO - mark as the exercise as a mistake
+                }
+                else{
+                    EditText firstNum = (EditText) findViewById(R.id.InputEditText);
+                    if (firstNum != null){
+                        int input_num;
+                        try{
+                            input_num = Integer.parseInt(firstNum.getText().toString());
+                            user.setAnswer(exercise, input_num);
+                            if (input_num == (exercise.result())) { /*correct answer*/
+                                toastAfterAnswer(true, true, exercise);
+                            }
+                            else {
+                                toastAfterAnswer(false, true, exercise);
+                            }
+                            if (user.total_answers % 4 == 0) {
+                                saveUser(user);
+                                String temp = String.format("%s", user.current_count_points_per_day);
+                                Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
+                            }
+                            firstNum.setText("");
+                            if(user.session_type == SEARCH_MODE){
+                                testDoneToast();
+                                saveUser(user);
+                                finish();
+                            }
+                            else{
+                                exercise = user.getNextExercise();
+                                showExercise(exercise);
+                            }
                         }
-                        else {
-                            toastAfterAnswer(false, true, exercise);
+                        catch(NumberFormatException ex){
                         }
-                        if (user.total_answers % 4 == 0) {
-                            saveUser(user);
-                            String temp = String.format("%s", user.current_count_points_per_day);
-                            Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
-                        }
-                        firstNum.setText("");
-                        if(user.session_type == SEARCH_MODE){
-                            testDoneToast();
-                            saveUser(user);
-                            finish();
-                        }
-                        else{
-                            exercise = user.getNextExercise();
-                            showExercise(exercise);
-                        }
-                                            }
-                    catch(NumberFormatException ex){
                     }
                 }
             }
@@ -108,11 +115,20 @@ public class TrainPage extends Utils {
         );
     }
 
+    public void time_for_answer(View view){
+        start_input_answer = System.currentTimeMillis();
+        if ((start_input_answer - exercise.time_displayed)/1000 > 5){
+            Toast.makeText(TrainPage.this, "To long...(5 seconds)", Toast.LENGTH_LONG).show();
+            // TODO - mark as the exercise as a mistake
+        }
+    }
+
     public void showExercise(Exercise exercise){
         TextView show_exercise = (TextView) findViewById(R.id.ExerciseTextView);
         String temp_exercise = String.format("%s * %s", exercise.mul1, exercise.mul2);
         show_exercise.setText(temp_exercise);
-        user.start_exercise = System.currentTimeMillis();
+        exercise.time_displayed = System.currentTimeMillis();
+        user.start_exercise = exercise.time_displayed;
     }
 
     public void testDoneToast(){

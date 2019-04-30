@@ -212,8 +212,9 @@ public class User{
 
     public void setAnswer(Exercise exercise, int answer){
         int user_answer_time;
-        user.end_exercise = System.currentTimeMillis();
-        if (exercise.result() == answer){
+        exercise.time_answered = System.currentTimeMillis();
+        user.end_exercise = exercise.time_answered;
+        if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= 10)){
             exercise.count_correct_answers++;
             user.correct_answers++;
         }
@@ -223,8 +224,8 @@ public class User{
         }
         user.total_answers = user.correct_answers + user.wrong_answers;
         if(this.session_type == Utils.TRAIN_MODE){
-            if (exercise.result() == answer){
-                user_answer_time = (int)(((user.end_exercise - user.start_exercise)/1000));
+            if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= 10)){
+                user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
                 user.current_count_points_per_day += calculatePoints(user_answer_time);
             }
             setGroupTrainMode(exercise);
