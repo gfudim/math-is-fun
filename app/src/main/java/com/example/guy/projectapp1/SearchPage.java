@@ -6,7 +6,9 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,13 +17,15 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
+
 import java.util.Calendar;
 
 import io.paperdb.Paper;
 
 public class SearchPage extends Utils {
     TextView submit;
-    TextView answer;
+    EditText answer;
     private DatabaseReference databaseUsers;
     Exercise exercise = user.getNextExercise();
 
@@ -30,46 +34,29 @@ public class SearchPage extends Utils {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train);
         submit = (TextView) findViewById(R.id.SubmitBtn);
-        answer = (TextView) findViewById(R.id.InputEditText);
+        answer = (EditText) findViewById(R.id.InputEditText);
         updateView((String) Paper.book().read("language"));
         showExercise(exercise);
-        user.start_session_time = System.currentTimeMillis();//to be continued
-        Button submitBtn = (Button) findViewById(R.id.SubmitBtn); // save the button for reference
+        user.start_session_time = System.currentTimeMillis();
+        UIUtil.showKeyboard(this,answer);
+        Button submitBtn = (Button)submit; // save the button for reference
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
              @Override
-             public void onClick(View view) { // here goes our logic code
-                 EditText firstNum = (EditText) findViewById(R.id.InputEditText);
-                 if (firstNum != null) {
-                     int input_num;
-                     try {
-                         input_num = Integer.parseInt(firstNum.getText().toString());
-                         user.setAnswer(exercise, input_num);
-                         if (input_num == (exercise.result())) { /*correct answer*/
-                             toastAfterAnswer(true, false, exercise);
-                         }
-                         else {
-                             toastAfterAnswer(false, false, exercise);
-                         }
-                         if (user.session_type == TRAIN_MODE){
-                             searchDoneToast();
-                             saveUser(user);
-                             finish();
-                         }
-                         else{
-                             if (user.total_answers % 4 == 0) {
-                                 saveUser(user);
-                             }
-                             firstNum.setText("");
-                             exercise = user.getNextExercise();
-                             showExercise(exercise);
-                         }
-
-                     } catch (NumberFormatException ex) {
-                     }
-                 }
+             public void onClick(View view) {
+                 handleAnswer();
              }
          }
         );
+
+        answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    handleAnswer();
+                }
+                UIUtil.showKeyboard(SearchPage.this,answer);
+                return true;
+            }
+        });
 
         new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
             Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
@@ -99,6 +86,38 @@ public class SearchPage extends Utils {
                 finish();
             }
         }.start();
+    }
+
+    public void handleAnswer(){
+        EditText firstNum = (EditText) findViewById(R.id.InputEditText);
+        if (firstNum != null) {
+            int input_num;
+            try {
+                input_num = Integer.parseInt(firstNum.getText().toString());
+                user.setAnswer(exercise, input_num);
+                if (input_num == (exercise.result())) { /*correct answer*/
+                    toastAfterAnswer(true, false, exercise);
+                }
+                else {
+                    toastAfterAnswer(false, false, exercise);
+                }
+                if (user.session_type == TRAIN_MODE){
+                    searchDoneToast();
+                    saveUser(user);
+                    finish();
+                }
+                else{
+                    if (user.total_answers % 4 == 0) {
+                        saveUser(user);
+                    }
+                    firstNum.setText("");
+                    exercise = user.getNextExercise();
+                    showExercise(exercise);
+                }
+
+            } catch (NumberFormatException ex) {
+            }
+        }
     }
 
     public void searchDoneToast(){

@@ -9,7 +9,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,13 +24,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
+
 import io.paperdb.Paper;
 
 
 public class TrainPage extends Utils {
     TextView submit;
-    TextView answer;
-    EditText firstNum;
+    EditText answer;
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
     @Override
@@ -36,8 +39,7 @@ public class TrainPage extends Utils {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train);
         submit = (TextView) findViewById(R.id.SubmitBtn);
-        answer = (TextView) findViewById(R.id.InputEditText);
-        firstNum = (EditText) findViewById(R.id.InputEditText);
+        answer = (EditText) findViewById(R.id.InputEditText);
         updateView();
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
@@ -70,51 +72,65 @@ public class TrainPage extends Utils {
                 user.start_session_time = System.currentTimeMillis();
             }
         });
+        UIUtil.showKeyboard(this,answer);
         builder.show();
         Button submitBtn = (Button) findViewById(R.id.SubmitBtn); // save the button for reference
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
-                exercise.time_answered = System.currentTimeMillis();
-                if ((exercise.time_answered - exercise.time_displayed)/1000 > 10){
-                    Toast.makeText(TrainPage.this, "To long (10 seconds..)", Toast.LENGTH_SHORT).show();
-                    handleOverTimeAnswer();
-                }
-                else{
-                    if (firstNum != null){
-                        int input_num;
-                        try{
-                            input_num = Integer.parseInt(firstNum.getText().toString());
-                            user.setAnswer(exercise, input_num);
-                            if (input_num == (exercise.result())) { /*correct answer*/
-                                toastAfterAnswer(true, true, exercise);
-                            }
-                            else {
-                                toastAfterAnswer(false, true, exercise);
-                            }
-                            if (user.total_answers % 4 == 0) {
-                                saveUser(user);
-                                String temp = String.format("%s", user.current_count_points_per_day);
-                                Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
-                            }
-                            firstNum.setText("");
-                            if(user.session_type == SEARCH_MODE){
-                                testDoneToast();
-                                saveUser(user);
-                                finish();
-                            }
-                            else{
-                                exercise = user.getNextExercise();
-                                showExercise(exercise);
-                            }
-                        }
-                        catch(NumberFormatException ex){
-                        }
-                    }
-                }
+                handleAnswer();
             }
         }
         );
+        answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    handleAnswer();
+                }
+                UIUtil.showKeyboard(TrainPage.this,answer);
+                return true;
+            }
+        });
+    }
+
+    public void handleAnswer(){
+        exercise.time_answered = System.currentTimeMillis();
+        if ((exercise.time_answered - exercise.time_displayed)/1000 > 10){
+            Toast.makeText(TrainPage.this, "To long (10 seconds..)", Toast.LENGTH_SHORT).show();
+            handleOverTimeAnswer();
+        }
+        else{
+            if (answer != null){
+                int input_num;
+                try{
+                    input_num = Integer.parseInt(answer.getText().toString());
+                    user.setAnswer(exercise, input_num);
+                    if (input_num == (exercise.result())) { /*correct answer*/
+                        toastAfterAnswer(true, true, exercise);
+                    }
+                    else {
+                        toastAfterAnswer(false, true, exercise);
+                    }
+                    if (user.total_answers % 4 == 0) {
+                        saveUser(user);
+                        String temp = String.format("%s", user.current_count_points_per_day);
+                        Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
+                    }
+                    answer.setText("");
+                    if(user.session_type == SEARCH_MODE){
+                        testDoneToast();
+                        saveUser(user);
+                        finish();
+                    }
+                    else{
+                        exercise = user.getNextExercise();
+                        showExercise(exercise);
+                    }
+                }
+                catch(NumberFormatException ex){
+                }
+            }
+        }
     }
 
     public void time_for_answer(View view){
@@ -132,7 +148,7 @@ public class TrainPage extends Utils {
             String temp = String.format("%s", user.current_count_points_per_day);
             Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
         }
-        firstNum.setText("");
+        answer.setText("");
         exercise = user.getNextExercise();
         showExercise(exercise);
     }
