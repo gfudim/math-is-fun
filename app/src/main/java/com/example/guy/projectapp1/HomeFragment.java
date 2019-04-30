@@ -77,7 +77,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in;
-
                 if(user.session_done && user.last_day_of_session == (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) && false){ // TODO - remove last false condition(only for debug)
                     // TODO - if the user doesn't connect for a week, his problem - don't care now...
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));

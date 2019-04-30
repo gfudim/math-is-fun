@@ -28,6 +28,7 @@ import io.paperdb.Paper;
 public class TrainPage extends Utils {
     TextView submit;
     TextView answer;
+    EditText firstNum;
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
     @Override
@@ -36,6 +37,7 @@ public class TrainPage extends Utils {
         setContentView(R.layout.activity_train);
         submit = (TextView) findViewById(R.id.SubmitBtn);
         answer = (TextView) findViewById(R.id.InputEditText);
+        firstNum = (EditText) findViewById(R.id.InputEditText);
         updateView();
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
@@ -73,12 +75,12 @@ public class TrainPage extends Utils {
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
-                if ((System.currentTimeMillis() - start_input_answer)/1000 > 10){
+                exercise.time_answered = System.currentTimeMillis();
+                if ((exercise.time_answered - exercise.time_displayed)/1000 > 10){
                     Toast.makeText(TrainPage.this, "To long (10 seconds..)", Toast.LENGTH_SHORT).show();
-                    // TODO - mark as the exercise as a mistake
+                    handleOverTimeAnswer();
                 }
                 else{
-                    EditText firstNum = (EditText) findViewById(R.id.InputEditText);
                     if (firstNum != null){
                         int input_num;
                         try{
@@ -119,8 +121,20 @@ public class TrainPage extends Utils {
         start_input_answer = System.currentTimeMillis();
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
             Toast.makeText(TrainPage.this, "To long...(5 seconds)", Toast.LENGTH_LONG).show();
-            // TODO - mark as the exercise as a mistake
+            handleOverTimeAnswer();
         }
+    }
+
+    public void handleOverTimeAnswer(){
+        user.setAnswer(exercise, 0); // wrong answer
+        if (user.total_answers % 4 == 0) {
+            saveUser(user);
+            String temp = String.format("%s", user.current_count_points_per_day);
+            Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
+        }
+        firstNum.setText("");
+        exercise = user.getNextExercise();
+        showExercise(exercise);
     }
 
     public void showExercise(Exercise exercise){
