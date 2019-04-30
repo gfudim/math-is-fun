@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import io.paperdb.Paper;
 
@@ -53,8 +53,6 @@ public class HomeFragment extends Fragment {
         // changes the language
         start = (TextView) view.findViewById(R.id.StartBtn);
         updateView((String) Paper.book().read("language"));
-        FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
-        long user_last_login = user_loggin.getMetadata().getLastSignInTimestamp();
         // TODO - need to switch the user.session_done flag to false at a new day
         //
 //        mAuth = FirebaseAuth.getInstance();
@@ -79,17 +77,21 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in;
-                if(user.session_done && false){ // TODO - remove second condition(only for debug)
+
+                if(user.session_done && user.last_day_of_session == (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) && false){ // TODO - remove last false condition(only for debug)
+                    // TODO - if the user doesn't connect for a week, his problem - don't care now...
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
                 }
                 else{
                     if(user.session_type == SEARCH_MODE){
                         Log.e(TAG,"Starting Search Activity");
+                        user.session_done = false;
                         in = new Intent(getActivity(), SearchPage.class);
                     }
                     else{ //user.session_type = TRAIN_MODE;
                         Log.e(TAG,"Starting Training Activity");
+                        user.last_day_of_session = (Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
                         in = new Intent(getActivity(), TrainPage.class);
                     }
                     startActivity(in);

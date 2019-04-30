@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+
 import io.paperdb.Paper;
 
 public class SearchPage extends Utils {
@@ -82,9 +84,8 @@ public class SearchPage extends Utils {
                 TextView res = (TextView) findViewById(R.id.ResultTextView);
                 res.setText(context.getResources().getString(R.string.session_done));
                 res.setTextSize(20);
-
-
                 user.session_type = TRAIN_MODE;
+                user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
                 searchDoneToast();
                 databaseUsers = FirebaseDatabase.getInstance().getReference("user");
                 if (user.mode == MULTI_MODE){

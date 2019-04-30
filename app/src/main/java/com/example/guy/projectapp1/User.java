@@ -1,6 +1,7 @@
 package com.example.guy.projectapp1;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
@@ -9,9 +10,6 @@ import static com.example.guy.projectapp1.Utils.optional_exercises;
 import static com.example.guy.projectapp1.Utils.user;
 import static com.example.guy.projectapp1.Utils.NUM_OF_EXERCISES_IN_SESSION;
 
-public class User{
-    int correct_answers;
-    int wrong_answers;
 //
 //    public void setCorrectAnswers(int correct_answers) {
 //        this.correct_answers = correct_answers;
@@ -113,6 +111,9 @@ public class User{
 //        this.current_exercises = current_exercises;
 //    }
 //
+public class User{
+    int correct_answers;
+    int wrong_answers;
     int total_answers;
     int mode; //single or multi
     int lang;
@@ -123,6 +124,7 @@ public class User{
     int count_tests;
     int current_count_points_per_day;
     int max_points_per_day;
+    int last_day_of_session;
     long first_login;
     long last_login;
     long start_session_time;
@@ -149,6 +151,7 @@ public class User{
         this.id_data_base = "";
         this.age = 0;
         this.start_page = true;
+        this.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         this.search_exercises_done = false;
         init();
     }
@@ -220,8 +223,10 @@ public class User{
         }
         user.total_answers = user.correct_answers + user.wrong_answers;
         if(this.session_type == Utils.TRAIN_MODE){
-            user_answer_time = (int)(((user.end_exercise - user.start_exercise)/1000));
-            user.current_count_points_per_day += calculate_points(user_answer_time);
+            if (exercise.result() == answer){
+                user_answer_time = (int)(((user.end_exercise - user.start_exercise)/1000));
+                user.current_count_points_per_day += calculatePoints(user_answer_time);
+            }
             setGroupTrainMode(exercise);
         }
         else if(this.session_type == Utils.SEARCH_MODE){
@@ -229,7 +234,6 @@ public class User{
             // check if need to remove exercise from C
             if (checkAllExercisesInGroup(unknown_exercises,current_exercises)){
                 user.search_exercises_done = true;
-                // user.session_type = TRAIN_MODE; // Only after 3 Minutes!!
             }
             for (int i=0; i<current_exercises.size(); i++){
                 if (checkExerciseInGroup(known_exercises,current_exercises.get(i))){
@@ -240,7 +244,7 @@ public class User{
         }
     }
 
-    private int calculate_points(int user_answer_time) {
+    private int calculatePoints(int user_answer_time) {
         return (int)(100*(Math.pow(0.95, Math.max(0,user_answer_time-Utils.PERFECT_TIME_FOR_ANSWER))));
     }
 
