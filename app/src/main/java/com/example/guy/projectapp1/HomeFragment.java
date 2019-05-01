@@ -27,6 +27,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
@@ -34,22 +39,39 @@ import io.paperdb.Paper;
 
 import static android.content.ContentValues.TAG;
 //import static com.example.guy.projectapp1.Utils.MULTI_MODE;
+import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
 import static com.example.guy.projectapp1.Utils.user;
 
 public class HomeFragment extends Fragment {
     TextView start;
-//    private FirebaseDatabase mFirebaseDatabse;
-//    private FirebaseAuth mAuth;
-//    private FirebaseAuth.AuthStateListener mAuthListener;
-//    private DatabaseReference myRef;
+    private FirebaseDatabase database;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference ref;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         user.last_login = System.currentTimeMillis();
         View view = inflater.inflate(R.layout.fragment_home,container,false);
+        if (user.mode == MULTI_MODE){
+            String user_path = String.format("user/%s",user.id_data_base);
+            Log.e(TAG, String.format("The user path: %s", user_path));
+            Toast.makeText(getActivity(), "!!!Testin1!!1", Toast.LENGTH_LONG).show();
+            ref = database.getReference(user_path);
+            ref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    user = dataSnapshot.getValue(User.class);
+                    Toast.makeText(getActivity(), "!!!Testin1!!1", Toast.LENGTH_LONG).show();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                }
+            });
+        }
         // changes the language
         start = (TextView) view.findViewById(R.id.StartBtn);
         updateView((String) Paper.book().read("language"));
