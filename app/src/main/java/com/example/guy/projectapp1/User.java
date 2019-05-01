@@ -5,10 +5,10 @@ import java.util.Calendar;
 import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
-import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
 import static com.example.guy.projectapp1.Utils.optional_exercises;
 import static com.example.guy.projectapp1.Utils.user;
 import static com.example.guy.projectapp1.Utils.NUM_OF_EXERCISES_IN_SESSION;
+import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
 
 //
 //    public void setCorrectAnswers(int correct_answers) {
@@ -214,7 +214,7 @@ public class User{
         int user_answer_time;
         exercise.time_answered = System.currentTimeMillis();
         user.end_exercise = exercise.time_answered;
-        if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= 10)){
+        if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             exercise.count_correct_answers++;
             user.correct_answers++;
         }
@@ -224,7 +224,7 @@ public class User{
         }
         user.total_answers = user.correct_answers + user.wrong_answers;
         if(this.session_type == Utils.TRAIN_MODE){
-            if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= 10)){
+            if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
                 user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
                 user.current_count_points_per_day += calculatePoints(user_answer_time);
             }

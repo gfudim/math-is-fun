@@ -3,7 +3,6 @@ package com.example.guy.projectapp1;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -95,7 +94,7 @@ public class TrainPage extends Utils {
 
     public void handleAnswer(){
         exercise.time_answered = System.currentTimeMillis();
-        if ((exercise.time_answered - exercise.time_displayed)/1000 > 10){
+        if ((exercise.time_answered - exercise.time_displayed)/1000 > MAX_TIME_TO_ANSWER){
             Toast.makeText(TrainPage.this, "To long (10 seconds..)", Toast.LENGTH_SHORT).show();
             handleOverTimeAnswer();
         }

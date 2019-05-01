@@ -1,7 +1,5 @@
 package com.example.guy.projectapp1;
 
-import java.util.Random;
-
 public class Exercise {
     int mul1;
     int mul2;

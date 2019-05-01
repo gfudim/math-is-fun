@@ -39,7 +39,7 @@ public class Utils extends AppCompatActivity {
     final protected static int RUSSIAN = 3;
     protected static int PERFECT_TIME_FOR_ANSWER = 3;
     protected static int NUM_OF_EXERCISES_IN_SESSION = 4;
-    protected static int MAX_TIME_TO_ANSWER = 60;
+    protected static int MAX_TIME_TO_ANSWER = 10;
 
     public void saveUser(User user){
         FileOutputStream fos;

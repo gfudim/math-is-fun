@@ -1,7 +1,6 @@
 package com.example.guy.projectapp1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -140,7 +139,6 @@ public class SearchPage extends Utils {
     @Override
     public void onBackPressed() {
         saveUser(user);
-        //startActivity(new Intent(SearchPage.this, MainActivity.class));
         finish();
     }
 }
