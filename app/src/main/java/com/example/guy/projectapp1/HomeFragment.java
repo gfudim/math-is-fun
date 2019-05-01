@@ -55,7 +55,8 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         user.last_login = System.currentTimeMillis();
         View view = inflater.inflate(R.layout.fragment_home,container,false);
-        if (user.mode == MULTI_MODE){
+        if (user.mode == MULTI_MODE&&false){
+            //TODO - added a false to bypass the crash on database.getReference(user_path);
             String user_path = String.format("user/%s",user.id_data_base);
             Log.e(TAG, String.format("The user path: %s", user_path));
             Toast.makeText(getActivity(), "!!!Testin1!!1", Toast.LENGTH_LONG).show();
