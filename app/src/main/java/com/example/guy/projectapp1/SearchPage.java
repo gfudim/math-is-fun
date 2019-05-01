@@ -86,6 +86,9 @@ public class SearchPage extends Utils {
             }
         }.start();
     }
+    public void time_for_answer(View view){
+        UIUtil.showKeyboard(SearchPage.this,answer);
+    }
 
     public void handleAnswer(){
         EditText firstNum = (EditText) findViewById(R.id.InputEditText);
