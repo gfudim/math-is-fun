@@ -200,10 +200,17 @@ public class User{
             }
             if (current_exercises.size() > 0){
                 exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
-                while (checkExerciseInGroup(user.known_exercises, exercise)){ // show user only exercises from group C in search mode
-                    exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
+                if (user.undefined_exercises.size() > 0){
+                    while (checkExerciseInGroup(user.unknown_exercises, exercise)){ // show user only exercises from group C in search mode
+                        exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
+                    }
                 }
-                // TODO - take care of case that all are from B
+                else if (known_exercises.size() > 0) {
+                    exercise = known_exercises.get(rand.nextInt(known_exercises.size()));
+                }
+                else{
+                    exercise = unknown_exercises.get(rand.nextInt(unknown_exercises.size())); // backup if everyone is in B
+                }
                 return exercise;
             }
         }
