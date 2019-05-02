@@ -5,7 +5,7 @@
     android:id="@+id/FirstNumEditText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TrainPage">
+    tools:context=".SearchPage">
 
     <EditText
         android:id="@+id/InputEditText"
@@ -18,6 +18,7 @@
         android:hint="@string/answer"
         android:inputType="number"
         android:textAlignment="center"
+        android:onClick="time_for_answer_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"

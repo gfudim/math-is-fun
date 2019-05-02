@@ -33,6 +33,7 @@ public class TrainPage extends Utils {
     EditText answer;
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
+    int user_answer = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,13 +59,8 @@ public class TrainPage extends Utils {
                         res.setTextSize(16);
                     }
                     public void onFinish() {
-                        TextView res = (TextView) findViewById(R.id.ResultTextView);
-                        user.session_done = true;
-                        saveUser(user);
-                        res.setText(context.getResources().getString(R.string.session_done));
-                        res.setTextSize(20);
+                        testDone();
                         // summary of exercises -- TODO
-                        finish();
                     }
                 }.start();
                 showExercise(exercise);
@@ -77,6 +73,7 @@ public class TrainPage extends Utils {
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
+                user_answer =  Integer.parseInt(answer.getText().toString());
                 handleAnswer();
             }
         }
@@ -84,6 +81,7 @@ public class TrainPage extends Utils {
         answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    user_answer =  Integer.parseInt(answer.getText().toString());
                     handleAnswer();
                 }
                 UIUtil.showKeyboard(TrainPage.this,answer);
@@ -95,14 +93,14 @@ public class TrainPage extends Utils {
     public void handleAnswer(){
         exercise.time_answered = System.currentTimeMillis();
         if ((exercise.time_answered - exercise.time_displayed)/1000 > MAX_TIME_TO_ANSWER){
-            Toast.makeText(TrainPage.this, "To long (10 seconds..)", Toast.LENGTH_SHORT).show();
-            handleOverTimeAnswer();
+            handleOverTimeAnswer(false);
         }
         else{
             if (answer != null){
                 int input_num;
                 try{
                     input_num = Integer.parseInt(answer.getText().toString());
+                    user_answer = input_num;
                     user.setAnswer(exercise, input_num);
                     if (input_num == (exercise.result())) { /*correct answer*/
                         toastAfterAnswer(true, true, exercise);
@@ -112,14 +110,10 @@ public class TrainPage extends Utils {
                     }
                     if (user.total_answers % 4 == 0) {
                         saveUser(user);
-                        String temp = String.format("%s", user.current_count_points_per_day);
-                        Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
                     }
                     answer.setText("");
                     if(user.session_type == SEARCH_MODE){
-                        testDoneToast();
-                        saveUser(user);
-                        finish();
+                        testDone();
                     }
                     else{
                         exercise = user.getNextExercise();
@@ -135,20 +129,24 @@ public class TrainPage extends Utils {
     public void time_for_answer(View view){
         start_input_answer = System.currentTimeMillis();
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
-            Toast.makeText(TrainPage.this, "To long...(5 seconds)", Toast.LENGTH_LONG).show();
-            handleOverTimeAnswer();
+            Toast.makeText(TrainPage.this, "Think faster..(5 seconds)", Toast.LENGTH_LONG).show();
+            handleOverTimeAnswer(true);
         }
     }
 
-    public void handleOverTimeAnswer(){
+    public void handleOverTimeAnswer(boolean no_answer){
         user.setAnswer(exercise, 0); // wrong answer
         if (user.total_answers % 4 == 0) {
             saveUser(user);
-            String temp = String.format("%s", user.current_count_points_per_day);
-            Toast.makeText(TrainPage.this, temp, Toast.LENGTH_SHORT).show();
+        }
+        if (exercise.result() == user_answer && !no_answer){
+            Toast.makeText(TrainPage.this, "Answer correct, but it took to much time..", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(TrainPage.this, "Try again..(faster)", Toast.LENGTH_SHORT).show();
         }
         answer.setText("");
-        exercise = user.getNextExercise();
+        // exercise = user.getNextExercise(); // if we want to change exercise after over time
         showExercise(exercise);
     }
 
@@ -158,15 +156,30 @@ public class TrainPage extends Utils {
         show_exercise.setText(temp_exercise);
         exercise.time_displayed = System.currentTimeMillis();
         user.start_exercise = exercise.time_displayed;
+        user_answer = 0;
     }
 
-    public void testDoneToast(){
+    public void testDone(){
         DatabaseReference databaseUsers;
+        user.session_done = true;
+        saveUser(user);
         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
         String id = databaseUsers.push().getKey();
         databaseUsers.child(id).setValue(user);
-
-        Toast.makeText(this, R.string.finished_test_session_text, Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        builder.setCancelable(true);
+        builder.setTitle(context.getResources().getString(R.string.session_done));
+        builder.setMessage(context.getResources().getString(R.string.finished_test_session_text));
+        builder.setCancelable(false);
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                saveUser(user);
+                finish();
+            }
+        });
+        builder.show();
     }
     private void updateView() {
         Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
