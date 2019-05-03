@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -24,6 +25,8 @@ import java.util.Calendar;
 
 import io.paperdb.Paper;
 
+import static android.content.ContentValues.TAG;
+
 public class SearchPage extends Utils {
     TextView submit;
     EditText answer;
@@ -35,9 +38,9 @@ public class SearchPage extends Utils {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train);
-        submit = (TextView) findViewById(R.id.SubmitBtn);
-        answer = (EditText) findViewById(R.id.InputEditText);
-        updateView((String) Paper.book().read("language"));
+        submit = findViewById(R.id.SubmitBtn);
+        answer = findViewById(R.id.InputEditText);
+        updateView();
         showExercise(exercise);
         user.start_session_time = System.currentTimeMillis();
         UIUtil.showKeyboard(this,answer);
@@ -53,7 +56,16 @@ public class SearchPage extends Utils {
 
         answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+//                Log.e(TAG,String.format("actionID : %s", actionId));
+//
+//                if (event != null){
+//                    Log.e(TAG,String.format("code : %s", event.getKeyCode()));
+//                }
+//                if (event != null && event.getKeyCode() > 6 && event.getKeyCode() < 17){
+//                    Toast.makeText(SearchPage.this, "!!!!USER PRESSED!!!!", Toast.LENGTH_LONG).show();
+//                }
+//                else
+               if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                     user_answer =  Integer.parseInt(answer.getText().toString());
                     handleAnswer();
                 }
@@ -66,7 +78,7 @@ public class SearchPage extends Utils {
             Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
 
             public void onTick(long millisUntilFinished) {
-                TextView res = (TextView) findViewById(R.id.ResultTextView);
+                TextView res = findViewById(R.id.ResultTextView);
                 res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
                 res.setTextColor(Color.BLACK);
                 res.setTextSize(16);
@@ -82,7 +94,7 @@ public class SearchPage extends Utils {
     }
 
     public void handleAnswer(){
-        EditText firstNum = (EditText) findViewById(R.id.InputEditText);
+        EditText firstNum = findViewById(R.id.InputEditText);
         exercise.time_answered = System.currentTimeMillis();
         if ((exercise.time_answered - exercise.time_displayed)/1000 > MAX_TIME_TO_ANSWER){
             handleOverTimeAnswer(false);
@@ -115,8 +127,8 @@ public class SearchPage extends Utils {
                 } catch (NumberFormatException ex) {
                 }
             }
-
         }
+        UIUtil.showKeyboard(this,answer);
     }
 
     public void time_for_answer_search(View view){
@@ -174,7 +186,7 @@ public class SearchPage extends Utils {
     }
 
     public void showExercise(Exercise exercise) {
-        TextView show_exercise = (TextView) findViewById(R.id.ExerciseTextView);
+        TextView show_exercise = findViewById(R.id.ExerciseTextView);
         String temp_exercise = String.format("%s * %s", exercise.mul1, exercise.mul2);
         show_exercise.setText(temp_exercise);
         exercise.time_displayed = System.currentTimeMillis();
@@ -182,7 +194,7 @@ public class SearchPage extends Utils {
         user_answer = 0;
     }
 
-    private void updateView(String language) {
+    private void updateView() {
         Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));

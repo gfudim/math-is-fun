@@ -12,7 +12,7 @@ public class FirstAppPage extends Utils {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_app_page);
 
-        Button singleBtn = (Button) findViewById(R.id.singleBtn); // save the button for reference
+        Button singleBtn = findViewById(R.id.singleBtn); // save the button for reference
         singleBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
@@ -20,7 +20,7 @@ public class FirstAppPage extends Utils {
             }
         });
 
-        Button multiBtn = (Button) findViewById(R.id.multiBtn); // save the button for reference
+        Button multiBtn = findViewById(R.id.multiBtn); // save the button for reference
         multiBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {

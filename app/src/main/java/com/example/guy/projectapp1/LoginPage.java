@@ -26,7 +26,7 @@ public class LoginPage extends Utils {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button switch_to_single_user_btn = (Button) findViewById(R.id.switchToSingleUserBtn);
+        Button switch_to_single_user_btn = findViewById(R.id.switchToSingleUserBtn);
         switch_to_single_user_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -41,7 +41,7 @@ public class LoginPage extends Utils {
         providers = Arrays.asList(
                 new AuthUI.IdpConfig.GoogleBuilder().build()
         );
-        Button btn_sign_in = (Button) findViewById(R.id.signInBtn);
+        Button btn_sign_in = findViewById(R.id.signInBtn);
         btn_sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,8 +67,7 @@ public class LoginPage extends Utils {
             IdpResponse response = IdpResponse.fromResultIntent(data);
             if(resultCode == RESULT_OK){
                 FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
-                String user_id = user_loggin.getUid();
-                user.id_data_base = user_id;
+                user.id_data_base = user_loggin.getUid();
                 Toast.makeText(this,""+user_loggin.getEmail(), Toast.LENGTH_LONG).show(); //Todo - remove(now for debug)
                 startActivity(new Intent(LoginPage.this, MainActivity.class));
                 finish();

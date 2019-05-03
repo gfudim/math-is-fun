@@ -45,9 +45,9 @@ public class SettingsFragment extends Fragment {
         final View fragment_view = inflater.inflate(R.layout.fragment_settings, container, false);
         user.start_page = true;
         updateView(fragment_view, (String) Paper.book().read("language"));
-        final Button multiBtn = (Button) fragment_view.findViewById(R.id.multiModeBtn);
-        final Button singleBtn = (Button) fragment_view.findViewById(R.id.singleModeBtn);
-        final Button btn_sign_out = (Button) fragment_view.findViewById(R.id.signoutBtn);
+        final Button multiBtn = fragment_view.findViewById(R.id.multiModeBtn);
+        final Button singleBtn = fragment_view.findViewById(R.id.singleModeBtn);
+        final Button btn_sign_out = fragment_view.findViewById(R.id.signoutBtn);
         if (user.mode == SINGLE_MODE) {
             singleBtn.setEnabled(false);
         }
@@ -112,7 +112,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button resetBtn = (Button) fragment_view.findViewById(R.id.resetBtn); // save the button for reference
+        Button resetBtn = fragment_view.findViewById(R.id.resetBtn); // save the button for reference
         resetBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
@@ -138,28 +138,28 @@ public class SettingsFragment extends Fragment {
                 builder.show();
             }
         });
-        Button setEnglishBtn = (Button) fragment_view.findViewById(R.id.englishBtn);
+        Button setEnglishBtn = fragment_view.findViewById(R.id.englishBtn);
         setEnglishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"en", ENGLISH);
             }
         });
-        Button setHebrewBtn = (Button) fragment_view.findViewById(R.id.hebrewBtn);
+        Button setHebrewBtn = fragment_view.findViewById(R.id.hebrewBtn);
         setHebrewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"iw", HEBREW);
             }
         });
-        Button setArabicBtn = (Button) fragment_view.findViewById(R.id.arabicBtn);
+        Button setArabicBtn = fragment_view.findViewById(R.id.arabicBtn);
         setArabicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"ar", ARABIC);
             }
         });
-        Button setRussianBtn = (Button) fragment_view.findViewById(R.id.russianBtn);
+        Button setRussianBtn = fragment_view.findViewById(R.id.russianBtn);
         setRussianBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -176,9 +176,9 @@ public class SettingsFragment extends Fragment {
         ((MainActivity)getActivity()).saveUser(user);
     }
     private void updateView(View view,String language) {
-        name = (TextView) view.findViewById(R.id.nameEditText);
-        age = (TextView) view.findViewById(R.id.ageEditText);
-        reset = (TextView) view.findViewById(R.id.resetBtn);
+        name = view.findViewById(R.id.nameEditText);
+        age = view.findViewById(R.id.ageEditText);
+        reset = view.findViewById(R.id.resetBtn);
         Context context = LocaleHelper.setLocale(getActivity(), language);
         Resources resources = context.getResources();
         name.setHint(resources.getString(R.string.Name));
@@ -186,23 +186,19 @@ public class SettingsFragment extends Fragment {
         reset.setText(resources.getString(R.string.reset_history));
     }
     private void saveDetails(View view) {
-        Context context = LocaleHelper.setLocale(getActivity(), (String)Paper.book().read("language"));
-        name = (TextView) view.findViewById(R.id.nameEditText);
-        age = (TextView) view.findViewById(R.id.ageEditText);
+        name = view.findViewById(R.id.nameEditText);
+        age = view.findViewById(R.id.ageEditText);
         if (name != null){
-            String user_name = name.getText().toString();
-            user.name = user_name;
+            user.name = name.getText().toString();
             ((MainActivity)getActivity()).saveUser(user);
         }
         if (age != null){
             try{
-                int user_age = Integer.parseInt(age.getText().toString());
-                user.age = user_age;
+                user.age = Integer.parseInt(age.getText().toString());
                 ((MainActivity)getActivity()).saveUser(user);
             }
             catch(NumberFormatException ex){
             }
         }
     }
-
 }

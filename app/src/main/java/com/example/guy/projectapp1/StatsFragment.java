@@ -24,7 +24,7 @@ public class StatsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stats,container,false);
-        SeekBar levelBar = (SeekBar)view.findViewById(R.id.levelBar);
+        SeekBar levelBar = view.findViewById(R.id.levelBar);
         levelBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             int originalProgress;
@@ -40,7 +40,7 @@ public class StatsFragment extends Fragment {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int arg1, boolean fromUser) {
-                if(fromUser == true){
+                if(fromUser){
                     seekBar.setProgress(originalProgress);
                 }
             }
@@ -58,7 +58,7 @@ public class StatsFragment extends Fragment {
         return view;
     }
     private void connectButton(View view,int id_button,final int id_title,final int id_message){
-        Button btn = (Button) view.findViewById(id_button);
+        Button btn = view.findViewById(id_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -1,7 +1,6 @@
 package com.example.guy.projectapp1;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
@@ -111,7 +110,7 @@ import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
 //        this.current_exercises = current_exercises;
 //    }
 //
-public class User{
+class User{
     int correct_answers;
     int wrong_answers;
     int total_answers;
@@ -167,10 +166,10 @@ public class User{
         this.count_tests = 0;
         this.current_count_points_per_day = 0;
         this.max_points_per_day = 0;
-        this.known_exercises = new ArrayList<Exercise>();
-        this.unknown_exercises = new ArrayList<Exercise>();
-        this.undefined_exercises = new ArrayList<Exercise>();
-        this.current_exercises = new ArrayList<Exercise>();
+        this.known_exercises = new ArrayList<>();
+        this.unknown_exercises = new ArrayList<>();
+        this.undefined_exercises = new ArrayList<>();
+        this.current_exercises = new ArrayList<>();
         for (int i = 2; i <= MAX_NUMBER; i++){
             for( int j = i; j<= MAX_NUMBER; j++){
                 Exercise exercise = new Exercise(i, j);
@@ -180,11 +179,11 @@ public class User{
         this.exerciseGroupWithMaxVar();
     }
 
-    public void resetHistory(){
+    void resetHistory(){
         init();
     }
 
-    public Exercise getNextExercise(){
+    Exercise getNextExercise(){
         Random rand = new Random();
         Exercise exercise;
         if (this.session_type == Utils.TRAIN_MODE) {
@@ -217,7 +216,7 @@ public class User{
         return null;
     }
 
-    public void setAnswer(Exercise exercise, int answer){
+    void setAnswer(Exercise exercise, int answer){
         int user_answer_time;
         exercise.time_answered = System.currentTimeMillis();
         user.end_exercise = exercise.time_answered;

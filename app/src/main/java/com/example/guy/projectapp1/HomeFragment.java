@@ -45,7 +45,7 @@ import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
 import static com.example.guy.projectapp1.Utils.user;
 
 public class HomeFragment extends Fragment {
-    TextView start;
+    Button startBtn;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -74,7 +74,6 @@ public class HomeFragment extends Fragment {
             });
         }
         // changes the language
-        start = (TextView) view.findViewById(R.id.StartBtn);
         updateView((String) Paper.book().read("language"));
         // TODO - need to switch the user.session_done flag to false at a new day
         //
@@ -94,7 +93,7 @@ public class HomeFragment extends Fragment {
 //            }
 //        });
 
-        Button startBtn = (Button) view.findViewById(R.id.StartBtn);
+        startBtn = view.findViewById(R.id.StartBtn);
         //A button to start a new session
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +158,6 @@ public class HomeFragment extends Fragment {
     private void updateView(String language) {
         Context context = LocaleHelper.setLocale(getActivity(), language);
         Resources resources = context.getResources();
-        start.setText(resources.getString(R.string.start));
+        startBtn.setText(resources.getString(R.string.start));
     }
 }

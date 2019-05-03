@@ -12,7 +12,7 @@ public class LoadApp extends Utils {
         ProgressBar spinner;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_load_app);
-        spinner=(ProgressBar)findViewById(R.id.progressBar);
+        spinner = findViewById(R.id.progressBar);
         spinner.setVisibility(View.GONE);
         spinner.setVisibility(View.VISIBLE);
 

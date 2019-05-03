@@ -40,8 +40,8 @@ public class TrainPage extends Utils {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train);
-        submit = (TextView) findViewById(R.id.SubmitBtn);
-        answer = (EditText) findViewById(R.id.InputEditText);
+        submit = findViewById(R.id.SubmitBtn);
+        answer = findViewById(R.id.InputEditText);
         updateView();
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
@@ -55,7 +55,7 @@ public class TrainPage extends Utils {
                 new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
                     Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
                     public void onTick(long millisUntilFinished) {
-                        TextView res = (TextView) findViewById(R.id.ResultTextView);
+                        TextView res = findViewById(R.id.ResultTextView);
                         res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
                         res.setTextColor(Color.BLACK);
                         res.setTextSize(16);
@@ -71,7 +71,7 @@ public class TrainPage extends Utils {
         });
         UIUtil.showKeyboard(this,answer);
         builder.show();
-        Button submitBtn = (Button) findViewById(R.id.SubmitBtn); // save the button for reference
+        Button submitBtn = findViewById(R.id.SubmitBtn); // save the button for reference
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
@@ -126,6 +126,7 @@ public class TrainPage extends Utils {
                 }
             }
         }
+        UIUtil.showKeyboard(this,answer);
     }
 
     public void time_for_answer(View view){
@@ -153,7 +154,7 @@ public class TrainPage extends Utils {
     }
 
     public void showExercise(Exercise exercise){
-        TextView show_exercise = (TextView) findViewById(R.id.ExerciseTextView);
+        TextView show_exercise = findViewById(R.id.ExerciseTextView);
         String temp_exercise = String.format("%s * %s", exercise.mul1, exercise.mul2);
         show_exercise.setText(temp_exercise);
         exercise.time_displayed = System.currentTimeMillis();
