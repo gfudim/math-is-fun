@@ -48,20 +48,25 @@ public class SettingsFragment extends Fragment {
         final Button multiBtn = fragment_view.findViewById(R.id.multiModeBtn);
         final Button singleBtn = fragment_view.findViewById(R.id.singleModeBtn);
         final Button btn_sign_out = fragment_view.findViewById(R.id.signoutBtn);
+
         if (user.mode == SINGLE_MODE) {
             singleBtn.setEnabled(false);
+            singleBtn.getCompoundDrawables()[1].setAlpha(128);
+            multiBtn.getCompoundDrawables()[1].setAlpha(255);
         }
         else{
             btn_sign_out.setEnabled(true);
             multiBtn.setEnabled(false);
+            singleBtn.getCompoundDrawables()[1].setAlpha(255);
+            multiBtn.getCompoundDrawables()[1].setAlpha(128);
         }
         singleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MainActivity.class));
                 user.mode = SINGLE_MODE;
-                singleBtn.setEnabled(false);
-                multiBtn.setEnabled(true);
+                singleBtn.setEnabled(false);//maybe don't need
+                multiBtn.setEnabled(true);//maybe don't need
+                startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
 
