@@ -64,8 +64,6 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 user.mode = SINGLE_MODE;
-                singleBtn.setEnabled(false);//maybe don't need
-                multiBtn.setEnabled(true);//maybe don't need
                 startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
