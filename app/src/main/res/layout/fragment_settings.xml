@@ -97,7 +97,7 @@
                 android:id="@+id/arabicBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableTop="@drawable/ic_palestine"
+                android:drawableTop="@drawable/ic_egypt"
                 android:text="Arabic"
                 android:textSize="14sp" />
 

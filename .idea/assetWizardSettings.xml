@@ -194,8 +194,9 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_people_black_24dp" />
-                            <entry key="sourceFile" value="C:\Users\gfudi\Documents\University\Fourth\Project\Images\team.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_egypt" />
+                            <entry key="sourceFile" value="C:\Users\gfudi\Documents\University\Fourth\Project\Images\egypt.svg" />
                           </map>
                         </option>
                       </PersistentState>
