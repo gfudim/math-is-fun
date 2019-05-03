@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         user.last_login = System.currentTimeMillis();
         View view = inflater.inflate(R.layout.fragment_home,container,false);
+        startBtn = view.findViewById(R.id.StartBtn);
         if (user.mode == MULTI_MODE&&false){
             //TODO - added a false to bypass the crash on database.getReference(user_path);
             String user_path = String.format("user/%s",user.id_data_base);
@@ -75,7 +76,6 @@ public class HomeFragment extends Fragment {
         }
         // changes the language
         updateView((String) Paper.book().read("language"));
-        // TODO - need to switch the user.session_done flag to false at a new day
         //
 //        mAuth = FirebaseAuth.getInstance();
 //        mFirebaseDatabse = FirebaseDatabase.getInstance();
@@ -93,7 +93,6 @@ public class HomeFragment extends Fragment {
 //            }
 //        });
 
-        startBtn = view.findViewById(R.id.StartBtn);
         //A button to start a new session
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +104,9 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
                 }
                 else{
+                    // new day - new session
                     user.session_done = false;
+                    user.current_count_points_per_day = 0;
                     if(user.session_type == SEARCH_MODE){
                         Log.e(TAG,"Starting Search Activity");
                         in = new Intent(getActivity(), SearchPage.class);

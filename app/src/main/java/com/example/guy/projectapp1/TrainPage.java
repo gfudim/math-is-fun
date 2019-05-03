@@ -36,6 +36,7 @@ public class TrainPage extends Utils {
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
     int user_answer = 0;
+    CountDownTimer train_counter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class TrainPage extends Utils {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
+                train_counter = new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
                     Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
                     public void onTick(long millisUntilFinished) {
                         TextView res = findViewById(R.id.ResultTextView);
@@ -62,7 +63,6 @@ public class TrainPage extends Utils {
                     }
                     public void onFinish() {
                         testDone();
-                        // summary of exercises -- TODO
                     }
                 }.start();
                 showExercise(exercise);
@@ -174,7 +174,7 @@ public class TrainPage extends Utils {
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.session_done));
-        builder.setMessage(context.getResources().getString(R.string.finished_test_session_text));
+        builder.setMessage(String.format("You just won %s points!", user.current_count_points_per_day));
         builder.setCancelable(false);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
@@ -210,6 +210,7 @@ public class TrainPage extends Utils {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 saveUser(user);
+                train_counter.cancel();
                 finish();
             }
         });

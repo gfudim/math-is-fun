@@ -23,7 +23,7 @@ import io.paperdb.Paper;
 
 public class Utils extends AppCompatActivity {
 
-    protected static final String FILE_NAME = "APP_DATA.txt";
+    protected static final String FILE_NAME = "DATA_FILE.txt";
     public static int MAX_NUMBER = 9;
     public static int SINGLE_MODE = 0;
     public static int MULTI_MODE = 1;
@@ -31,7 +31,7 @@ public class Utils extends AppCompatActivity {
     protected static int SEARCH_MODE = 0;
     protected static int TRAIN_MODE = 1;
     protected static User user;
-    protected static long SESSION_MILLI_DURATION = 54000; // todo - change to 3 minutes - 180000
+    protected static long SESSION_MILLI_DURATION = 30000; // todo - change to 3 minutes - 180000
     protected static int optional_exercises = 1000;
     final protected static int ENGLISH = 0;
     final protected static int HEBREW = 1;

@@ -68,7 +68,6 @@ public class LoginPage extends Utils {
             if(resultCode == RESULT_OK){
                 FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
                 user.id_data_base = user_loggin.getUid();
-                Toast.makeText(this,""+user_loggin.getEmail(), Toast.LENGTH_LONG).show(); //Todo - remove(now for debug)
                 startActivity(new Intent(LoginPage.this, MainActivity.class));
                 finish();
             }

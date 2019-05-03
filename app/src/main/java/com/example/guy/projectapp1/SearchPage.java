@@ -34,6 +34,7 @@ public class SearchPage extends Utils {
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
     int user_answer = 0;
+    CountDownTimer search_counter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +75,7 @@ public class SearchPage extends Utils {
             }
         });
 
-        new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
+        search_counter = new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
             Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
 
             public void onTick(long millisUntilFinished) {
@@ -85,7 +86,6 @@ public class SearchPage extends Utils {
             }
             public void onFinish() {
                 searchDoneToast();
-                // summary of exercises -- TODO
             }
         }.start();
     }
@@ -173,7 +173,7 @@ public class SearchPage extends Utils {
         Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.session_done));
-        builder.setMessage("Search Done!"); // TODO - change string
+        builder.setMessage(String.format("You just won %s points!", user.current_count_points_per_day)); // TODO - change string
         builder.setCancelable(false);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
@@ -204,6 +204,7 @@ public class SearchPage extends Utils {
     @Override
     public void onBackPressed() {
         saveUser(user);
+        search_counter.cancel();
         finish();
     }
 }
