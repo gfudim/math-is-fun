@@ -151,7 +151,7 @@ public class User{
         this.id_data_base = "";
         this.age = 0;
         this.start_page = true;
-        this.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        this.last_day_of_session = 0;
         this.search_exercises_done = false;
         init();
     }

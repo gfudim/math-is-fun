@@ -25,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+import java.util.Calendar;
+
 import io.paperdb.Paper;
 
 
@@ -162,6 +164,7 @@ public class TrainPage extends Utils {
     public void testDone(){
         DatabaseReference databaseUsers;
         user.session_done = true;
+        user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         saveUser(user);
         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
         String id = databaseUsers.push().getKey();

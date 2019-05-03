@@ -100,20 +100,19 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in;
-                if(user.session_done && user.last_day_of_session == (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) && false){ // TODO - remove last false condition(only for debug)
+                if((user.session_done || user.last_day_of_session == (Calendar.getInstance().get(Calendar.DAY_OF_WEEK))) && false){ // TODO - remove last false condition(only for debug)
                     // TODO - if the user doesn't connect for a week, his problem - don't care now...
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
                 }
                 else{
+                    user.session_done = false;
                     if(user.session_type == SEARCH_MODE){
                         Log.e(TAG,"Starting Search Activity");
-                        user.session_done = false;
                         in = new Intent(getActivity(), SearchPage.class);
                     }
                     else{ //user.session_type = TRAIN_MODE;
                         Log.e(TAG,"Starting Training Activity");
-                        user.last_day_of_session = (Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
                         in = new Intent(getActivity(), TrainPage.class);
                     }
                     startActivity(in);
