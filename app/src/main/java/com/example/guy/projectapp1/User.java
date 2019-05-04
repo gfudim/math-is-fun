@@ -231,11 +231,11 @@ class User{
             this.wrong_answers++;
         }
         this.total_answers = this.correct_answers + this.wrong_answers;
+        if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
+            user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
+            this.current_count_points_per_day += calculatePoints(user_answer_time);
+        }
         if(this.session_type == Utils.TRAIN_MODE){
-            if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
-                user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
-                this.current_count_points_per_day += calculatePoints(user_answer_time);
-            }
             setGroupTrainMode(exercise);
         }
         else if(this.session_type == Utils.SEARCH_MODE){
