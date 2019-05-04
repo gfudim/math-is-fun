@@ -88,36 +88,32 @@ public class SearchPage extends Utils {
     }
 
     public void handleAnswer(){
-        EditText firstNum = findViewById(R.id.InputEditText);
         exercise.time_answered = System.currentTimeMillis();
         if ((exercise.time_answered - exercise.time_displayed)/1000 > MAX_TIME_TO_ANSWER){
             handleOverTimeAnswer(false);
         }
         else{
-            if (firstNum != null) {
-                try {
-                    user_answer = Integer.parseInt(answer.getText().toString());
-                    user.setAnswer(exercise, user_answer);
-                    if (user_answer == (exercise.result())) { /*correct answer*/
-                        toastAfterAnswer(true, false, exercise);
-                    }
-                    else {
-                        toastAfterAnswer(false, false, exercise);
-                    }
-                    if (user.session_type == TRAIN_MODE){
-                        searchDoneToast();
-                    }
-                    else{
-                        if (user.total_answers % 4 == 0) {
-                            saveUser(user);
-                        }
-                        firstNum.setText("");
-                        exercise = user.getNextExercise();
-                        showExercise(exercise);
-                    }
-
-                } catch (NumberFormatException ex) {
+            try {
+                 user.setAnswer(exercise, user_answer);
+                if (user_answer == (exercise.result())) { /*correct answer*/
+                    toastAfterAnswer(true, false, exercise);
                 }
+                else {
+                    toastAfterAnswer(false, false, exercise);
+                }
+                if (user.session_type == TRAIN_MODE){
+                    searchDoneToast();
+                }
+                else{
+                    if (user.total_answers % 4 == 0) {
+                        saveUser(user);
+                    }
+                    answer.setText("");
+                    exercise = user.getNextExercise();
+                    showExercise(exercise);
+                }
+            }
+            catch (NumberFormatException ex) {
             }
         }
         UIUtil.showKeyboard(this,answer);

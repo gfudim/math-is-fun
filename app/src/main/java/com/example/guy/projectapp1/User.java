@@ -186,31 +186,33 @@ class User{
     Exercise getNextExercise(){
         Random rand = new Random();
         Exercise exercise;
+        int counter = 0;
         if (this.session_type == Utils.TRAIN_MODE) {
             if (current_exercises.size() > 0){
                 return current_exercises.get(rand.nextInt(current_exercises.size()));
             }
         }
         else if(this.session_type == Utils.SEARCH_MODE){
-            if (rand.nextInt(100) < 25 || user.search_exercises_done){  //from, group A
+            if (rand.nextInt(100) < 25 || this.search_exercises_done){  //from, group A
                 if (known_exercises.size() > 0) {
                     return known_exercises.get(rand.nextInt(known_exercises.size()));
                 }
             }
             if (current_exercises.size() > 0){
                 exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
-                if (user.undefined_exercises.size() > 0){
-                    while (checkExerciseInGroup(user.unknown_exercises, exercise)){ // show user only exercises from group C in search mode
+                if (this.undefined_exercises.size() > 0){
+                    while (checkExerciseInGroup(this.unknown_exercises, exercise) && counter < 16){ // show user only exercises from group C in search mode
                         exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
+                        counter++;
                     }
                 }
                 else if (known_exercises.size() > 0) {
-                    exercise = known_exercises.get(rand.nextInt(known_exercises.size()));
+                    return known_exercises.get(rand.nextInt(known_exercises.size()));
                 }
                 else{
-                    exercise = unknown_exercises.get(rand.nextInt(unknown_exercises.size())); // backup if everyone is in B
+                    return unknown_exercises.get(rand.nextInt(unknown_exercises.size())); // backup if everyone is in B
                 }
-                return exercise;
+                return undefined_exercises.get(rand.nextInt(undefined_exercises.size()));
             }
         }
         return null;
@@ -219,20 +221,20 @@ class User{
     void setAnswer(Exercise exercise, int answer){
         int user_answer_time;
         exercise.time_answered = System.currentTimeMillis();
-        user.end_exercise = exercise.time_answered;
+        this.end_exercise = exercise.time_answered;
         if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             exercise.count_correct_answers++;
-            user.correct_answers++;
+            this.correct_answers++;
         }
         else{
             exercise.count_wrong_answers++;
-            user.wrong_answers++;
+            this.wrong_answers++;
         }
-        user.total_answers = user.correct_answers + user.wrong_answers;
+        this.total_answers = this.correct_answers + this.wrong_answers;
         if(this.session_type == Utils.TRAIN_MODE){
             if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
                 user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
-                user.current_count_points_per_day += calculatePoints(user_answer_time);
+                this.current_count_points_per_day += calculatePoints(user_answer_time);
             }
             setGroupTrainMode(exercise);
         }
@@ -240,7 +242,7 @@ class User{
             setGroupSearchMode(exercise);
             // check if need to remove exercise from C
             if (checkAllExercisesInGroup(unknown_exercises,current_exercises)){
-                user.search_exercises_done = true;
+                this.search_exercises_done = true;
             }
             for (int i=0; i<current_exercises.size(); i++){
                 if (checkExerciseInGroup(known_exercises,current_exercises.get(i))){

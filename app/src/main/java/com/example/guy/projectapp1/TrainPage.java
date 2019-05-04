@@ -125,30 +125,27 @@ public class TrainPage extends Utils {
             handleOverTimeAnswer(false);
         }
         else{
-            if (answer != null){
-                try{
-                    user_answer = Integer.parseInt(answer.getText().toString());
-                    user.setAnswer(exercise, user_answer);
-                    if (user_answer == (exercise.result())) { /*correct answer*/
-                        toastAfterAnswer(true, true, exercise);
-                    }
-                    else {
-                        toastAfterAnswer(false, true, exercise);
-                    }
+            try{
+                user.setAnswer(exercise, user_answer);
+                if (user_answer == (exercise.result())) { /*correct answer*/
+                    toastAfterAnswer(true, true, exercise);
+                }
+                else {
+                    toastAfterAnswer(false, true, exercise);
+                }
+                if(user.session_type == SEARCH_MODE){
+                    testDone();
+                }
+                else{
                     if (user.total_answers % 4 == 0) {
                         saveUser(user);
                     }
                     answer.setText("");
-                    if(user.session_type == SEARCH_MODE){
-                        testDone();
-                    }
-                    else{
-                        exercise = user.getNextExercise();
-                        showExercise(exercise);
-                    }
+                    exercise = user.getNextExercise();
+                    showExercise(exercise);
                 }
-                catch(NumberFormatException ex){
-                }
+            }
+            catch(NumberFormatException ex){
             }
         }
         UIUtil.showKeyboard(this,answer);
