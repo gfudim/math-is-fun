@@ -32,7 +32,8 @@
                 android:layout_height="75dp"
                 android:layout_width="75dp"
                 android:id="@+id/sevenDaysBtn"
-                android:src="@drawable/ic_7_days"/>
+                android:src="@drawable/ic_7_days"
+                android:padding="12dp"/>
             <ImageButton
                 android:id="@+id/fourteenDaysBtn"
                 android:scaleType="fitXY"
