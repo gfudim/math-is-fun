@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -58,7 +59,7 @@ public class StatsFragment extends Fragment {
         return view;
     }
     private void connectButton(View view,int id_button,final int id_title,final int id_message){
-        Button btn = view.findViewById(id_button);
+        ImageButton btn = (ImageButton)view.findViewById(id_button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

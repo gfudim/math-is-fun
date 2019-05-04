@@ -27,25 +27,26 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
+                android:scaleType="fitXY"
+                android:layout_height="75dp"
+                android:layout_width="75dp"
                 android:id="@+id/sevenDaysBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="7"
-                android:textSize="18sp" />
-
-            <Button
+                android:src="@drawable/ic_7_days"/>
+            <ImageButton
                 android:id="@+id/fourteenDaysBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="14"
-                android:textSize="18sp" />
-            <Button
+                android:scaleType="fitXY"
+                android:layout_height="75dp"
+                android:layout_width="75dp"
+                android:src="@drawable/ic_14_days"
+                android:padding="12dp"/>
+            <ImageButton
                 android:id="@+id/thirtyDaysBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="30"
-                android:textSize="18sp" />
+                android:scaleType="fitXY"
+                android:layout_height="75dp"
+                android:layout_width="75dp"
+                android:src="@drawable/ic_30_days"
+                android:padding="12dp"/>
         </LinearLayout>
 
         <View style="@style/Divider" />
@@ -60,20 +61,20 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/p1500Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1500"
                 android:textSize="18sp" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/p3000Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3000"
                 android:textSize="18sp" />
-            <Button
+            <ImageButton
                 android:id="@+id/p6000Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -93,20 +94,20 @@
             android:layout_gravity="center"
             android:orientation="horizontal">
 
-            <Button
+            <ImageButton
                 android:id="@+id/c1Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
                 android:textSize="18sp" />
 
-            <Button
+            <ImageButton
                 android:id="@+id/c5Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="5"
                 android:textSize="18sp" />
-            <Button
+            <ImageButton
                 android:id="@+id/c10Btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
