@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -28,6 +29,8 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 import java.util.Calendar;
 
 import io.paperdb.Paper;
+
+import static android.content.ContentValues.TAG;
 
 
 public class TrainPage extends Utils {
@@ -75,8 +78,11 @@ public class TrainPage extends Utils {
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
-                user_answer =  Integer.parseInt(answer.getText().toString());
-                handleAnswer();
+                try{
+                    user_answer =  Integer.parseInt(answer.getText().toString());
+                    handleAnswer();
+                }catch(NumberFormatException ex){ // if clicked submit without input
+                }
             }
         }
         );
@@ -92,6 +98,27 @@ public class TrainPage extends Utils {
         });
     }
 
+//    @Override
+//    public boolean onKeyUp(int keyCode, KeyEvent event){
+//        Toast.makeText(this, "1111", Toast.LENGTH_LONG);
+//        Toast.makeText(this, String.format("%s",keyCode), Toast.LENGTH_LONG);
+//        switch (keyCode) {
+//            case KeyEvent.KEYCODE_0:
+//            case KeyEvent.KEYCODE_1:
+//            case KeyEvent.KEYCODE_2:
+//            case KeyEvent.KEYCODE_3:
+//            case KeyEvent.KEYCODE_4:
+//            case KeyEvent.KEYCODE_5:
+//            case KeyEvent.KEYCODE_6:
+//            case KeyEvent.KEYCODE_7:
+//            case KeyEvent.KEYCODE_8:
+//            case KeyEvent.KEYCODE_9:
+//                Toast.makeText(this, "!!!PRESSED!!!", Toast.LENGTH_LONG);
+//                return true;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
+
     public void handleAnswer(){
         exercise.time_answered = System.currentTimeMillis();
         if ((exercise.time_answered - exercise.time_displayed)/1000 > MAX_TIME_TO_ANSWER){
@@ -99,12 +126,10 @@ public class TrainPage extends Utils {
         }
         else{
             if (answer != null){
-                int input_num;
                 try{
-                    input_num = Integer.parseInt(answer.getText().toString());
-                    user_answer = input_num;
-                    user.setAnswer(exercise, input_num);
-                    if (input_num == (exercise.result())) { /*correct answer*/
+                    user_answer = Integer.parseInt(answer.getText().toString());
+                    user.setAnswer(exercise, user_answer);
+                    if (user_answer == (exercise.result())) { /*correct answer*/
                         toastAfterAnswer(true, true, exercise);
                     }
                     else {
