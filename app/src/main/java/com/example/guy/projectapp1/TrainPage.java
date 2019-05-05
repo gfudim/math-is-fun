@@ -133,7 +133,7 @@ public class TrainPage extends Utils {
                 else {
                     toastAfterAnswer(false, true, exercise);
                 }
-                if(user.session_type == SEARCH_MODE){
+                if(user.session_done){
                     testDone();
                 }
                 else{
@@ -151,7 +151,7 @@ public class TrainPage extends Utils {
         UIUtil.showKeyboard(this,answer);
     }
 
-    public void time_for_answer(View view){
+    public void time_for_answer_train(View view){
         start_input_answer = System.currentTimeMillis();
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
             Toast.makeText(TrainPage.this, "Think faster..(5 seconds)", Toast.LENGTH_LONG).show();
@@ -188,6 +188,7 @@ public class TrainPage extends Utils {
         DatabaseReference databaseUsers;
         user.session_done = true;
         user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        user.session_type = SEARCH_MODE;
         saveUser(user);
         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
         String id = databaseUsers.push().getKey();

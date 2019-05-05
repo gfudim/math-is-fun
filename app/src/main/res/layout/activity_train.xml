@@ -44,7 +44,7 @@
             android:hint="@string/answer"
             android:inputType="number"
             android:textAlignment="center"
-            android:onClick="time_for_answer_search"/>
+            android:onClick="time_for_answer_train"/>
         <Button
             android:id="@+id/SubmitBtn"
             android:layout_width="wrap_content"

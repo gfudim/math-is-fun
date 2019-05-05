@@ -275,7 +275,6 @@ class User{
             for (i=0; i< current_exercises.size(); i++){
                 moveExercise(current_exercises,known_exercises, current_exercises.get(i));
             }
-            this.session_type = Utils.SEARCH_MODE;
             this.session_done = true;
             this.exerciseGroupWithMaxVar();
         }
