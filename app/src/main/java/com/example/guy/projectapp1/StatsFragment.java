@@ -56,6 +56,7 @@ public class StatsFragment extends Fragment {
         connectButton(view,R.id.c1Btn,R.string.start_training,R.string.start_training);
         connectButton(view,R.id.c5Btn,R.string.start_training,R.string.start_training);
         connectButton(view,R.id.c10Btn,R.string.start_training,R.string.start_training);
+        connectButton(view,R.id.trophyBtn,R.string.start_training,R.string.start_training);
         return view;
     }
     private void connectButton(View view,int id_button,final int id_title,final int id_message){

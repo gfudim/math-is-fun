@@ -97,23 +97,116 @@
 
             <ImageButton
                 android:id="@+id/c1Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textSize="18sp" />
+                android:scaleType="centerCrop"
+                android:layout_height="75dp"
+                android:layout_width="60dp"
+                android:src="@drawable/ic_exam"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp"/>
+
+
+            <FrameLayout
+                android:layout_width="70dp"
+                android:layout_height="75dp">
+                <ImageButton
+                    android:id="@+id/c5Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top|start"
+                    android:src="@drawable/ic_exam"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:gravity="center" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center|center"
+                    android:src="@drawable/ic_exam"
+                    android:background="@android:color/transparent"
+                    android:gravity="center" />
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|end"
+                    android:src="@drawable/ic_exam"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:gravity="center" />
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="75dp"
+                android:layout_height="75dp">
+                <ImageButton
+                    android:id="@+id/c10Btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top|start"
+                    android:src="@drawable/ic_exam"
+                    android:padding="10dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="top|end"
+                    android:src="@drawable/ic_exam"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:gravity="center" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|start"
+                    android:src="@drawable/ic_exam"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:gravity="center" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|end"
+                    android:src="@drawable/ic_exam"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:gravity="center" />
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center|center"
+                    android:src="@drawable/ic_exam"
+                    android:background="@android:color/transparent"
+                    android:gravity="center" />
+
+
+            </FrameLayout>
+        </LinearLayout>
+
+        <View style="@style/Divider" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:text="Trophy:" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/c5Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="5"
-                android:textSize="18sp" />
-            <ImageButton
-                android:id="@+id/c10Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="10"
-                android:textSize="18sp" />
+                android:id="@+id/trophyBtn"
+                android:scaleType="fitXY"
+                android:layout_height="120dp"
+                android:layout_width="120dp"
+                android:src="@drawable/ic_award"
+                android:padding="12dp"/>
         </LinearLayout>
 
         <View style="@style/Divider" />
