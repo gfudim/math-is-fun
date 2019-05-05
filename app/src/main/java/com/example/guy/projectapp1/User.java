@@ -176,7 +176,6 @@ class User{
                 this.undefined_exercises.add(exercise);
             }
         }
-        this.exerciseGroupWithMaxVar();
     }
 
     void resetHistory(){
@@ -343,7 +342,7 @@ class User{
         removeExerciseFromGroup(src,exercise);
     }
 
-    private void exerciseGroupWithMaxVar(){
+    public void exerciseGroupWithMaxVar(){
         Random rand = new Random();
         Double current_var;
         Double max_var = Double.NEGATIVE_INFINITY;

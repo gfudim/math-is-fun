@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment {
                     if(user.session_type == SEARCH_MODE){
                         user.search_exercises_done = false;
                         cleaned_exercises = false;
+                        user.exerciseGroupWithMaxVar();
                         Log.e(TAG,"Starting Search Activity");
                         in = new Intent(getActivity(), SearchPage.class);
                     }
