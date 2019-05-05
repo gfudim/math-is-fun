@@ -33,21 +33,21 @@
                 android:layout_width="75dp"
                 android:id="@+id/sevenDaysBtn"
                 android:src="@drawable/ic_7_days"
-                android:padding="12dp"/>
+                android:padding="20dp"/>
             <ImageButton
                 android:id="@+id/fourteenDaysBtn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
                 android:src="@drawable/ic_14_days"
-                android:padding="12dp"/>
+                android:padding="15dp"/>
             <ImageButton
                 android:id="@+id/thirtyDaysBtn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
                 android:src="@drawable/ic_30_days"
-                android:padding="12dp"/>
+                android:padding="10dp"/>
         </LinearLayout>
 
         <View style="@style/Divider" />
@@ -64,23 +64,26 @@
 
             <ImageButton
                 android:id="@+id/p1500Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1500"
-                android:textSize="18sp" />
+                android:scaleType="fitXY"
+                android:layout_height="75dp"
+                android:layout_width="75dp"
+                android:src="@drawable/ic_two"
+                android:padding="20dp"/>
 
             <ImageButton
                 android:id="@+id/p3000Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3000"
-                android:textSize="18sp" />
+                android:scaleType="fitXY"
+                android:layout_height="75dp"
+                android:layout_width="75dp"
+                android:src="@drawable/ic_four"
+                android:padding="15dp"/>
             <ImageButton
                 android:id="@+id/p6000Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="6000"
-                android:textSize="18sp" />
+                android:scaleType="fitXY"
+                android:layout_height="75dp"
+                android:layout_width="75dp"
+                android:src="@drawable/ic_six"
+                android:padding="10dp"/>
         </LinearLayout>
 
         <View style="@style/Divider" />
