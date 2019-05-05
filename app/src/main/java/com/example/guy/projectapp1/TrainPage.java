@@ -133,7 +133,7 @@ public class TrainPage extends Utils {
                 else {
                     toastAfterAnswer(false, true, exercise);
                 }
-                if(user.session_done){
+                if(user.session_done || user.current_exercises.size() == 0){ //backup
                     testDone();
                 }
                 else{

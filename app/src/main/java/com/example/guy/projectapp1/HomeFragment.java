@@ -108,6 +108,7 @@ public class HomeFragment extends Fragment {
                     user.session_done = false;
                     user.current_count_points_per_day = 0;
                     if(user.session_type == SEARCH_MODE){
+                        user.search_exercises_done = false;
                         Log.e(TAG,"Starting Search Activity");
                         in = new Intent(getActivity(), SearchPage.class);
                     }

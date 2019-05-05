@@ -83,9 +83,6 @@ public class SearchPage extends Utils {
             }
         }.start();
     }
-    public void time_for_answer(View view){
-        UIUtil.showKeyboard(SearchPage.this,answer);
-    }
 
     public void handleAnswer(){
         exercise.time_answered = System.currentTimeMillis();
@@ -142,6 +139,7 @@ public class SearchPage extends Utils {
 
     public void time_for_answer_search(View view){
         start_input_answer = System.currentTimeMillis();
+        UIUtil.showKeyboard(SearchPage.this,answer);
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
             Toast.makeText(SearchPage.this, "Think faster..(5 seconds)", Toast.LENGTH_LONG).show();
             handleOverTimeAnswer(true);

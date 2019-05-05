@@ -41,7 +41,7 @@ public class MainActivity extends Utils {
             Paper.book().write("language", "en");
         }
         // if it's the first time, print a welcome message
-        if(user.name != "" && new_connection){
+        if(user.name != null && user.name != "" && new_connection){
             showWelcomeMsg();
         }
     }
