@@ -205,6 +205,7 @@ class User{
                         exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
                         counter++;
                     }
+                    return exercise;
                 }
                 else if (known_exercises.size() > 0) {
                     return known_exercises.get(rand.nextInt(known_exercises.size()));
@@ -212,7 +213,6 @@ class User{
                 else{
                     return unknown_exercises.get(rand.nextInt(unknown_exercises.size())); // backup if everyone is in B
                 }
-                return undefined_exercises.get(rand.nextInt(undefined_exercises.size()));
             }
         }
         return null;
@@ -234,6 +234,9 @@ class User{
         if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
             this.current_count_points_per_day += calculatePoints(user_answer_time);
+        }
+        else{
+            exercise.count_correct_answers = 0; //wrong answer or too much time
         }
         if(this.session_type == Utils.TRAIN_MODE){
             setGroupTrainMode(exercise);
@@ -292,7 +295,7 @@ class User{
             else if(exercise.count_correct_answers == 1){
                 exercise.displayed_today = true;
             }
-            else if(exercise.count_correct_answers == 2){
+            else if(exercise.count_correct_answers == 3){
                 moveExercise(undefined_exercises, known_exercises, exercise);
             }
         }
