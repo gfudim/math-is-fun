@@ -137,6 +137,7 @@
             android:layout_gravity="center"
             android:enabled="false"
             android:text="Sign out"
+            android:drawableTop="@drawable/ic_exit"
             android:textSize="12sp" />
 
     </LinearLayout>

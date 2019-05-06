@@ -17,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
+        android:drawableTop="@drawable/ic_enter"
         android:text="Sign in"/>
     <Button
         android:id="@+id/switchToSingleUserBtn"
