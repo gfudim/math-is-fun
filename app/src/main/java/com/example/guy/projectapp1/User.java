@@ -176,7 +176,6 @@ class User{
                 this.undefined_exercises.add(exercise);
             }
         }
-        this.exerciseGroupWithMaxVar();
     }
 
     void resetHistory(){
@@ -188,30 +187,30 @@ class User{
         Exercise exercise;
         int counter = 0;
         if (this.session_type == Utils.TRAIN_MODE) {
-            if (current_exercises.size() > 0){
-                return current_exercises.get(rand.nextInt(current_exercises.size()));
+            if (this.current_exercises.size() > 0){
+                return this.current_exercises.get(rand.nextInt(this.current_exercises.size()));
             }
         }
         else if(this.session_type == Utils.SEARCH_MODE){
-            if (rand.nextInt(100) < 25 || this.search_exercises_done){  //from, group A
-                if (known_exercises.size() > 0) {
-                    return known_exercises.get(rand.nextInt(known_exercises.size()));
+            if (rand.nextInt(100) < 25 || this.search_exercises_done){  //from group A
+                if (this.known_exercises.size() > 0) {
+                    return this.known_exercises.get(rand.nextInt(this.known_exercises.size()));
                 }
             }
-            if (current_exercises.size() > 0){
-                exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
+            if (this.current_exercises.size() > 0){
+                exercise =this. current_exercises.get(rand.nextInt(this.current_exercises.size()));
                 if (this.undefined_exercises.size() > 0){
                     while (checkExerciseInGroup(this.unknown_exercises, exercise) && counter < 16){ // show user only exercises from group C in search mode
-                        exercise = current_exercises.get(rand.nextInt(current_exercises.size()));
+                        exercise = this.current_exercises.get(rand.nextInt(this.current_exercises.size()));
                         counter++;
                     }
                     return exercise;
                 }
-                else if (known_exercises.size() > 0) {
-                    return known_exercises.get(rand.nextInt(known_exercises.size()));
+                else if (this.known_exercises.size() > 0) {
+                    return this.known_exercises.get(rand.nextInt(this.known_exercises.size()));
                 }
                 else{
-                    return unknown_exercises.get(rand.nextInt(unknown_exercises.size())); // backup if everyone is in B
+                    return this.unknown_exercises.get(rand.nextInt(this.unknown_exercises.size())); // backup if everyone is in B
                 }
             }
         }
@@ -343,7 +342,7 @@ class User{
         removeExerciseFromGroup(src,exercise);
     }
 
-    private void exerciseGroupWithMaxVar(){
+    public void exerciseGroupWithMaxVar(){
         Random rand = new Random();
         Double current_var;
         Double max_var = Double.NEGATIVE_INFINITY;

@@ -46,6 +46,7 @@ import static com.example.guy.projectapp1.Utils.user;
 
 public class HomeFragment extends Fragment {
     Button startBtn;
+    Boolean cleaned_exercises = false;
     private FirebaseDatabase database;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -102,6 +103,9 @@ public class HomeFragment extends Fragment {
                     // TODO - if the user doesn't connect for a week, his problem - don't care now...
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
+                    if (cleaned_exercises){
+                        uncheckDisplayedExercises();
+                    }
                 }
                 else{
                     // new day - new session
@@ -109,6 +113,8 @@ public class HomeFragment extends Fragment {
                     user.current_count_points_per_day = 0;
                     if(user.session_type == SEARCH_MODE){
                         user.search_exercises_done = false;
+                        cleaned_exercises = false;
+                        user.exerciseGroupWithMaxVar();
                         Log.e(TAG,"Starting Search Activity");
                         in = new Intent(getActivity(), SearchPage.class);
                     }
@@ -157,6 +163,23 @@ public class HomeFragment extends Fragment {
 //        }
 //    }
 //
+    public void uncheckDisplayedExercises(){
+        int i;
+        for (i=0;i<user.current_exercises.size(); i++){
+            user.current_exercises.get(i).displayed_today = false;
+        }
+        for (i=0;i<user.known_exercises.size(); i++){
+            user.known_exercises.get(i).displayed_today = false;
+        }
+        for (i=0;i<user.undefined_exercises.size(); i++){
+            user.undefined_exercises.get(i).displayed_today = false;
+        }
+        for (i=0;i<user.unknown_exercises.size(); i++){
+            user.unknown_exercises.get(i).displayed_today = false;
+        }
+        cleaned_exercises = true;
+    }
+
     private void updateView(String language) {
         Context context = LocaleHelper.setLocale(getActivity(), language);
         Resources resources = context.getResources();
