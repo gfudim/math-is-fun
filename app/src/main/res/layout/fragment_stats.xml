@@ -33,21 +33,24 @@
                 android:layout_width="75dp"
                 android:id="@+id/sevenDaysBtn"
                 android:src="@drawable/ic_7_days"
-                android:padding="20dp"/>
+                android:padding="20dp"
+                android:alpha="0.5"/>
             <ImageButton
                 android:id="@+id/fourteenDaysBtn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
                 android:src="@drawable/ic_14_days"
-                android:padding="15dp"/>
+                android:padding="15dp"
+                android:alpha="0.5"/>
             <ImageButton
                 android:id="@+id/thirtyDaysBtn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
                 android:src="@drawable/ic_30_days"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:alpha="0.5"/>
         </LinearLayout>
 
         <View style="@style/Divider" />
@@ -63,27 +66,30 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/p1500Btn"
+                android:id="@+id/p2000Btn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
                 android:src="@drawable/ic_two"
-                android:padding="20dp"/>
+                android:padding="20dp"
+                android:alpha="0.5"/>
 
             <ImageButton
-                android:id="@+id/p3000Btn"
+                android:id="@+id/p4000Btn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
                 android:src="@drawable/ic_four"
-                android:padding="15dp"/>
+                android:padding="15dp"
+                android:alpha="0.5"/>
             <ImageButton
                 android:id="@+id/p6000Btn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
                 android:src="@drawable/ic_six"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:alpha="0.5"/>
         </LinearLayout>
 
         <View style="@style/Divider" />
@@ -97,7 +103,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
-
+            <FrameLayout
+                android:id="@+id/c1Frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5">
             <ImageButton
                 android:id="@+id/c1Btn"
                 android:scaleType="centerCrop"
@@ -106,13 +116,16 @@
                 android:src="@drawable/ic_exam"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp"/>
+            </FrameLayout>
 
 
             <FrameLayout
+                android:id="@+id/c3Frame"
                 android:layout_width="70dp"
-                android:layout_height="75dp">
+                android:layout_height="75dp"
+                android:alpha="0.5">
                 <ImageButton
-                    android:id="@+id/c5Btn"
+                    android:id="@+id/c3Btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
                 <ImageView
@@ -141,10 +154,12 @@
                     android:gravity="center" />
             </FrameLayout>
             <FrameLayout
+                android:id="@+id/c5Frame"
                 android:layout_width="75dp"
-                android:layout_height="75dp">
+                android:layout_height="75dp"
+                android:alpha="0.5">
                 <ImageButton
-                    android:id="@+id/c10Btn"
+                    android:id="@+id/c5Btn"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
                 <ImageView
@@ -209,7 +224,9 @@
                 android:layout_height="120dp"
                 android:layout_width="120dp"
                 android:src="@drawable/ic_award"
-                android:padding="12dp"/>
+                android:padding="12dp"
+                android:alpha="0.5"
+                />
         </LinearLayout>
 
         <View style="@style/Divider" />

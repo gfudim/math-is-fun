@@ -2,22 +2,19 @@ package com.example.guy.projectapp1;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import io.paperdb.Paper;
+
+import static com.example.guy.projectapp1.Utils.user;
 
 public class StatsFragment extends Fragment {
 
@@ -46,18 +43,59 @@ public class StatsFragment extends Fragment {
                 }
             }
         });
-        // TODO - switch to correct strings
-        connectButton(view,R.id.sevenDaysBtn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.fourteenDaysBtn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.thirtyDaysBtn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.p1500Btn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.p3000Btn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.p6000Btn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.c1Btn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.c5Btn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.c10Btn,R.string.start_training,R.string.start_training);
-        connectButton(view,R.id.trophyBtn,R.string.start_training,R.string.start_training);
+
+        user.updateTrophies();//TODO - delete only for debugging
+
+        connectDaysRow(view,R.id.sevenDaysBtn,7);
+        connectDaysRow(view,R.id.fourteenDaysBtn,14);
+        connectDaysRow(view,R.id.thirtyDaysBtn,30);
+        connectMaxPoints(view,R.id.p2000Btn,2000);
+        connectMaxPoints(view,R.id.p4000Btn,4000);
+        connectMaxPoints(view,R.id.p6000Btn,6000);
+        connectTestsRow(view,R.id.c1Btn,R.id.c1Frame,1);
+        connectTestsRow(view,R.id.c3Btn,R.id.c3Frame,3);
+        connectTestsRow(view,R.id.c5Btn,R.id.c5Frame,5);
+        connectTrophy(view,R.id.trophyBtn,30,6000,5);
         return view;
+    }
+
+
+    // TODO - switch to correct strings
+    private void connectDaysRow(View view, final int id_button, int threshold) {
+        if(user.days_in_row>=threshold){
+            connectButton(view,id_button,R.string.well_done,R.string.start_training);
+            view.findViewById(id_button).setAlpha(1);
+        }
+        else{
+            connectButton(view,id_button,R.string.more_work,R.string.start_training);
+        }
+    }
+    private void connectMaxPoints(View view, final int id_button, int threshold) {
+        if(user.max_points_per_day>=threshold){
+            connectButton(view,id_button,R.string.well_done,R.string.start_training);
+            view.findViewById(id_button).setAlpha(1);
+        }
+        else{
+            connectButton(view,id_button,R.string.more_work,R.string.start_training);
+        }
+    }
+    private void connectTestsRow(View view, final int id_button,final int id_frame, int threshold) {
+        if(user.tests_in_row>=threshold){
+            connectButton(view,id_button,R.string.well_done,R.string.start_training);
+            view.findViewById(id_frame).setAlpha(1);
+        }
+        else{
+            connectButton(view,id_button,R.string.more_work,R.string.start_training);
+        }
+    }
+    private void connectTrophy(View view, final int id_button, int days_row_threshold, int max_points_thresold, int tests_row_threshold) {
+        if(user.days_in_row>=days_row_threshold&&user.max_points_per_day>=max_points_thresold&&user.tests_in_row>=tests_row_threshold){
+            connectButton(view,id_button,R.string.well_done,R.string.start_training);
+            view.findViewById(id_button).setAlpha(1);
+        }
+        else{
+            connectButton(view,id_button,R.string.more_work,R.string.start_training);
+        }
     }
     private void connectButton(View view,int id_button,final int id_title,final int id_message){
         ImageButton btn = (ImageButton)view.findViewById(id_button);

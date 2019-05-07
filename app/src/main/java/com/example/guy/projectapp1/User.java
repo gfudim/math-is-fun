@@ -1,5 +1,8 @@
 package com.example.guy.projectapp1;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -111,6 +114,7 @@ import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
 //    }
 //
 class User{
+
     int correct_answers;
     int wrong_answers;
     int total_answers;
@@ -124,6 +128,8 @@ class User{
     int current_count_points_per_day;
     int max_points_per_day;
     int last_day_of_session;
+    int days_in_row;
+    int tests_in_row;
     long first_login;
     long last_login;
     long start_session_time;
@@ -132,6 +138,7 @@ class User{
     boolean session_done;
     boolean start_page;  //true if last page was the main menu - for the "back" option
     boolean search_exercises_done;
+
     String name;
     String id_data_base;
     ArrayList<Exercise> known_exercises;
@@ -151,6 +158,8 @@ class User{
         this.age = 0;
         this.start_page = true;
         this.last_day_of_session = 0;
+        this.days_in_row=0;
+        this.tests_in_row=0;
         this.search_exercises_done = false;
         init();
     }
@@ -372,6 +381,12 @@ class User{
             }
         }
         return sum_var;
+    }
+
+    public void updateTrophies() {//TODO - delete only for debugging
+        this.days_in_row=14;
+        this.max_points_per_day=3000;
+        this.tests_in_row=4;
     }
 //    protected void setUserInformation(User user){
 //
