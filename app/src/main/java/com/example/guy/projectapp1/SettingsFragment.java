@@ -52,13 +52,16 @@ public class SettingsFragment extends Fragment {
         if (user.mode == SINGLE_MODE) {
             singleBtn.setEnabled(false);
             singleBtn.getCompoundDrawables()[1].setAlpha(128);
+            btn_sign_out.setEnabled(false);
+            btn_sign_out.getCompoundDrawables()[1].setAlpha(128);
             multiBtn.getCompoundDrawables()[1].setAlpha(255);
         }
         else{
             btn_sign_out.setEnabled(true);
+            btn_sign_out.getCompoundDrawables()[1].setAlpha(255);
             multiBtn.setEnabled(false);
-            singleBtn.getCompoundDrawables()[1].setAlpha(255);
             multiBtn.getCompoundDrawables()[1].setAlpha(128);
+            singleBtn.getCompoundDrawables()[1].setAlpha(255);
         }
         singleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +104,7 @@ public class SettingsFragment extends Fragment {
                                         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
                                         databaseUsers.child(user.id_data_base).setValue(user);
                                         btn_sign_out.setEnabled(false);
+                                        btn_sign_out.getCompoundDrawables()[1].setAlpha(128);
                                         startActivity(new Intent(getActivity(), LoginPage.class));
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
