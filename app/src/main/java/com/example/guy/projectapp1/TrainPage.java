@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -40,6 +41,8 @@ public class TrainPage extends Utils {
     long start_input_answer;
     int user_answer = 0;
     CountDownTimer train_counter;
+    MediaPlayer exercise_media = new MediaPlayer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -179,6 +182,8 @@ public class TrainPage extends Utils {
         TextView show_exercise = findViewById(R.id.ExerciseTextView);
         String temp_exercise = String.format("%s * %s", exercise.mul1, exercise.mul2);
         show_exercise.setText(temp_exercise);
+        exercise_media = MediaPlayer.create(this, Utils.resID[exercise.exercise_id]);
+        exercise_media.start();
         exercise.time_displayed = System.currentTimeMillis();
         user.start_exercise = exercise.time_displayed;
         user_answer = 0;

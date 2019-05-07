@@ -158,6 +158,7 @@ class User{
     // User() {}
 
     private void init(){
+        int id = 0;
         this.correct_answers = 0;
         this.wrong_answers = 0;
         this.total_answers = 0;
@@ -171,9 +172,10 @@ class User{
         this.undefined_exercises = new ArrayList<>();
         this.current_exercises = new ArrayList<>();
         for (int i = 2; i <= MAX_NUMBER; i++){
-            for( int j = i; j<= MAX_NUMBER; j++){
-                Exercise exercise = new Exercise(i, j);
+            for( int j = i; j <= MAX_NUMBER; j++){
+                Exercise exercise = new Exercise(i, j, id);
                 this.undefined_exercises.add(exercise);
+                id++;
             }
         }
     }
