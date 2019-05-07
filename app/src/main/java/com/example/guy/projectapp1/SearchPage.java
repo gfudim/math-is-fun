@@ -199,7 +199,7 @@ public class SearchPage extends Utils {
         TextView show_exercise = findViewById(R.id.ExerciseTextView);
         String temp_exercise = String.format("%s x %s", exercise.mul1, exercise.mul2);
         show_exercise.setText(temp_exercise);
-        exercise_media = MediaPlayer.create(this, Utils.resID[0]); // TODO - zero only for now!!
+        exercise_media = MediaPlayer.create(this, Utils.resID[exercise.exercise_id]);
         exercise_media.start();
         exercise.time_displayed = System.currentTimeMillis();
         user.start_exercise = exercise.time_displayed;
