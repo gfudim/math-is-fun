@@ -244,6 +244,9 @@ class User{
         if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
             this.current_count_points_per_day += calculatePoints(user_answer_time);
+            if(this.current_count_points_per_day>this.max_points_per_day){
+                this.max_points_per_day=this.current_count_points_per_day;
+            }
         }
         else{
             exercise.count_correct_answers = 0; //wrong answer or too much time
