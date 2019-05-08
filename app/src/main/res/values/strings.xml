@@ -28,4 +28,5 @@
     <string name="Stats" translatable="false">Stats</string>
     <string name="well_done">Well Done!</string>
     <string name="more_work">You need to train a little more!</string>
+    <string name="dont_know">Don\'t Know</string>
 </resources>

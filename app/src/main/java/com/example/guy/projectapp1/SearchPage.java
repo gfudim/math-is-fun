@@ -30,6 +30,7 @@ import static android.content.ContentValues.TAG;
 
 public class SearchPage extends Utils {
     TextView submit;
+    TextView dont_know;
     EditText answer;
     private DatabaseReference databaseUsers;
     Exercise exercise = user.getNextExercise();
@@ -41,14 +42,16 @@ public class SearchPage extends Utils {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_train);
+        setContentView(R.layout.activity_search);
         submit = findViewById(R.id.SubmitBtn);
+        dont_know=findViewById(R.id.DontKnowBtn);
         answer = findViewById(R.id.InputEditText);
         updateView();
         showExercise(exercise);
         user.start_session_time = System.currentTimeMillis();
         UIUtil.showKeyboard(this,answer);
         Button submitBtn = (Button)submit; // save the button for reference
+        Button dontKnowBtn=(Button)dont_know;
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
              @Override
              public void onClick(View view) {
@@ -60,6 +63,13 @@ public class SearchPage extends Utils {
              }
          }
         );
+        dontKnowBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
+            @Override
+            public void onClick(View view) {
+                user_answer =  -1;
+                handleAnswer();
+            }
+        });
 
         answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -210,6 +220,7 @@ public class SearchPage extends Utils {
         Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));
+        dont_know.setText(resources.getString(R.string.dont_know));
         answer.setHint(resources.getString(R.string.answer));
     }
 

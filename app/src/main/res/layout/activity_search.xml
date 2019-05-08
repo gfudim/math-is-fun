@@ -44,12 +44,26 @@
         android:inputType="number"
         android:textAlignment="center"
         android:onClick="time_for_answer_search"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+
     <Button
         android:id="@+id/SubmitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/submit"/>
+    <Button
+        android:id="@+id/DontKnowBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/dont_know"/>
+    </LinearLayout>
     <View
         android:layout_width="0dp"
         android:layout_height="0dp"
