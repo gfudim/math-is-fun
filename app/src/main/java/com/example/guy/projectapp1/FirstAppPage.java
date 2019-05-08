@@ -30,7 +30,7 @@ public class FirstAppPage extends Utils {
         }
     protected void newProfile(int state){
         user.mode = state;
-        saveUser(user);
+        saveUserToDevice(user);
         startActivity(new Intent(FirstAppPage.this, LoadApp.class));
         finish();
         }

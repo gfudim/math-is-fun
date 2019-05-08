@@ -12,25 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
-//import android.widget.Toast;
-//
+
 //import com.google.firebase.auth.FirebaseAuth;
 //import com.google.firebase.database.DataSnapshot;
 //import com.google.firebase.database.DatabaseError;
 //import com.google.firebase.database.DatabaseReference;
 //import com.google.firebase.database.FirebaseDatabase;
 //import com.google.firebase.database.ValueEventListener;
-//
+
 //import java.util.ArrayList;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
@@ -38,18 +33,16 @@ import java.util.Calendar;
 import io.paperdb.Paper;
 
 import static android.content.ContentValues.TAG;
-//import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
-import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
+import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
 import static com.example.guy.projectapp1.Utils.user;
+import static com.example.guy.projectapp1.Utils.databaseUsers;
+import static com.example.guy.projectapp1.Utils.id_for_user;
 
 public class HomeFragment extends Fragment {
     Button startBtn;
     Boolean cleaned_exercises = false;
-    private FirebaseDatabase database;
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference ref;
     @Nullable
     @Override
@@ -57,17 +50,18 @@ public class HomeFragment extends Fragment {
         user.last_login = System.currentTimeMillis();
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         startBtn = view.findViewById(R.id.StartBtn);
-        if (user.mode == MULTI_MODE&&false){
-            //TODO - added a false to bypass the crash on database.getReference(user_path);
-            String user_path = String.format("user/%s",user.id_data_base);
-            Log.e(TAG, String.format("The user path: %s", user_path));
-            Toast.makeText(getActivity(), "!!!Testin1!!1", Toast.LENGTH_LONG).show();
-            ref = database.getReference(user_path);
+        if(user.mode == SINGLE_MODE && (user.id_data_base == null || user.id_data_base == "")){
+            user.id_data_base = String.format("%s",id_for_user);
+            id_for_user++;
+            Log.e(TAG,String.format("id_for_user %s",user.id_data_base));
+        }
+        if (user.mode == MULTI_MODE && false){//TODO - added a false to bypass the crash on database.getReference(user_path);
+            ref = databaseUsers.child(user.id_data_base);
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     user = dataSnapshot.getValue(User.class);
-                    Toast.makeText(getActivity(), "!!!Testin1!!1", Toast.LENGTH_LONG).show();
+                    Log.e(TAG,String.format("222222 %s", user.total_answers));
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {

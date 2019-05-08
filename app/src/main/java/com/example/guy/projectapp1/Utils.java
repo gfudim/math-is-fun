@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,6 +33,8 @@ public class Utils extends AppCompatActivity {
     protected static int SEARCH_MODE = 0;
     protected static int TRAIN_MODE = 1;
     protected static User user;
+    protected static DatabaseReference databaseUsers;
+    protected static int id_for_user = 0;
     protected static long SESSION_MILLI_DURATION = 20000; // todo - change to 3 minutes - 180000
     protected static int optional_exercises = 1000;
     final protected static int ENGLISH = 0;
@@ -51,6 +55,10 @@ public class Utils extends AppCompatActivity {
             R.raw.ex9times9};
 
     public void saveUser(User user){
+        databaseUsers = FirebaseDatabase.getInstance().getReference("user");
+        databaseUsers.child(user.id_data_base).setValue(user);
+    }
+    public void saveUserToDevice(User user){
         FileOutputStream fos;
         Gson gson = new Gson();
         String json = gson.toJson(user);
@@ -82,7 +90,7 @@ public class Utils extends AppCompatActivity {
 
         } catch (FileNotFoundException e) {
             user = new User(-1);
-            saveUser(user);
+//            saveUser(user);
         } catch (IOException e) {
             e.printStackTrace();
         }
