@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import io.paperdb.Paper;
 
@@ -37,6 +38,9 @@ public class HomeFragment extends Fragment {
     Button startBtn;
     Boolean cleaned_exercises = false;
     private DatabaseReference reff;
+    protected Boolean first_time = true;
+    Exercise current_exercise = new Exercise(0,0,0);
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,122 +50,192 @@ public class HomeFragment extends Fragment {
         if(user.mode == SINGLE_MODE && (user.id_data_base == null || user.id_data_base == "")){
             user.id_data_base = String.format("%s",id_for_user);
             id_for_user++;
-            Log.e(TAG,String.format("id_for_user %s",user.id_data_base));
         }
         if (user.mode == MULTI_MODE){//TODO - added a false to bypass the crash on database.getReference(user_path);
             reff = FirebaseDatabase.getInstance().getReference().child("user").child(user.id_data_base);
             reff.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    int correct_answers = Integer.parseInt(dataSnapshot.child("correct_answers").getValue().toString());
-                    int count_tests = Integer.parseInt(dataSnapshot.child("count_tests").getValue().toString());
-                    int current_correct_tests_in_row = Integer.parseInt(dataSnapshot.child("current_correct_tests_in_row").getValue().toString());
-                    int current_count_points_per_day = Integer.parseInt(dataSnapshot.child("current_count_points_per_day").getValue().toString());
-
-                    user.correct_answers = correct_answers;
-                    user.count_tests = count_tests;
-                    user.current_correct_tests_in_row = current_correct_tests_in_row;
-                    user.current_count_points_per_day = current_count_points_per_day;
-
-                    // current exercises
-                    // ex1
-                    int count_correct_answers = Integer.parseInt(dataSnapshot.child("current_exercises").child("0").child("count_correct_answers").getValue().toString());
-                    int count_wrong_answers = Integer.parseInt(dataSnapshot.child("current_exercises").child("0").child("count_wrong_answers").getValue().toString());
-                    Boolean displayed_today = Boolean.valueOf(dataSnapshot.child("current_exercises").child("0").child("displayed_today").getValue().toString());
-                    int exercise_id = Integer.parseInt(dataSnapshot.child("current_exercises").child("0").child("exercise_id").getValue().toString());
-                    int mul1 = Integer.parseInt(dataSnapshot.child("current_exercises").child("0").child("mul1").getValue().toString());
-                    int mul2 = Integer.parseInt(dataSnapshot.child("current_exercises").child("0").child("mul2").getValue().toString());
-                    long time_answered = Long.parseLong(dataSnapshot.child("current_exercises").child("0").child("time_answered").getValue().toString());
-                    long time_displayed = Long.parseLong(dataSnapshot.child("current_exercises").child("0").child("time_displayed").getValue().toString());
-                    Exercise current_exercises_ex1 = new Exercise(mul1,mul2,exercise_id);
-                    current_exercises_ex1.count_correct_answers = count_correct_answers;
-                    current_exercises_ex1.count_wrong_answers = count_wrong_answers;
-                    current_exercises_ex1.displayed_today = displayed_today;
-                    current_exercises_ex1.time_answered = time_answered;
-                    current_exercises_ex1.time_displayed = time_displayed;
-
-                    // ex2
-                    count_correct_answers = Integer.parseInt(dataSnapshot.child("current_exercises").child("1").child("count_correct_answers").getValue().toString());
-                    count_wrong_answers = Integer.parseInt(dataSnapshot.child("current_exercises").child("1").child("count_wrong_answers").getValue().toString());
-                    displayed_today = Boolean.valueOf(dataSnapshot.child("current_exercises").child("1").child("displayed_today").getValue().toString());
-                    exercise_id = Integer.parseInt(dataSnapshot.child("current_exercises").child("1").child("exercise_id").getValue().toString());
-                    mul1 = Integer.parseInt(dataSnapshot.child("current_exercises").child("1").child("mul1").getValue().toString());
-                    mul2 = Integer.parseInt(dataSnapshot.child("current_exercises").child("1").child("mul2").getValue().toString());
-                    time_answered = Long.parseLong(dataSnapshot.child("current_exercises").child("1").child("time_answered").getValue().toString());
-                    time_displayed = Long.parseLong(dataSnapshot.child("current_exercises").child("1").child("time_displayed").getValue().toString());
-                    Exercise current_exercises_ex2 = new Exercise(mul1,mul2,exercise_id);
-                    current_exercises_ex2.count_correct_answers = count_correct_answers;
-                    current_exercises_ex2.count_wrong_answers = count_wrong_answers;
-                    current_exercises_ex2.displayed_today = displayed_today;
-                    current_exercises_ex2.time_answered = time_answered;
-                    current_exercises_ex2.time_displayed = time_displayed;
-
-                    // ex3
-                    count_correct_answers = Integer.parseInt(dataSnapshot.child("current_exercises").child("2").child("count_correct_answers").getValue().toString());
-                    count_wrong_answers = Integer.parseInt(dataSnapshot.child("current_exercises").child("2").child("count_wrong_answers").getValue().toString());
-                    displayed_today = Boolean.valueOf(dataSnapshot.child("current_exercises").child("2").child("displayed_today").getValue().toString());
-                    exercise_id = Integer.parseInt(dataSnapshot.child("current_exercises").child("2").child("exercise_id").getValue().toString());
-                    mul1 = Integer.parseInt(dataSnapshot.child("current_exercises").child("2").child("mul1").getValue().toString());
-                    mul2 = Integer.parseInt(dataSnapshot.child("current_exercises").child("2").child("mul2").getValue().toString());
-                    time_answered = Long.parseLong(dataSnapshot.child("current_exercises").child("2").child("time_answered").getValue().toString());
-                    time_displayed = Long.parseLong(dataSnapshot.child("current_exercises").child("2").child("time_displayed").getValue().toString());
-                    Exercise current_exercises_ex3 = new Exercise(mul1,mul2,exercise_id);
-                    current_exercises_ex3.count_correct_answers = count_correct_answers;
-                    current_exercises_ex3.count_wrong_answers = count_wrong_answers;
-                    current_exercises_ex3.displayed_today = displayed_today;
-                    current_exercises_ex3.time_answered = time_answered;
-                    current_exercises_ex3.time_displayed = time_displayed;
-
-                    // ex4
-                    count_correct_answers = Integer.parseInt(dataSnapshot.child("current_exercises").child("3").child("count_correct_answers").getValue().toString());
-                    count_wrong_answers = Integer.parseInt(dataSnapshot.child("current_exercises").child("3").child("count_wrong_answers").getValue().toString());
-                    displayed_today = Boolean.valueOf(dataSnapshot.child("current_exercises").child("3").child("displayed_today").getValue().toString());
-                    exercise_id = Integer.parseInt(dataSnapshot.child("current_exercises").child("3").child("exercise_id").getValue().toString());
-                    mul1 = Integer.parseInt(dataSnapshot.child("current_exercises").child("3").child("mul1").getValue().toString());
-                    mul2 = Integer.parseInt(dataSnapshot.child("current_exercises").child("3").child("mul2").getValue().toString());
-                    time_answered = Long.parseLong(dataSnapshot.child("current_exercises").child("3").child("time_answered").getValue().toString());
-                    time_displayed = Long.parseLong(dataSnapshot.child("current_exercises").child("3").child("time_displayed").getValue().toString());
-                    Exercise current_exercises_ex4 = new Exercise(mul1,mul2,exercise_id);
-                    current_exercises_ex4.count_correct_answers = count_correct_answers;
-                    current_exercises_ex4.count_wrong_answers = count_wrong_answers;
-                    current_exercises_ex4.displayed_today = displayed_today;
-                    current_exercises_ex4.time_answered = time_answered;
-                    current_exercises_ex4.time_displayed = time_displayed;
-
-                    ArrayList <Exercise> temp_group = new ArrayList<>();
-                    temp_group.add(current_exercises_ex1);
-                    temp_group.add(current_exercises_ex2);
-                    temp_group.add(current_exercises_ex3);
-                    temp_group.add(current_exercises_ex4);
-                    user.current_exercises = temp_group;
-
-                    int days_in_row = Integer.parseInt(dataSnapshot.child("days_in_row").getValue().toString());
-                    int lang = Integer.parseInt(dataSnapshot.child("lang").getValue().toString());
-                    int last_day_of_session = Integer.parseInt(dataSnapshot.child("last_day_of_session").getValue().toString());
-                    int max_correct_tests_in_row = Integer.parseInt(dataSnapshot.child("max_correct_tests_in_row").getValue().toString());
-                    int max_points_per_day = Integer.parseInt(dataSnapshot.child("max_points_per_day").getValue().toString());
-                    int mode = Integer.parseInt(dataSnapshot.child("mode").getValue().toString());
-                    user.days_in_row = days_in_row;
-                    user.lang = lang;
-                    user.last_day_of_session = last_day_of_session;
-                    user.max_correct_tests_in_row = max_correct_tests_in_row;
-                    user.max_points_per_day = max_points_per_day;
-                    user.mode = mode;
-                    Boolean search_exercises_done = Boolean.valueOf(dataSnapshot.child("search_exercises_done").getValue().toString());
-                    Boolean session_done = Boolean.valueOf(dataSnapshot.child("session_done").getValue().toString());
-                    int session_type = Integer.parseInt(dataSnapshot.child("session_type").getValue().toString());
-                    Boolean start_page = Boolean.valueOf(dataSnapshot.child("start_page").getValue().toString());
-                    int tests_in_row = Integer.parseInt(dataSnapshot.child("tests_in_row").getValue().toString());
-                    int total_answers = Integer.parseInt(dataSnapshot.child("total_answers").getValue().toString());
-                    user.search_exercises_done = search_exercises_done;
-                    user.session_done = session_done;
-                    user.session_type = session_type;
-                    user.start_page = start_page;
-                    user.tests_in_row = tests_in_row;
-                    user.total_answers = total_answers;
-                    int wrong_answers = Integer.parseInt(dataSnapshot.child("wrong_answers").getValue().toString());
-                    user.wrong_answers = wrong_answers;
-                    Log.e(TAG,String.format("222222 ex2: %s",current_exercises_ex3.exercise_id));
+                    if (first_time){
+                        first_time = false;
+                        List<String> keys = new ArrayList<>();
+                        List<String> values = new ArrayList<>();
+                        for(DataSnapshot keyNode : dataSnapshot.getChildren()){
+                            keys.add(keyNode.getKey());
+                            values.add(keyNode.getValue().toString());
+                            if(keyNode.getKey().equals("age")){
+                                user.age = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("correct_answers")){
+                                user.correct_answers = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("count_tests")){
+                                user.count_tests = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("current_correct_tests_in_row")){
+                                user.current_correct_tests_in_row = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("current_count_points_per_day")){
+                                user.current_count_points_per_day = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("days_in_row")){
+                                user.days_in_row = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("end_exercise")){
+                                user.end_exercise = Long.parseLong(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("first_login")){
+                                user.first_login = Long.parseLong(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("lang")){
+                                user.lang = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("last_day_of_session")){
+                                user.last_day_of_session = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("last_login")){
+                                user.last_login = Long.parseLong(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("max_correct_tests_in_row")){
+                                user.max_correct_tests_in_row = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("max_points_per_day")){
+                                user.max_points_per_day = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("mode")){
+                                user.mode = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("name")){
+                                user.name = keyNode.getValue().toString();
+                            }
+                            if(keyNode.getKey().equals("search_exercises_done")){
+                                user.search_exercises_done = Boolean.valueOf(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("session_done")){
+                                user.session_done = Boolean.valueOf(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("session_type")){
+                                user.session_type = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("start_exercise")){
+                                user.start_exercise = Long.parseLong(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("start_page")){
+                                user.start_page = Boolean.valueOf(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("start_session_time")){
+                                user.start_session_time = Long.parseLong(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("tests_in_row")){
+                                user.tests_in_row = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("total_answers")){
+                                user.total_answers = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("wrong_answers")){
+                                user.wrong_answers = Integer.parseInt(keyNode.getValue().toString());
+                            }
+                            if(keyNode.getKey().equals("current_exercises")){
+                                for(DataSnapshot ds: keyNode.getChildren()){
+                                    for(DataSnapshot ds2: ds.getChildren()){
+                                        if (ds2.getKey().equals("count_correct_answers")){
+                                            current_exercise.count_correct_answers = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds2.getKey().equals("count_wrong_answers")){
+                                            current_exercise.count_wrong_answers = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds2.getKey().equals("displayed_today")){
+                                            current_exercise.displayed_today = Boolean.valueOf(ds2.getValue().toString());
+                                        }
+                                        if (ds2.getKey().equals("exercise_id")){
+                                            current_exercise.exercise_id = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds2.getKey().equals("mul1")){
+                                            current_exercise.mul1 = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds2.getKey().equals("mul2")){
+                                            current_exercise.mul2 = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds2.getKey().equals("time_answered")){
+                                            current_exercise.time_answered = Long.parseLong(ds2.getValue().toString());
+                                        }
+                                        if (ds2.getKey().equals("time_displayed")){
+                                            current_exercise.time_displayed = Long.parseLong(ds2.getValue().toString());
+                                        }
+                                    }
+                                }
+                                if(current_exercise.mul1 != 0){
+                                    user.current_exercises.add(current_exercise);
+                                }
+                            }
+                            if(keyNode.getKey().equals("undefined_exercises")){
+                                for(DataSnapshot ds: keyNode.getChildren()){
+                                    for(DataSnapshot ds2: ds.getChildren()){
+                                        if (ds.getKey().equals("count_correct_answers")){
+                                            current_exercise.count_correct_answers = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("count_wrong_answers")){
+                                            current_exercise.count_wrong_answers = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("displayed_today")){
+                                            current_exercise.displayed_today = Boolean.valueOf(ds2.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("exercise_id")){
+                                            current_exercise.exercise_id = Integer.parseInt(ds.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("mul1")){
+                                            current_exercise.mul1 = Integer.parseInt(ds.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("mul2")){
+                                            current_exercise.mul2 = Integer.parseInt(ds.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("time_answered")){
+                                            current_exercise.time_answered = Long.parseLong(ds.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("time_displayed")){
+                                            current_exercise.time_displayed = Long.parseLong(ds.getValue().toString());
+                                        }
+                                    }
+                                }
+                                if(current_exercise.mul1 != 0){
+                                    user.undefined_exercises.add(current_exercise);
+                                }
+                            }
+                            if(keyNode.getKey().equals("unknown_exercises")){
+                                for(DataSnapshot ds: keyNode.getChildren()){
+                                    for(DataSnapshot ds2: ds.getChildren()){
+                                        if (ds.getKey().equals("count_correct_answers")){
+                                            current_exercise.count_correct_answers = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("count_wrong_answers")){
+                                            current_exercise.count_wrong_answers = Integer.parseInt(ds2.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("displayed_today")){
+                                            current_exercise.displayed_today = Boolean.valueOf(ds2.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("exercise_id")){
+                                            current_exercise.exercise_id = Integer.parseInt(ds.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("mul1")){
+                                            current_exercise.mul1 = Integer.parseInt(ds.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("mul2")){
+                                            current_exercise.mul2 = Integer.parseInt(ds.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("time_answered")){
+                                            current_exercise.time_answered = Long.parseLong(ds.getValue().toString());
+                                        }
+                                        if (ds.getKey().equals("time_displayed")){
+                                            current_exercise.time_displayed = Long.parseLong(ds.getValue().toString());
+                                        }
+                                    }
+                                }
+                                if(current_exercise.mul1 != 0){
+                                    user.unknown_exercises.add(current_exercise);
+                                }
+                            }
+                        }
+                    }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -171,22 +245,6 @@ public class HomeFragment extends Fragment {
         }
         // changes the language
         updateView((String) Paper.book().read("language"));
-        //
-//        mAuth = FirebaseAuth.getInstance();
-//        mFirebaseDatabse = FirebaseDatabase.getInstance();
-//        myRef = mFirebaseDatabse.getReference();
-//
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                updateUser(dataSnapshot);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
 
         //A button to start a new session
         startBtn.setOnClickListener(new View.OnClickListener() {
