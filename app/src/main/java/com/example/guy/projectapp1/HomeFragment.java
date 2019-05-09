@@ -40,6 +40,7 @@ public class HomeFragment extends Fragment {
     private DatabaseReference reff;
     protected Boolean first_time = true;
     Exercise current_exercise = new Exercise(0,0,0);
+    List<Integer> exercises_ids = new ArrayList<>();
 
     @Nullable
     @Override
@@ -164,8 +165,9 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
                                 }
-                                if(current_exercise.mul1 != 0){
+                                if(current_exercise.mul1 != 0 && !user.current_exercises.contains(current_exercise) && !exercises_ids.contains(current_exercise.exercise_id)){
                                     user.current_exercises.add(current_exercise);
+                                    exercises_ids.add(current_exercise.exercise_id);
                                 }
                             }
                             if(keyNode.getKey().equals("undefined_exercises")){
@@ -197,8 +199,9 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
                                 }
-                                if(current_exercise.mul1 != 0){
+                                if(current_exercise.mul1 != 0 && !user.undefined_exercises.contains(current_exercise) && !exercises_ids.contains(current_exercise.exercise_id)){
                                     user.undefined_exercises.add(current_exercise);
+                                    exercises_ids.add(current_exercise.exercise_id);
                                 }
                             }
                             if(keyNode.getKey().equals("unknown_exercises")){
@@ -230,8 +233,9 @@ public class HomeFragment extends Fragment {
                                         }
                                     }
                                 }
-                                if(current_exercise.mul1 != 0){
+                                if(current_exercise.mul1 != 0 && !user.unknown_exercises.contains(current_exercise) && !exercises_ids.contains(current_exercise.exercise_id)){
                                     user.unknown_exercises.add(current_exercise);
+                                    exercises_ids.add(current_exercise.exercise_id);
                                 }
                             }
                         }
