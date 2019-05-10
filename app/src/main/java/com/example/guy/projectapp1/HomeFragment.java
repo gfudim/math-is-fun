@@ -23,9 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 import io.paperdb.Paper;
 
@@ -44,12 +43,13 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        user.last_login = System.currentTimeMillis();
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         startBtn = view.findViewById(R.id.StartBtn);
-        if(user.mode == SINGLE_MODE && (user.id_data_base == null || user.id_data_base == "")){
+        if(user.mode == SINGLE_MODE && (user.id_data_base == null || user.id_data_base.equals(""))){
             user.id_data_base = String.format("%s",id_for_user);
             id_for_user++;
+            user.last_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
+
         }
         if (user.mode == MULTI_MODE){
             reff = FirebaseDatabase.getInstance().getReference().child("user").child(user.id_data_base);
@@ -62,6 +62,7 @@ public class HomeFragment extends Fragment {
                         FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
                         user.id_data_base = user_loggin.getUid();
                         user.email = user_loggin.getEmail();
+                        user.last_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
                         user.exerciseGroupWithMaxVar();
                     }
                 }

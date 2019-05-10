@@ -83,8 +83,13 @@ public class TrainPage extends Utils {
         answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    user_answer =  Integer.parseInt(answer.getText().toString());
-                    handleAnswer();
+                    try{
+                        user_answer =  Integer.parseInt(answer.getText().toString());
+                        handleAnswer();
+                    }
+                    catch (NumberFormatException ex){
+                    }
+
                 }
                 UIUtil.showKeyboard(TrainPage.this,answer);
                 return true;

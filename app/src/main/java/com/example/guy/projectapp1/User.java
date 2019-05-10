@@ -1,6 +1,8 @@
 package com.example.guy.projectapp1;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
@@ -28,7 +30,7 @@ class User{
     int days_in_row;
     int tests_in_row;
     long first_login;
-    long last_login;
+    String last_login;
     long start_session_time;
     long start_exercise;
     long end_exercise;
@@ -51,7 +53,7 @@ class User{
         this.lang = Utils.DEFAULT_LANG;
         this.session_type = Utils.SEARCH_MODE;
         this.first_login = System.currentTimeMillis();
-        this.last_login = first_login;
+        this.last_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
         this.session_done = false;
         this.name = "";
         this.email = "";
@@ -70,7 +72,7 @@ class User{
         this.correct_answers = 0;
         this.wrong_answers = 0;
         this.total_answers = 0;
-        this.max_correct_tests_in_row = 0;
+        int max_correct_tests_in_row = 0;
         this.current_correct_tests_in_row = 0;
         this.count_tests = 0;
         this.current_count_points_per_day = 0;
@@ -294,7 +296,7 @@ class User{
         return sum_var;
     }
 
-    public void updateTrophies() {//TODO - delete only for debugging
+    private void updateTrophies() {//TODO - delete only for debugging
         this.days_in_row=14;
         this.max_points_per_day=3000;
         this.tests_in_row=4;
