@@ -8,111 +8,10 @@ import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
 import static com.example.guy.projectapp1.Utils.optional_exercises;
-import static com.example.guy.projectapp1.Utils.user;
 import static com.example.guy.projectapp1.Utils.NUM_OF_EXERCISES_IN_SESSION;
 import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
 
-//
-//    public void setCorrectAnswers(int correct_answers) {
-//        this.correct_answers = correct_answers;
-//    }
-//
-//    public void setWrongAnswers(int wrong_answers) {
-//        this.wrong_answers = wrong_answers;
-//    }
-//
-//    public void setTotalAnswers(int total_answers) {
-//        this.total_answers = total_answers;
-//    }
-//
-//    public void setMode(int mode) {
-//        this.mode = mode;
-//    }
-//
-//    public void setLang(int lang) {
-//        this.lang = lang;
-//    }
-//
-//    public void setAge(int age) {
-//        this.age = age;
-//    }
-//
-//    public void setSessionType(int session_type) {
-//        this.session_type = session_type;
-//    }
-//
-//    public void setMaxCorrectTestsInRow(int max_correct_tests_in_row) {
-//        this.max_correct_tests_in_row = max_correct_tests_in_row;
-//    }
-//
-//    public void setCurrentCorrectTestsInRow(int current_correct_tests_in_row) {
-//        this.current_correct_tests_in_row = current_correct_tests_in_row;
-//    }
-//
-//    public void setCountTests(int count_tests) {
-//        this.count_tests = count_tests;
-//    }
-//
-//    public void setCurrentCountPointsPerDay(int current_count_points_per_day) {
-//        this.current_count_points_per_day = current_count_points_per_day;
-//    }
-//
-//    public void setMaxPointsPerDay(int max_points_per_day) {
-//        this.max_points_per_day = max_points_per_day;
-//    }
-//
-//    public void setFirstLogin(long first_login) {
-//        this.first_login = first_login;
-//    }
-//
-//    public void setLastLogin(long last_login) {
-//        this.last_login = last_login;
-//    }
-//
-//    public void setStartSessionTime(long start_session_time) {
-//        this.start_session_time = start_session_time;
-//    }
-//
-//    public void setStartExercise(long start_exercise) {
-//        this.start_exercise = start_exercise;
-//    }
-//
-//    public void setEndExercise(long end_exercise) {
-//        this.end_exercise = end_exercise;
-//    }
-//
-//    public void setSessionDone(boolean session_done) {
-//        this.session_done = session_done;
-//    }
-//
-//    public void setStartPage(boolean start_page) {
-//        this.start_page = start_page;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-//
-//    public void setIdDataBase(String id_data_base) {
-//        this.id_data_base = id_data_base;
-//    }
-//
-//    public void setKnownExercises(ArrayList<Exercise> known_exercises) {
-//        this.known_exercises = known_exercises;
-//    }
-//
-//    public void setUnknownExercises(ArrayList<Exercise> unknown_exercises) {
-//        this.unknown_exercises = unknown_exercises;
-//    }
-//
-//    public void setUndefinedExercises(ArrayList<Exercise> undefined_exercises) {
-//        this.undefined_exercises = undefined_exercises;
-//    }
-//
-//    public void setCurrentExercises(ArrayList<Exercise> current_exercises) {
-//        this.current_exercises = current_exercises;
-//    }
-//
+
 class User{
 
     int correct_answers;
@@ -142,6 +41,7 @@ class User{
 
     String name;
     String id_data_base;
+    String email;
     ArrayList<Exercise> known_exercises;
     ArrayList<Exercise> unknown_exercises;
     ArrayList<Exercise> undefined_exercises;
@@ -155,6 +55,7 @@ class User{
         this.last_login = first_login;
         this.session_done = false;
         this.name = "";
+        this.email = "";
         this.id_data_base = "";
         this.age = 0;
         this.start_page = true;
@@ -164,8 +65,6 @@ class User{
         this.search_exercises_done = false;
         init();
     }
-
-    // User() {}
 
     private void init(){
         int id = 0;
@@ -395,7 +294,4 @@ class User{
         this.max_points_per_day=3000;
         this.tests_in_row=4;
     }
-//    protected void setUserInformation(User user){
-//
-//    }
 }

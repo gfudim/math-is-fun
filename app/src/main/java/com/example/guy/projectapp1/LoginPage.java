@@ -68,6 +68,7 @@ public class LoginPage extends Utils {
             if(resultCode == RESULT_OK){
                 FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
                 user.id_data_base = user_loggin.getUid();
+                user.email = user_loggin.getEmail();
                 saveUserToDevice(user);
                 saveUser(user);
                 startActivity(new Intent(LoginPage.this, MainActivity.class));

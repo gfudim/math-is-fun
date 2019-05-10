@@ -66,8 +66,41 @@ public class SettingsFragment extends Fragment {
         singleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.mode = SINGLE_MODE;
-                startActivity(new Intent(getActivity(), MainActivity.class));
+                Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setCancelable(true);
+                builder.setTitle(context.getString(R.string.signout_notice));
+                builder.setMessage(context.getString(R.string.signout_warning));
+                builder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        AuthUI.getInstance()
+                                .signOut(getActivity())
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        databaseUsers = FirebaseDatabase.getInstance().getReference("user");
+                                        databaseUsers.child(user.id_data_base).setValue(user);
+                                        user = new User(SINGLE_MODE);
+                                        btn_sign_out.setEnabled(false);
+                                        btn_sign_out.getCompoundDrawables()[1].setAlpha(128);
+                                        startActivity(new Intent(getActivity(), MainActivity.class));
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getActivity(), ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                builder.show();
             }
         });
 
