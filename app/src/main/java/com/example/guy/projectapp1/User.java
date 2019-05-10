@@ -127,6 +127,7 @@ class User{
     int count_tests;
     int current_count_points_per_day;
     int max_points_per_day;
+    int total_points;
     int last_day_of_session;
     int days_in_row;
     int tests_in_row;
@@ -176,6 +177,7 @@ class User{
         this.count_tests = 0;
         this.current_count_points_per_day = 0;
         this.max_points_per_day = 0;
+        this.total_points=0;
         this.known_exercises = new ArrayList<>();
         this.unknown_exercises = new ArrayList<>();
         this.undefined_exercises = new ArrayList<>();
@@ -243,7 +245,9 @@ class User{
         this.total_answers = this.correct_answers + this.wrong_answers;
         if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
-            this.current_count_points_per_day += calculatePoints(user_answer_time);
+            int points=calculatePoints(user_answer_time);
+            this.current_count_points_per_day += points;
+            this.total_points+=points;
             if(this.current_count_points_per_day>this.max_points_per_day){
                 this.max_points_per_day=this.current_count_points_per_day;
             }

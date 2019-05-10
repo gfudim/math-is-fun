@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
             user.id_data_base = String.format("%s",id_for_user);
             id_for_user++;
         }
-        if (user.mode == MULTI_MODE){//TODO - added a false to bypass the crash on database.getReference(user_path);
+        if (user.mode == MULTI_MODE){
             reff = FirebaseDatabase.getInstance().getReference().child("user").child(user.id_data_base);
             reff.addValueEventListener(new ValueEventListener() {
                 @Override
