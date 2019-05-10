@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
@@ -26,13 +24,10 @@ import java.util.Calendar;
 
 import io.paperdb.Paper;
 
-import static android.content.ContentValues.TAG;
-
 public class SearchPage extends Utils {
     TextView submit;
     TextView dont_know;
     EditText answer;
-    private DatabaseReference databaseUsers;
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
     int user_answer = 0;
@@ -180,15 +175,6 @@ public class SearchPage extends Utils {
         user.session_done = true;
         user.session_type = TRAIN_MODE;
         user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        saveUser(user);
-        databaseUsers = FirebaseDatabase.getInstance().getReference("user");
-        if (user.mode == MULTI_MODE){
-            databaseUsers.child(user.id_data_base).setValue(user);
-        }
-        else{
-            String id = databaseUsers.push().getKey();
-            databaseUsers.child(id).setValue(user);
-        }
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
         Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);

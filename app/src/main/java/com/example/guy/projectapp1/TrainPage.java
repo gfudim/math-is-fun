@@ -8,8 +8,6 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -18,20 +16,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.Calendar;
 
 import io.paperdb.Paper;
-
-import static android.content.ContentValues.TAG;
 
 
 public class TrainPage extends Utils {
@@ -194,10 +185,6 @@ public class TrainPage extends Utils {
         user.session_done = true;
         user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         user.session_type = SEARCH_MODE;
-        saveUser(user);
-        databaseUsers = FirebaseDatabase.getInstance().getReference("user");
-        String id = databaseUsers.push().getKey();
-        databaseUsers.child(id).setValue(user);
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);

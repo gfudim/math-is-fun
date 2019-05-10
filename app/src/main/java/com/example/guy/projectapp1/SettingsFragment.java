@@ -66,7 +66,7 @@ public class SettingsFragment extends Fragment {
         singleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.mode = SINGLE_MODE;
+                user = new User(SINGLE_MODE);
                 startActivity(new Intent(getActivity(), MainActivity.class));
             }
         });
@@ -74,7 +74,7 @@ public class SettingsFragment extends Fragment {
         multiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                user.mode = MULTI_MODE;
+                user = new User(MULTI_MODE);
                 startActivity(new Intent(getActivity(), LoginPage.class));
             }
         });

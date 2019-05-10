@@ -30,8 +30,8 @@ public class LoginPage extends Utils {
         switch_to_single_user_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                user.mode = SINGLE_MODE;
-                saveUser(user);
+                user = new User(SINGLE_MODE);
+                saveUserToDevice(user);
                 Intent intent = new Intent(LoginPage.this, MainActivity.class);
                 intent.putExtra("new_connection",true);
                 startActivity(intent);
@@ -68,6 +68,8 @@ public class LoginPage extends Utils {
             if(resultCode == RESULT_OK){
                 FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
                 user.id_data_base = user_loggin.getUid();
+                saveUserToDevice(user);
+                saveUser(user);
                 startActivity(new Intent(LoginPage.this, MainActivity.class));
                 finish();
             }
