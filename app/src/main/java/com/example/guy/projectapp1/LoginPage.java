@@ -73,9 +73,6 @@ public class LoginPage extends Utils {
                 startActivity(new Intent(LoginPage.this, MainActivity.class));
                 finish();
             }
-            else{
-                Toast.makeText(this,""+response.getError().getMessage(), Toast.LENGTH_SHORT).show();
-            }
         }
     }
 
