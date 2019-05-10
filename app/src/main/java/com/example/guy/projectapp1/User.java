@@ -1,8 +1,5 @@
 package com.example.guy.projectapp1;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-
 import java.util.ArrayList;
 import java.util.Random;
 

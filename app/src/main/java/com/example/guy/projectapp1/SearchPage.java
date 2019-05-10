@@ -124,27 +124,6 @@ public class SearchPage extends Utils {
         UIUtil.showKeyboard(this,answer);
     }
 
-//    @Override
-//    public boolean onKeyUp(int keyCode, KeyEvent event){
-//        Toast.makeText(this, "1111", Toast.LENGTH_LONG);
-//        Toast.makeText(this, String.format("%s",keyCode), Toast.LENGTH_LONG);
-//        switch (keyCode) {
-//            case KeyEvent.KEYCODE_0:
-//            case KeyEvent.KEYCODE_1:
-//            case KeyEvent.KEYCODE_2:
-//            case KeyEvent.KEYCODE_3:
-//            case KeyEvent.KEYCODE_4:
-//            case KeyEvent.KEYCODE_5:
-//            case KeyEvent.KEYCODE_6:
-//            case KeyEvent.KEYCODE_7:
-//            case KeyEvent.KEYCODE_8:
-//            case KeyEvent.KEYCODE_9:
-//                Toast.makeText(this, "!!!PRESSED!!!", Toast.LENGTH_LONG);
-//                return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
-
     public void time_for_answer_search(View view){
         start_input_answer = System.currentTimeMillis();
         UIUtil.showKeyboard(SearchPage.this,answer);
@@ -212,8 +191,26 @@ public class SearchPage extends Utils {
 
     @Override
     public void onBackPressed() {
-        saveUser(user);
-        search_counter.cancel();
-        finish();
+        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        // TODO - switch to correct strings
+        builder.setTitle(context.getString(R.string.reset_notice));
+        builder.setMessage(context.getString(R.string.reset_warning));
+        builder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                saveUser(user);
+                search_counter.cancel();
+                finish();
+            }
+        });
+        builder.show();
     }
 }
