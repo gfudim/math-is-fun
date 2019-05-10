@@ -10,7 +10,7 @@ class Exercise {
     long time_answered;
     boolean displayed_today;
 
-    Exercise(){ }
+    Exercise(){} // for loading user from firebase
 
     Exercise(int i, int j, int id){
         mul1 = i;
@@ -22,7 +22,6 @@ class Exercise {
         time_answered = 0;
         displayed_today = false;
     }
-    // Exercise(){}
 
     int result(){
         return mul1*mul2;

@@ -92,27 +92,6 @@ public class TrainPage extends Utils {
         });
     }
 
-//    @Override
-//    public boolean onKeyUp(int keyCode, KeyEvent event){
-//        Toast.makeText(this, "1111", Toast.LENGTH_LONG);
-//        Toast.makeText(this, String.format("%s",keyCode), Toast.LENGTH_LONG);
-//        switch (keyCode) {
-//            case KeyEvent.KEYCODE_0:
-//            case KeyEvent.KEYCODE_1:
-//            case KeyEvent.KEYCODE_2:
-//            case KeyEvent.KEYCODE_3:
-//            case KeyEvent.KEYCODE_4:
-//            case KeyEvent.KEYCODE_5:
-//            case KeyEvent.KEYCODE_6:
-//            case KeyEvent.KEYCODE_7:
-//            case KeyEvent.KEYCODE_8:
-//            case KeyEvent.KEYCODE_9:
-//                Toast.makeText(this, "!!!PRESSED!!!", Toast.LENGTH_LONG);
-//                return true;
-//        }
-//        return super.onKeyDown(keyCode, event);
-//    }
-
     public void handleAnswer(){
         exercise.time_answered = System.currentTimeMillis();
         if ((exercise.time_answered - exercise.time_displayed)/1000 > MAX_TIME_TO_ANSWER){

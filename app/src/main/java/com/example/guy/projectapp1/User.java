@@ -44,7 +44,7 @@ class User{
     ArrayList<Exercise> undefined_exercises;
     ArrayList<Exercise> current_exercises;
 
-    User(){  }
+    User(){} //for loading user from firebase
 
     User(int user_mode){
         this.mode = user_mode;

@@ -40,9 +40,6 @@ public class HomeFragment extends Fragment {
     Button startBtn;
     Boolean cleaned_exercises = false;
     private DatabaseReference reff;
-    protected Boolean first_time = true;
-    Exercise current_exercise = new Exercise(0,0,0);
-    List<Integer> exercises_ids = new ArrayList<>();
 
     @Nullable
     @Override
