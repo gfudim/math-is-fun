@@ -29,11 +29,10 @@ class User{
     int last_day_of_session;
     int days_in_row;
     int tests_in_row;
-    long first_login;
+    String first_login;
     String last_login;
-    long start_session_time;
-    long start_exercise;
-    long end_exercise;
+    String start_session_time;
+    String end_session_time;
     boolean session_done;
     boolean start_page;  //true if last page was the main menu - for the "back" option
     boolean search_exercises_done;
@@ -52,7 +51,7 @@ class User{
         this.mode = user_mode;
         this.lang = Utils.DEFAULT_LANG;
         this.session_type = Utils.SEARCH_MODE;
-        this.first_login = System.currentTimeMillis();
+        this.first_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
         this.last_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
         this.session_done = false;
         this.name = "";
@@ -133,7 +132,6 @@ class User{
     void setAnswer(Exercise exercise, int answer){
         int user_answer_time;
         exercise.time_answered = System.currentTimeMillis();
-        this.end_exercise = exercise.time_answered;
         if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             exercise.count_correct_answers++;
             this.correct_answers++;
@@ -296,7 +294,7 @@ class User{
         return sum_var;
     }
 
-    private void updateTrophies() {//TODO - delete only for debugging
+    public void updateTrophies() {//TODO - delete only for debugging
         this.days_in_row=14;
         this.max_points_per_day=3000;
         this.tests_in_row=4;

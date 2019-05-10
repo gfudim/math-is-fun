@@ -16,10 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import io.paperdb.Paper;
@@ -63,7 +62,7 @@ public class TrainPage extends Utils {
                     }
                 }.start();
                 showExercise(exercise);
-                user.start_session_time = System.currentTimeMillis();
+                user.start_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
             }
         });
         UIUtil.showKeyboard(this,answer);
@@ -160,15 +159,14 @@ public class TrainPage extends Utils {
         exercise_media = MediaPlayer.create(this, Utils.resID[exercise.exercise_id]);
         exercise_media.start();
         exercise.time_displayed = System.currentTimeMillis();
-        user.start_exercise = exercise.time_displayed;
         user_answer = 0;
     }
 
     public void testDone(){
-        DatabaseReference databaseUsers;
         user.session_done = true;
         user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         user.session_type = SEARCH_MODE;
+        user.end_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
@@ -208,6 +206,7 @@ public class TrainPage extends Utils {
         builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                user.end_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
                 saveUser(user);
                 train_counter.cancel();
                 finish();
