@@ -154,7 +154,6 @@ public class SearchPage extends Utils {
     }
 
     public void searchDoneToast(){
-        DatabaseReference databaseUsers;
         user.session_done = true;
         user.session_type = TRAIN_MODE;
         user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
