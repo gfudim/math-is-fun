@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,188 +59,13 @@ public class HomeFragment extends Fragment {
             reff.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if (first_time){
-                        first_time = false;
-                        List<String> keys = new ArrayList<>();
-                        List<String> values = new ArrayList<>();
-                        for(DataSnapshot keyNode : dataSnapshot.getChildren()){
-                            keys.add(keyNode.getKey());
-                            values.add(keyNode.getValue().toString());
-                            if(keyNode.getKey().equals("age")){
-                                user.age = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("correct_answers")){
-                                user.correct_answers = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("count_tests")){
-                                user.count_tests = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("current_correct_tests_in_row")){
-                                user.current_correct_tests_in_row = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("current_count_points_per_day")){
-                                user.current_count_points_per_day = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("days_in_row")){
-                                user.days_in_row = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("end_exercise")){
-                                user.end_exercise = Long.parseLong(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("first_login")){
-                                user.first_login = Long.parseLong(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("lang")){
-                                user.lang = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("last_day_of_session")){
-                                user.last_day_of_session = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("last_login")){
-                                user.last_login = Long.parseLong(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("max_correct_tests_in_row")){
-                                user.max_correct_tests_in_row = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("max_points_per_day")){
-                                user.max_points_per_day = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("mode")){
-                                user.mode = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("name")){
-                                user.name = keyNode.getValue().toString();
-                            }
-                            if(keyNode.getKey().equals("search_exercises_done")){
-                                user.search_exercises_done = Boolean.valueOf(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("session_done")){
-                                user.session_done = Boolean.valueOf(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("session_type")){
-                                user.session_type = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("start_exercise")){
-                                user.start_exercise = Long.parseLong(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("start_page")){
-                                user.start_page = Boolean.valueOf(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("start_session_time")){
-                                user.start_session_time = Long.parseLong(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("tests_in_row")){
-                                user.tests_in_row = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("total_answers")){
-                                user.total_answers = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("wrong_answers")){
-                                user.wrong_answers = Integer.parseInt(keyNode.getValue().toString());
-                            }
-                            if(keyNode.getKey().equals("current_exercises")){
-                                for(DataSnapshot ds: keyNode.getChildren()){
-                                    for(DataSnapshot ds2: ds.getChildren()){
-                                        if (ds2.getKey().equals("count_correct_answers")){
-                                            current_exercise.count_correct_answers = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds2.getKey().equals("count_wrong_answers")){
-                                            current_exercise.count_wrong_answers = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds2.getKey().equals("displayed_today")){
-                                            current_exercise.displayed_today = Boolean.valueOf(ds2.getValue().toString());
-                                        }
-                                        if (ds2.getKey().equals("exercise_id")){
-                                            current_exercise.exercise_id = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds2.getKey().equals("mul1")){
-                                            current_exercise.mul1 = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds2.getKey().equals("mul2")){
-                                            current_exercise.mul2 = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds2.getKey().equals("time_answered")){
-                                            current_exercise.time_answered = Long.parseLong(ds2.getValue().toString());
-                                        }
-                                        if (ds2.getKey().equals("time_displayed")){
-                                            current_exercise.time_displayed = Long.parseLong(ds2.getValue().toString());
-                                        }
-                                    }
-                                }
-                                if(current_exercise.mul1 != 0 && !user.current_exercises.contains(current_exercise) && !exercises_ids.contains(current_exercise.exercise_id)){
-                                    user.current_exercises.add(current_exercise);
-                                    exercises_ids.add(current_exercise.exercise_id);
-                                }
-                            }
-                            if(keyNode.getKey().equals("undefined_exercises")){
-                                for(DataSnapshot ds: keyNode.getChildren()){
-                                    for(DataSnapshot ds2: ds.getChildren()){
-                                        if (ds.getKey().equals("count_correct_answers")){
-                                            current_exercise.count_correct_answers = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("count_wrong_answers")){
-                                            current_exercise.count_wrong_answers = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("displayed_today")){
-                                            current_exercise.displayed_today = Boolean.valueOf(ds2.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("exercise_id")){
-                                            current_exercise.exercise_id = Integer.parseInt(ds.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("mul1")){
-                                            current_exercise.mul1 = Integer.parseInt(ds.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("mul2")){
-                                            current_exercise.mul2 = Integer.parseInt(ds.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("time_answered")){
-                                            current_exercise.time_answered = Long.parseLong(ds.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("time_displayed")){
-                                            current_exercise.time_displayed = Long.parseLong(ds.getValue().toString());
-                                        }
-                                    }
-                                }
-                                if(current_exercise.mul1 != 0 && !user.undefined_exercises.contains(current_exercise) && !exercises_ids.contains(current_exercise.exercise_id)){
-                                    user.undefined_exercises.add(current_exercise);
-                                    exercises_ids.add(current_exercise.exercise_id);
-                                }
-                            }
-                            if(keyNode.getKey().equals("unknown_exercises")){
-                                for(DataSnapshot ds: keyNode.getChildren()){
-                                    for(DataSnapshot ds2: ds.getChildren()){
-                                        if (ds.getKey().equals("count_correct_answers")){
-                                            current_exercise.count_correct_answers = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("count_wrong_answers")){
-                                            current_exercise.count_wrong_answers = Integer.parseInt(ds2.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("displayed_today")){
-                                            current_exercise.displayed_today = Boolean.valueOf(ds2.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("exercise_id")){
-                                            current_exercise.exercise_id = Integer.parseInt(ds.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("mul1")){
-                                            current_exercise.mul1 = Integer.parseInt(ds.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("mul2")){
-                                            current_exercise.mul2 = Integer.parseInt(ds.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("time_answered")){
-                                            current_exercise.time_answered = Long.parseLong(ds.getValue().toString());
-                                        }
-                                        if (ds.getKey().equals("time_displayed")){
-                                            current_exercise.time_displayed = Long.parseLong(ds.getValue().toString());
-                                        }
-                                    }
-                                }
-                                if(current_exercise.mul1 != 0 && !user.unknown_exercises.contains(current_exercise) && !exercises_ids.contains(current_exercise.exercise_id)){
-                                    user.unknown_exercises.add(current_exercise);
-                                    exercises_ids.add(current_exercise.exercise_id);
-                                }
-                            }
-                        }
+                    user = dataSnapshot.getValue(User.class);
+                    if (user == null){
+                        user = new User(MULTI_MODE);
+                        FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
+                        user.id_data_base = user_loggin.getUid();
+                        user.email = user_loggin.getEmail();
+                        user.exerciseGroupWithMaxVar();
                     }
                 }
                 @Override

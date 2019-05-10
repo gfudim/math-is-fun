@@ -33,7 +33,7 @@ public class Utils extends AppCompatActivity {
     protected static int SEARCH_MODE = 0;
     protected static int TRAIN_MODE = 1;
     protected static User user;
-    protected static DatabaseReference databaseUsers;
+    protected static DatabaseReference reff;
     protected static int id_for_user = 0;
     protected static long SESSION_MILLI_DURATION = 20000; // todo - change to 3 minutes - 180000
     protected static int optional_exercises = 1000;
@@ -54,10 +54,14 @@ public class Utils extends AppCompatActivity {
             R.raw.ex8times8, R.raw.ex8times9,
             R.raw.ex9times9};
 
-    public void saveUser(User user){
-        databaseUsers = FirebaseDatabase.getInstance().getReference("user");
-        databaseUsers.child(user.id_data_base).setValue(user);
+    public void saveUser(User current_user){
+        reff = FirebaseDatabase.getInstance().getReference("user");
+        if (current_user.mode == SINGLE_MODE) {
+            current_user.id_data_base = String.format("%s", id_for_user);
+        }
+        reff.child(current_user.id_data_base).setValue(current_user);
     }
+
     public void saveUserToDevice(User user){
         FileOutputStream fos;
         Gson gson = new Gson();
@@ -90,7 +94,6 @@ public class Utils extends AppCompatActivity {
 
         } catch (FileNotFoundException e) {
             user = new User(-1);
-//            saveUser(user);
         } catch (IOException e) {
             e.printStackTrace();
         }

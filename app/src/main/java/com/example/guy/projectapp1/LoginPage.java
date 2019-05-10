@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -70,7 +69,6 @@ public class LoginPage extends Utils {
                 user.id_data_base = user_loggin.getUid();
                 user.email = user_loggin.getEmail();
                 saveUserToDevice(user);
-                saveUser(user);
                 startActivity(new Intent(LoginPage.this, MainActivity.class));
                 finish();
             }

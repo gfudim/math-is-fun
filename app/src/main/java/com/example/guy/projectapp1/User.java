@@ -44,6 +44,8 @@ class User{
     ArrayList<Exercise> undefined_exercises;
     ArrayList<Exercise> current_exercises;
 
+    User(){  }
+
     User(int user_mode){
         this.mode = user_mode;
         this.lang = Utils.DEFAULT_LANG;
@@ -102,12 +104,12 @@ class User{
         }
         else if(this.session_type == Utils.SEARCH_MODE){
             if (rand.nextInt(100) < 25 || this.search_exercises_done){  //from group A
-                if (this.known_exercises.size() > 0) {
+                if (this.known_exercises != null && this.known_exercises.size() > 0) {
                     return this.known_exercises.get(rand.nextInt(this.known_exercises.size()));
                 }
             }
             if (this.current_exercises.size() > 0){
-                exercise =this. current_exercises.get(rand.nextInt(this.current_exercises.size()));
+                exercise = this.current_exercises.get(rand.nextInt(this.current_exercises.size()));
                 if (this.undefined_exercises.size() > 0){
                     while (checkExerciseInGroup(this.unknown_exercises, exercise) && counter < 16){ // show user only exercises from group C in search mode
                         exercise = this.current_exercises.get(rand.nextInt(this.current_exercises.size()));
@@ -115,10 +117,10 @@ class User{
                     }
                     return exercise;
                 }
-                else if (this.known_exercises.size() > 0) {
+                else if (this.known_exercises != null && this.known_exercises.size() > 0) {
                     return this.known_exercises.get(rand.nextInt(this.known_exercises.size()));
                 }
-                else{
+                else if(this.unknown_exercises != null){
                     return this.unknown_exercises.get(rand.nextInt(this.unknown_exercises.size())); // backup if everyone is in B
                 }
             }
@@ -216,6 +218,9 @@ class User{
 
     private Boolean checkExerciseInGroup(ArrayList<Exercise> group, Exercise exercise){
         Exercise temp_exercise;
+        if (group == null){
+            return false;
+        }
         for(int i=0; i<group.size();i++){
             temp_exercise = group.get(i);
             if(temp_exercise.mul1 == exercise.mul1 && temp_exercise.mul2 == exercise.mul2){
@@ -226,6 +231,9 @@ class User{
     }
 
     private Boolean checkAllExercisesInGroup(ArrayList<Exercise> group, ArrayList<Exercise> exercises){
+        if (group == null){
+            return false;
+        }
         int count_exercises = 0;
         for(int i=0; i<exercises.size();i++) {
             for (int j = 0; j < group.size(); j++) {

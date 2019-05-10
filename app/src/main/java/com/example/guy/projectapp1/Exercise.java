@@ -10,6 +10,8 @@ class Exercise {
     long time_answered;
     boolean displayed_today;
 
+    Exercise(){ }
+
     Exercise(int i, int j, int id){
         mul1 = i;
         mul2 = j;
