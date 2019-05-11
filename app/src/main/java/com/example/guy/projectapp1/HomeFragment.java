@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,15 +22,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import io.paperdb.Paper;
 
-import static android.content.ContentValues.TAG;
 import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
+import static com.example.guy.projectapp1.Utils.simpleDateFormat;
 import static com.example.guy.projectapp1.Utils.user;
 import static com.example.guy.projectapp1.Utils.id_for_user;
 
@@ -48,8 +46,6 @@ public class HomeFragment extends Fragment {
         if(user.mode == SINGLE_MODE && (user.id_data_base == null || user.id_data_base.equals(""))){
             user.id_data_base = String.format("%s",id_for_user);
             id_for_user++;
-            user.last_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
-
         }
         if (user.mode == MULTI_MODE){
             reff = FirebaseDatabase.getInstance().getReference().child("user").child(user.id_data_base);
@@ -60,9 +56,9 @@ public class HomeFragment extends Fragment {
                     if (user == null){
                         user = new User(MULTI_MODE);
                         FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
+                        assert user_loggin != null;
                         user.id_data_base = user_loggin.getUid();
                         user.email = user_loggin.getEmail();
-                        user.last_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
                         user.exerciseGroupWithMaxVar();
                     }
                 }
@@ -72,6 +68,7 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+        user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
         // changes the language
         updateView((String) Paper.book().read("language"));
 
@@ -96,11 +93,9 @@ public class HomeFragment extends Fragment {
                         user.search_exercises_done = false;
                         cleaned_exercises = false;
                         user.exerciseGroupWithMaxVar();
-                        Log.e(TAG,"Starting Search Activity");
                         in = new Intent(getActivity(), SearchPage.class);
                     }
                     else{ //user.session_type = TRAIN_MODE;
-                        Log.e(TAG,"Starting Training Activity");
                         in = new Intent(getActivity(), TrainPage.class);
                     }
                     startActivity(in);

@@ -20,4 +20,8 @@
     <string name="hello">مرحبا</string>
     <string name="signout_notice">بصدد الخروج</string>
     <string name="signout_warning">هل أنت متأكد أنك تريد الخروج؟</string>
+    <string name="training_over_today">11</string>
+    <string name="well_done">22</string>
+    <string name="more_work">33</string>
+    <string name="dont_know">4234</string>
 </resources>

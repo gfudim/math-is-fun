@@ -16,11 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import io.paperdb.Paper;
@@ -44,7 +41,7 @@ public class SearchPage extends Utils {
         answer = findViewById(R.id.InputEditText);
         updateView();
         showExercise(exercise);
-        user.start_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
+        user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
         UIUtil.showKeyboard(this,answer);
         Button submitBtn = (Button)submit; // save the button for reference
         Button dontKnowBtn=(Button)dont_know;
@@ -74,7 +71,7 @@ public class SearchPage extends Utils {
                        user_answer = Integer.parseInt(answer.getText().toString());
                        handleAnswer();
                    }
-                   catch (NumberFormatException ex){}
+                   catch (NumberFormatException ignored){}
                 }
                 UIUtil.showKeyboard(SearchPage.this,answer);
                 return true;
@@ -122,7 +119,7 @@ public class SearchPage extends Utils {
                     showExercise(exercise);
                 }
             }
-            catch (NumberFormatException ex) {
+            catch (NumberFormatException ignored) {
             }
         }
         UIUtil.showKeyboard(this,answer);
@@ -166,7 +163,7 @@ public class SearchPage extends Utils {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                user.end_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
+                user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
                 saveUser(user);
                 finish();
             }
@@ -209,7 +206,7 @@ public class SearchPage extends Utils {
         builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                user.end_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
+                user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
                 saveUser(user);
                 search_counter.cancel();
                 finish();

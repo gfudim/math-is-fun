@@ -20,4 +20,8 @@
     <string name="hello">Привет</string>
     <string name="signout_notice">О выходе</string>
     <string name="signout_warning">выходе</string>
+    <string name="training_over_today">111</string>
+    <string name="well_done">222</string>
+    <string name="more_work">333</string>
+    <string name="dont_know">54353</string>
 </resources>

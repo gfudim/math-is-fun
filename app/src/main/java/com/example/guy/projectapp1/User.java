@@ -1,6 +1,5 @@
 package com.example.guy.projectapp1;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -9,6 +8,7 @@ import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
 import static com.example.guy.projectapp1.Utils.optional_exercises;
 import static com.example.guy.projectapp1.Utils.NUM_OF_EXERCISES_IN_SESSION;
 import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
+import static com.example.guy.projectapp1.Utils.simpleDateFormat;
 
 
 class User{
@@ -51,8 +51,8 @@ class User{
         this.mode = user_mode;
         this.lang = Utils.DEFAULT_LANG;
         this.session_type = Utils.SEARCH_MODE;
-        this.first_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
-        this.last_login = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
+        this.first_login = simpleDateFormat.format(Calendar.getInstance().getTime());
+        this.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
         this.session_done = false;
         this.name = "";
         this.email = "";

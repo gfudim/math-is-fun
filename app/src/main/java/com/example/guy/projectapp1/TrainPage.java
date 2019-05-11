@@ -62,7 +62,7 @@ public class TrainPage extends Utils {
                     }
                 }.start();
                 showExercise(exercise);
-                user.start_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
+                user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
             }
         });
         UIUtil.showKeyboard(this,answer);
@@ -86,7 +86,7 @@ public class TrainPage extends Utils {
                         user_answer =  Integer.parseInt(answer.getText().toString());
                         handleAnswer();
                     }
-                    catch (NumberFormatException ex){
+                    catch (NumberFormatException ignored){
                     }
 
                 }
@@ -122,7 +122,7 @@ public class TrainPage extends Utils {
                     showExercise(exercise);
                 }
             }
-            catch(NumberFormatException ex){
+            catch(NumberFormatException ignored){
             }
         }
         UIUtil.showKeyboard(this,answer);
@@ -166,7 +166,7 @@ public class TrainPage extends Utils {
         user.session_done = true;
         user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         user.session_type = SEARCH_MODE;
-        user.end_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
+        user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
@@ -206,7 +206,7 @@ public class TrainPage extends Utils {
         builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                user.end_session_time = new SimpleDateFormat("dd/MM/yyyy_HH:mm").format(Calendar.getInstance().getTime());
+                user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
                 saveUser(user);
                 train_counter.cancel();
                 finish();

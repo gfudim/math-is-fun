@@ -19,6 +19,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 
 import io.paperdb.Paper;
 
@@ -53,6 +54,9 @@ public class Utils extends AppCompatActivity {
             R.raw.ex7times7, R.raw.ex7times8, R.raw.ex7times9,
             R.raw.ex8times8, R.raw.ex8times9,
             R.raw.ex9times9};
+
+    protected static String pattern = "dd/MM/yyyy_HH:mm";
+    protected static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 
     public void saveUser(User current_user){
         reff = FirebaseDatabase.getInstance().getReference("user");

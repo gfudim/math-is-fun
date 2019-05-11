@@ -24,4 +24,7 @@
     <string name="signout_notice">עומדים להתנתק</string>
     <string name="signout_warning">בטוח להתנתק?</string>
     <string name="training_over_today">האימון הסתיים להיום</string>
+    <string name="well_done">כל הכבוד!</string>
+    <string name="more_work">צריך עוד קצת אימון</string>
+    <string name="dont_know">לא יודע</string>
 </resources>
