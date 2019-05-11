@@ -190,13 +190,12 @@ public class TrainPage extends Utils {
     }
 
     @Override
-    public void onBackPressed() { // TODO - add toast for conformation if user wants to exit test - need to check
+    public void onBackPressed() {
         Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
-        // TODO - switch to correct strings
-        builder.setTitle(context.getString(R.string.reset_notice));
-        builder.setMessage(context.getString(R.string.reset_warning));
+        builder.setTitle(context.getString(R.string.exit_session));
+        builder.setMessage(context.getString(R.string.exit_session_warning));
         builder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

@@ -24,4 +24,6 @@
     <string name="well_done">222</string>
     <string name="more_work">333</string>
     <string name="dont_know">54353</string>
+    <string name="exit_session_warning">44345</string>
+    <string name="exit_session">323</string>
 </resources>
