@@ -37,7 +37,6 @@ import static com.example.guy.projectapp1.Utils.id_for_user;
 public class HomeFragment extends Fragment {
     Button startBtn;
     Boolean cleaned_exercises = false;
-    private DatabaseReference reff;
 
     @Nullable
     @Override
@@ -47,27 +46,6 @@ public class HomeFragment extends Fragment {
         if(user.mode == SINGLE_MODE && (user.id_data_base == null || user.id_data_base.equals(""))){
             user.id_data_base = String.format("%s",id_for_user);
             id_for_user++;
-        }
-        if (user.mode == MULTI_MODE){
-            reff = FirebaseDatabase.getInstance().getReference().child("user").child(user.id_data_base);
-            reff.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    user = dataSnapshot.getValue(User.class);
-                    if (user == null){
-                        user = new User(MULTI_MODE);
-                        FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
-                        assert user_loggin != null;
-                        user.id_data_base = user_loggin.getUid();
-                        user.email = user_loggin.getEmail();
-                        user.exerciseGroupWithMaxVar();
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                }
-            });
         }
         user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
         // changes the language
