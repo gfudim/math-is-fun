@@ -82,6 +82,11 @@ public class TrainPage extends Utils {
                         res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
                         res.setTextColor(Color.BLACK);
                         res.setTextSize(16);
+                        if(user.session_done){
+                            user.setEndSession();
+                            saveUser(user);
+                            testDoneToast();
+                        }
                     }
                     public void onFinish() {
                         user.setEndSession();
