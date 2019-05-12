@@ -57,6 +57,7 @@ public class Utils extends AppCompatActivity {
 
     protected static String pattern = "dd/MM/yyyy_HH:mm";
     protected static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+    protected static SimpleDateFormat day_format = new SimpleDateFormat("dd/MM/yyyy");
 
     public void saveUser(User current_user){
         reff = FirebaseDatabase.getInstance().getReference("user");

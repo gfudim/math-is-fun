@@ -29,6 +29,7 @@ import io.paperdb.Paper;
 import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
+import static com.example.guy.projectapp1.Utils.day_format;
 import static com.example.guy.projectapp1.Utils.simpleDateFormat;
 import static com.example.guy.projectapp1.Utils.user;
 import static com.example.guy.projectapp1.Utils.id_for_user;
@@ -77,8 +78,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in;
-                if((user.session_done || user.last_day_of_session == (Calendar.getInstance().get(Calendar.DAY_OF_WEEK))) && false){ // TODO - remove last false condition(only for debug)
-                    // TODO - if the user doesn't connect for a week, his problem - don't care now...
+                if((user.session_done || user.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime()))) && false){ // TODO - remove last false condition(only for debug)
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
                     if (cleaned_exercises){

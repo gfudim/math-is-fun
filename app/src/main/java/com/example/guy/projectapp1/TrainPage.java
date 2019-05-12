@@ -164,7 +164,7 @@ public class TrainPage extends Utils {
 
     public void testDone(){
         user.session_done = true;
-        user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        user.last_day_of_session = day_format.format(Calendar.getInstance().getTime());
         user.session_type = SEARCH_MODE;
         user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);

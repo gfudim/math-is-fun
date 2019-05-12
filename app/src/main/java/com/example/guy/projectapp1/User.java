@@ -26,7 +26,7 @@ class User{
     int current_count_points_per_day;
     int max_points_per_day;
     int total_points;
-    int last_day_of_session;
+    String last_day_of_session;
     int days_in_row;
     int tests_in_row;
     String first_login;
@@ -59,7 +59,7 @@ class User{
         this.id_data_base = "";
         this.age = 0;
         this.start_page = true;
-        this.last_day_of_session = 0;
+        this.last_day_of_session = "None";
         this.days_in_row=0;
         this.tests_in_row=0;
         this.search_exercises_done = false;

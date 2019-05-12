@@ -153,7 +153,7 @@ public class SearchPage extends Utils {
     public void searchDoneToast(){
         user.session_done = true;
         user.session_type = TRAIN_MODE;
-        user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        user.last_day_of_session = day_format.format(Calendar.getInstance().getTime());
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
         Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
