@@ -18,15 +18,14 @@ import android.widget.Toast;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import io.paperdb.Paper;
 
 
 public class TrainPage extends Utils {
-    TextView submit;
-    EditText answer;
+    TextView submitBtnView;
+    EditText answerText;
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
     int user_answer = 0;
@@ -37,9 +36,36 @@ public class TrainPage extends Utils {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train);
-        submit = findViewById(R.id.SubmitBtn);
-        answer = findViewById(R.id.InputEditText);
+        submitBtnView = findViewById(R.id.SubmitBtn);
+        answerText = findViewById(R.id.InputEditText);
         updateView();
+        Button submitBtn = (Button) submitBtnView; // save the button for reference
+        submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
+                                         @Override
+                                         public void onClick(View view) {
+                                             try{
+                                                 user_answer =  Integer.parseInt(answerText.getText().toString());
+                                                 handleAnswer();
+                                             }catch(NumberFormatException ex){ // if clicked submitBtn without input
+                                             }
+                                         }
+                                     }
+        );
+        answerText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                    try{
+                        user_answer =  Integer.parseInt(answerText.getText().toString());
+                        handleAnswer();
+                    }
+                    catch (NumberFormatException ignored){
+                    }
+
+                }
+                UIUtil.showKeyboard(TrainPage.this, answerText);
+                return true;
+            }
+        });
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
@@ -58,42 +84,18 @@ public class TrainPage extends Utils {
                         res.setTextSize(16);
                     }
                     public void onFinish() {
-                        testDone();
+                        user.setEndSession();
+                        saveUser(user);
+                        testDoneToast();
                     }
                 }.start();
                 showExercise(exercise);
                 user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
             }
         });
-        UIUtil.showKeyboard(this,answer);
+        UIUtil.showKeyboard(this, answerText);
         builder.show();
-        Button submitBtn = findViewById(R.id.SubmitBtn); // save the button for reference
-        submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
-            @Override
-            public void onClick(View view) {
-                try{
-                    user_answer =  Integer.parseInt(answer.getText().toString());
-                    handleAnswer();
-                }catch(NumberFormatException ex){ // if clicked submit without input
-                }
-            }
-        }
-        );
-        answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
-                    try{
-                        user_answer =  Integer.parseInt(answer.getText().toString());
-                        handleAnswer();
-                    }
-                    catch (NumberFormatException ignored){
-                    }
 
-                }
-                UIUtil.showKeyboard(TrainPage.this,answer);
-                return true;
-            }
-        });
     }
 
     public void handleAnswer(){
@@ -104,20 +106,17 @@ public class TrainPage extends Utils {
         else{
             try{
                 user.setAnswer(exercise, user_answer);
-                if (user_answer == (exercise.result())) { /*correct answer*/
+                if (user_answer == (exercise.result())) { /*correct answerText*/
                     toastAfterAnswer(true, true, exercise);
                 }
                 else {
                     toastAfterAnswer(false, true, exercise);
                 }
-                if(user.session_done || user.current_exercises.size() == 0){ //backup
-                    testDone();
-                }
-                else{
+                if(!user.session_done){ //backup -> && user.current_exercises.size() != 0
                     if (user.total_answers % 4 == 0) {
                         saveUser(user);
                     }
-                    answer.setText("");
+                    answerText.setText("");
                     exercise = user.getNextExercise();
                     showExercise(exercise);
                 }
@@ -125,7 +124,7 @@ public class TrainPage extends Utils {
             catch(NumberFormatException ignored){
             }
         }
-        UIUtil.showKeyboard(this,answer);
+        UIUtil.showKeyboard(this, answerText);
     }
 
     public void time_for_answer_train(View view){
@@ -137,7 +136,7 @@ public class TrainPage extends Utils {
     }
 
     public void handleOverTimeAnswer(boolean no_answer){
-        user.setAnswer(exercise, 0); // wrong answer
+        user.setAnswer(exercise, 0); // wrong answerText
         if (user.total_answers % 4 == 0) {
             saveUser(user);
         }
@@ -147,9 +146,25 @@ public class TrainPage extends Utils {
         else{
             Toast.makeText(TrainPage.this, "Try again..(faster)", Toast.LENGTH_SHORT).show();
         }
-        answer.setText("");
+        answerText.setText("");
         // exercise = user.getNextExercise(); // if we want to change exercise after over time
         showExercise(exercise);
+    }
+
+    public void testDoneToast(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        builder.setCancelable(true);
+        builder.setTitle(context.getResources().getString(R.string.session_done));
+        builder.setMessage(String.format("You just won %s points!", user.current_count_points_per_day));
+        builder.setCancelable(false);
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        builder.show();
     }
 
     public void showExercise(Exercise exercise){
@@ -161,32 +176,11 @@ public class TrainPage extends Utils {
         exercise.time_displayed = System.currentTimeMillis();
         user_answer = 0;
     }
-
-    public void testDone(){
-        user.session_done = true;
-        user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        user.session_type = SEARCH_MODE;
-        user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
-        AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
-        builder.setCancelable(true);
-        builder.setTitle(context.getResources().getString(R.string.session_done));
-        builder.setMessage(String.format("You just won %s points!", user.current_count_points_per_day));
-        builder.setCancelable(false);
-        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                saveUser(user);
-                finish();
-            }
-        });
-        builder.show();
-    }
     private void updateView() {
         Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
-        submit.setText(resources.getString(R.string.submit));
-        answer.setHint(resources.getString(R.string.answer));
+        submitBtnView.setText(resources.getString(R.string.submit));
+        answerText.setHint(resources.getString(R.string.answer));
     }
 
     @Override

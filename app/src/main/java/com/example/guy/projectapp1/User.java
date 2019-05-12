@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
+import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
+import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
 import static com.example.guy.projectapp1.Utils.optional_exercises;
 import static com.example.guy.projectapp1.Utils.NUM_OF_EXERCISES_IN_SESSION;
 import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
@@ -50,7 +52,7 @@ class User{
     User(int user_mode){
         this.mode = user_mode;
         this.lang = Utils.DEFAULT_LANG;
-        this.session_type = Utils.SEARCH_MODE;
+        this.session_type = SEARCH_MODE;
         this.first_login = simpleDateFormat.format(Calendar.getInstance().getTime());
         this.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
         this.session_done = false;
@@ -103,7 +105,7 @@ class User{
                 return this.current_exercises.get(rand.nextInt(this.current_exercises.size()));
             }
         }
-        else if(this.session_type == Utils.SEARCH_MODE){
+        else if(this.session_type == SEARCH_MODE){
             if (rand.nextInt(100) < 25 || this.search_exercises_done){  //from group A
                 if (this.known_exercises != null && this.known_exercises.size() > 0) {
                     return this.known_exercises.get(rand.nextInt(this.known_exercises.size()));
@@ -151,12 +153,12 @@ class User{
             }
         }
         else{
-            exercise.count_correct_answers = 0; //wrong answer or too much time
+            exercise.count_correct_answers = 0; //wrong answerText or too much time
         }
         if(this.session_type == Utils.TRAIN_MODE){
             setGroupTrainMode(exercise);
         }
-        else if(this.session_type == Utils.SEARCH_MODE){
+        else if(this.session_type == SEARCH_MODE){
             setGroupSearchMode(exercise);
             // check if need to remove exercise from C
             if (checkAllExercisesInGroup(unknown_exercises,current_exercises)){
@@ -293,10 +295,60 @@ class User{
         }
         return sum_var;
     }
-
+    protected boolean hadSessionToday(){
+        // TODO - if the user doesn't connect for a week, his problem - don't care now...
+        if((this.session_done || this.last_day_of_session == (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))&&false){
+            // TODO - remove last false condition(only for debug)
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public void uncheckDisplayedExercises(){
+        int i;
+        for (i=0;i<this.current_exercises.size(); i++){
+            this.current_exercises.get(i).displayed_today = false;
+        }
+        if(this.known_exercises!=null){//TODO - somehow the list is deleted and points to null in multimode
+            for (i=0;i<this.known_exercises.size(); i++){
+                this.known_exercises.get(i).displayed_today = false;
+            }
+        }
+        for (i=0;i<this.undefined_exercises.size(); i++){
+            this.undefined_exercises.get(i).displayed_today = false;
+        }
+        for (i=0;i<this.unknown_exercises.size(); i++){
+            this.unknown_exercises.get(i).displayed_today = false;
+        }
+    }
+    public void setStartSession() {
+        this.uncheckDisplayedExercises();
+        this.session_done=false;
+        this.current_count_points_per_day=0;
+        if(this.session_type == SEARCH_MODE){
+            this.search_exercises_done = false;
+            this.exerciseGroupWithMaxVar();
+        }
+        else{ //user.session_type = TRAIN_MODE;
+        }
+    }
+    public void setEndSession() {
+        this.session_done=true;
+        this.last_day_of_session=Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        this.end_session_time=simpleDateFormat.format(Calendar.getInstance().getTime());
+        if(this.session_type==TRAIN_MODE){
+            this.session_type=SEARCH_MODE;
+        }
+        else if(this.session_type==SEARCH_MODE){
+            this.session_type=TRAIN_MODE;
+        }
+    }
     public void updateTrophies() {//TODO - delete only for debugging
         this.days_in_row=14;
         this.max_points_per_day=3000;
         this.tests_in_row=4;
     }
+
+
 }

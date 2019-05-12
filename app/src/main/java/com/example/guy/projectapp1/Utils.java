@@ -3,6 +3,7 @@ package com.example.guy.projectapp1;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -123,12 +124,15 @@ public class Utils extends AppCompatActivity {
         TextView messageTextView = (TextView) group.getChildAt(0);
         messageTextView.setTextSize(25);
         messageTextView.setTextColor(color);
+        int yOffset=100;
+        toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,yOffset);
         toast.show();
         if(second_toast != null) {
             group = (ViewGroup) second_toast.getView();
             messageTextView = (TextView) group.getChildAt(0);
             messageTextView.setTextSize(25);
             messageTextView.setTextColor(color);
+            second_toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,yOffset);
             second_toast.show();
         }
     }
