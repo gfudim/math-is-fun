@@ -44,8 +44,6 @@ public class StatsFragment extends Fragment {
             }
         });
 
-        user.updateTrophies();//TODO - delete only for debugging
-
         connectDaysRow(view,R.id.sevenDaysBtn,7);
         connectDaysRow(view,R.id.fourteenDaysBtn,14);
         connectDaysRow(view,R.id.thirtyDaysBtn,30);
@@ -62,7 +60,7 @@ public class StatsFragment extends Fragment {
 
     // TODO - switch to correct strings
     private void connectDaysRow(View view, final int id_button, int threshold) {
-        if(user.days_in_row>=threshold){
+        if(user.max_days_in_row>=threshold){
             connectButton(view,id_button,R.string.well_done,R.string.start_training);
             view.findViewById(id_button).setAlpha(1);
         }
@@ -80,7 +78,7 @@ public class StatsFragment extends Fragment {
         }
     }
     private void connectTestsRow(View view, final int id_button,final int id_frame, int threshold) {
-        if(user.tests_in_row>=threshold){
+        if(user.max_correct_tests_in_row>=threshold){
             connectButton(view,id_button,R.string.well_done,R.string.start_training);
             view.findViewById(id_frame).setAlpha(1);
         }
@@ -89,7 +87,7 @@ public class StatsFragment extends Fragment {
         }
     }
     private void connectTrophy(View view, final int id_button, int days_row_threshold, int max_points_thresold, int tests_row_threshold) {
-        if(user.days_in_row>=days_row_threshold&&user.max_points_per_day>=max_points_thresold&&user.tests_in_row>=tests_row_threshold){
+        if(user.max_days_in_row>=days_row_threshold&&user.max_points_per_day>=max_points_thresold&&user.max_correct_tests_in_row>=tests_row_threshold){
             connectButton(view,id_button,R.string.well_done,R.string.start_training);
             view.findViewById(id_button).setAlpha(1);
         }

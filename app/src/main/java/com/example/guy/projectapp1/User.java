@@ -2,6 +2,7 @@ package com.example.guy.projectapp1;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
@@ -31,7 +32,7 @@ class User{
     int total_points;
     String last_day_of_session;
     int days_in_row;
-    int tests_in_row;
+    int max_days_in_row;
     String first_login;
     String last_login;
     String start_session_time;
@@ -64,7 +65,7 @@ class User{
         this.start_page = true;
         this.last_day_of_session = "None";
         this.days_in_row=0;
-        this.tests_in_row=0;
+        this.max_days_in_row=0;
         this.search_exercises_done = false;
         init();
     }
@@ -74,7 +75,7 @@ class User{
         this.correct_answers = 0;
         this.wrong_answers = 0;
         this.total_answers = 0;
-        int max_correct_tests_in_row = 0;
+        this.max_correct_tests_in_row = 0;
         this.current_correct_tests_in_row = 0;
         this.count_tests = 0;
         this.current_count_points_per_day = 0;
@@ -336,19 +337,58 @@ class User{
     }
     public void setEndSession() {
         this.session_done=true;
+        this.checkDaysInRow();
+        if(this.session_type==TRAIN_MODE) {
+            this.checkTest();
+        }
         this.last_day_of_session=day_format.format(Calendar.getInstance().getTime());
         this.end_session_time=simpleDateFormat.format(Calendar.getInstance().getTime());
+        this.switchMode();
+
+    }
+
+    private void checkTest() {
+        //checks if the test got a full score
+        if(this.checkFullScore()){
+            this.current_correct_tests_in_row+=1;
+            if(this.current_correct_tests_in_row>this.max_correct_tests_in_row){
+                this.max_correct_tests_in_row=this.current_correct_tests_in_row;
+            }
+        }
+        else{
+            this.current_correct_tests_in_row=0;
+        }
+    }
+
+    private boolean checkFullScore() {
+        //checks if all the answers are correct for the current test
+        return true;
+    }
+
+    private void checkDaysInRow() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(calendar.DATE,-1);
+        Date yesterday = calendar.getTime();
+        if(day_format.format(yesterday).equals(this.last_day_of_session)){
+            //the user had a session yesterday and today
+            this.days_in_row+=1;
+            if(this.days_in_row>this.max_days_in_row){
+                this.max_days_in_row=this.days_in_row;
+            }
+        }
+        else{
+            // the user didn't have a session yesterday
+            this.days_in_row=0;
+        }
+    }
+
+    private void switchMode() {//switches the user mode - TRAIN MODE <-> SEARCH MODE
         if(this.session_type==TRAIN_MODE){
             this.session_type=SEARCH_MODE;
         }
         else if(this.session_type==SEARCH_MODE){
             this.session_type=TRAIN_MODE;
         }
-    }
-    public void updateTrophies() {//TODO - delete only for debugging
-        this.days_in_row=14;
-        this.max_points_per_day=3000;
-        this.tests_in_row=4;
     }
 
 
