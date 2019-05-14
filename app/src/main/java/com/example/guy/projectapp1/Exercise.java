@@ -10,6 +10,7 @@ class Exercise {
     int count_correct_answers;
     int count_wrong_answers;
     int exercise_id;
+    int count_trained;
     long time_displayed; // for calculating the time for answers
     long time_answered;
     boolean displayed_today;
@@ -19,6 +20,7 @@ class Exercise {
     Exercise(int i, int j, int id){
         mul1 = i;
         mul2 = j;
+        count_trained=0;
         count_correct_answers = 0;
         count_wrong_answers = 0;
         exercise_id = id;

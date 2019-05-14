@@ -196,11 +196,7 @@ class User{
             }
             // test done!
             this.fullscore=true;
-            for (i=0; i< current_exercises.size(); i++){
-                moveExercise(current_exercises,known_exercises, current_exercises.get(i));
-            }
             this.session_done = true;
-            this.exerciseGroupWithMaxVar();//maybe no need for that
         }
     }
     private void setGroupSearchMode(Exercise exercise) {
@@ -335,6 +331,11 @@ class User{
             this.exerciseGroupWithMaxVar();
         }
         else{ //user.session_type = TRAIN_MODE;
+            if(fullscore){
+                for (int i=0; i< current_exercises.size(); i++){
+                    moveExercise(current_exercises,known_exercises, current_exercises.get(i));
+                }
+            }
             this.fullscore=false;
         }
     }
