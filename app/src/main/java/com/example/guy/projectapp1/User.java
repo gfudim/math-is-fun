@@ -40,7 +40,7 @@ class User{
     boolean session_done;
     boolean start_page;  //true if last page was the main menu - for the "back" option
     boolean search_exercises_done;
-
+    boolean fullscore;
     String name;
     String id_data_base;
     String email;
@@ -64,8 +64,6 @@ class User{
         this.age = 0;
         this.start_page = true;
         this.last_day_of_session = "None";
-        this.days_in_row=0;
-        this.max_days_in_row=0;
         this.search_exercises_done = false;
         init();
     }
@@ -81,6 +79,9 @@ class User{
         this.current_count_points_per_day = 0;
         this.max_points_per_day = 0;
         this.total_points=0;
+        this.days_in_row=0;
+        this.max_days_in_row=0;
+        this.fullscore=false;
         this.known_exercises = new ArrayList<>();
         this.unknown_exercises = new ArrayList<>();
         this.undefined_exercises = new ArrayList<>();
@@ -194,11 +195,12 @@ class User{
                 }
             }
             // test done!
+            this.fullscore=true;
             for (i=0; i< current_exercises.size(); i++){
                 moveExercise(current_exercises,known_exercises, current_exercises.get(i));
             }
             this.session_done = true;
-            this.exerciseGroupWithMaxVar();
+            this.exerciseGroupWithMaxVar();//maybe no need for that
         }
     }
     private void setGroupSearchMode(Exercise exercise) {
@@ -333,14 +335,17 @@ class User{
             this.exerciseGroupWithMaxVar();
         }
         else{ //user.session_type = TRAIN_MODE;
+            this.fullscore=false;
         }
     }
     public void setEndSession() {
         this.session_done=true;
+        //trophies
         this.checkDaysInRow();
         if(this.session_type==TRAIN_MODE) {
             this.checkTest();
         }
+        //end trophies
         this.last_day_of_session=day_format.format(Calendar.getInstance().getTime());
         this.end_session_time=simpleDateFormat.format(Calendar.getInstance().getTime());
         this.switchMode();
@@ -362,7 +367,7 @@ class User{
 
     private boolean checkFullScore() {
         //checks if all the answers are correct for the current test
-        return true;
+        return this.fullscore;
     }
 
     private void checkDaysInRow() {
