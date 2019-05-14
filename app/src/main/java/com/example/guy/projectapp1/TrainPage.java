@@ -56,9 +56,16 @@ public class TrainPage extends Utils {
                         res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
                         res.setTextColor(Color.BLACK);
                         res.setTextSize(16);
+                        if(user.session_done){
+                            user.setEndSession();
+                            saveUser(user);
+                            testDoneToast();
+                        }
                     }
                     public void onFinish() {
-                        testDone();
+                        user.setEndSession();
+                        saveUser(user);
+                        testDoneToast();
                     }
                 }.start();
                 showExercise(exercise);
@@ -110,10 +117,7 @@ public class TrainPage extends Utils {
                 else {
                     toastAfterAnswer(false, true, exercise);
                 }
-                if(user.session_done || user.current_exercises.size() == 0){ //backup
-                    testDone();
-                }
-                else{
+                if(!user.session_done){ //backup -> && user.current_exercises.size() != 0
                     if (user.total_answers % 4 == 0) {
                         saveUser(user);
                     }
@@ -162,11 +166,7 @@ public class TrainPage extends Utils {
         user_answer = 0;
     }
 
-    public void testDone(){
-        user.session_done = true;
-        user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        user.session_type = SEARCH_MODE;
-        user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
+    public void testDoneToast(){
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
@@ -176,7 +176,6 @@ public class TrainPage extends Utils {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                saveUser(user);
                 finish();
             }
         });

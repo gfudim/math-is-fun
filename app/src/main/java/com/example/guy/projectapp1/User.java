@@ -7,6 +7,7 @@ import java.util.Random;
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
+import static com.example.guy.projectapp1.Utils.day_format;
 import static com.example.guy.projectapp1.Utils.optional_exercises;
 import static com.example.guy.projectapp1.Utils.NUM_OF_EXERCISES_IN_SESSION;
 import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
@@ -297,7 +298,7 @@ class User{
     }
     protected boolean hadSessionToday(){
         // TODO - if the user doesn't connect for a week, his problem - don't care now...
-        if((this.session_done || this.last_day_of_session == (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))&&false){
+        if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))&&false){
             // TODO - remove last false condition(only for debug)
             return true;
         }
@@ -335,7 +336,7 @@ class User{
     }
     public void setEndSession() {
         this.session_done=true;
-        this.last_day_of_session=Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        this.last_day_of_session=day_format.format(Calendar.getInstance().getTime());
         this.end_session_time=simpleDateFormat.format(Calendar.getInstance().getTime());
         if(this.session_type==TRAIN_MODE){
             this.session_type=SEARCH_MODE;

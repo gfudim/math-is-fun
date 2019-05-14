@@ -40,8 +40,6 @@ public class SearchPage extends Utils {
         dont_know=findViewById(R.id.DontKnowBtn);
         answer = findViewById(R.id.InputEditText);
         updateView();
-        showExercise(exercise);
-        user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
         UIUtil.showKeyboard(this,answer);
         Button submitBtn = (Button)submit; // save the button for reference
         Button dontKnowBtn=(Button)dont_know;
@@ -88,9 +86,13 @@ public class SearchPage extends Utils {
                 res.setTextSize(16);
             }
             public void onFinish() {
+                user.setEndSession();
+                saveUser(user);
                 searchDoneToast();
             }
         }.start();
+        showExercise(exercise);
+        user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
     }
 
     public void handleAnswer(){
@@ -107,10 +109,7 @@ public class SearchPage extends Utils {
                 else {
                     toastAfterAnswer(false, false, exercise);
                 }
-                if (user.session_type == TRAIN_MODE){
-                    searchDoneToast();
-                }
-                else{
+                if (!user.session_done){
                     if (user.total_answers % 4 == 0) {
                         saveUser(user);
                     }
@@ -151,9 +150,6 @@ public class SearchPage extends Utils {
     }
 
     public void searchDoneToast(){
-        user.session_done = true;
-        user.session_type = TRAIN_MODE;
-        user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
         Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
@@ -163,8 +159,6 @@ public class SearchPage extends Utils {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
-                saveUser(user);
                 finish();
             }
         });
