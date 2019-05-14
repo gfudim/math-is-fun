@@ -35,6 +35,7 @@ import static com.example.guy.projectapp1.Utils.id_for_user;
 
 public class HomeFragment extends Fragment {
     Button startBtn;
+    Boolean cleaned_exercises = false;
     private DatabaseReference reff;
 
     @Nullable
@@ -70,25 +71,28 @@ public class HomeFragment extends Fragment {
         user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
         // changes the language
         updateView((String) Paper.book().read("language"));
-        if(user.hadSessionToday()){
-            ((View)startBtn).setAlpha(.5f);
-        }
-        else {
-            ((View)startBtn).setAlpha(1f);
-        }
+
         //A button to start a new session
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent in;
-                if(user.hadSessionToday()){
+                if((user.session_done || user.last_day_of_session == (Calendar.getInstance().get(Calendar.DAY_OF_WEEK))) && false){ // TODO - remove last false condition(only for debug)
+                    // TODO - if the user doesn't connect for a week, his problem - don't care now...
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
+                    if (cleaned_exercises){
+                        uncheckDisplayedExercises();
+                    }
                 }
                 else{
                     // new day - new session
-                    user.setStartSession();
+                    user.session_done = false;
+                    user.current_count_points_per_day = 0;
                     if(user.session_type == SEARCH_MODE){
+                        user.search_exercises_done = false;
+                        cleaned_exercises = false;
+                        user.exerciseGroupWithMaxVar();
                         in = new Intent(getActivity(), SearchPage.class);
                     }
                     else{ //user.session_type = TRAIN_MODE;
@@ -99,6 +103,23 @@ public class HomeFragment extends Fragment {
             }
         });
         return view;
+    }
+
+    public void uncheckDisplayedExercises(){
+        int i;
+        for (i=0;i<user.current_exercises.size(); i++){
+            user.current_exercises.get(i).displayed_today = false;
+        }
+        for (i=0;i<user.known_exercises.size(); i++){
+            user.known_exercises.get(i).displayed_today = false;
+        }
+        for (i=0;i<user.undefined_exercises.size(); i++){
+            user.undefined_exercises.get(i).displayed_today = false;
+        }
+        for (i=0;i<user.unknown_exercises.size(); i++){
+            user.unknown_exercises.get(i).displayed_today = false;
+        }
+        cleaned_exercises = true;
     }
 
     private void updateView(String language) {

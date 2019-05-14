@@ -23,9 +23,9 @@ import java.util.Calendar;
 import io.paperdb.Paper;
 
 public class SearchPage extends Utils {
-    TextView submitBtnView;
-    TextView dont_knowBtnView;
-    EditText answerText;
+    TextView submit;
+    TextView dont_know;
+    EditText answer;
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
     int user_answer = 0;
@@ -36,20 +36,22 @@ public class SearchPage extends Utils {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        submitBtnView = findViewById(R.id.SubmitBtn);
-        dont_knowBtnView =findViewById(R.id.DontKnowBtn);
-        answerText = findViewById(R.id.InputEditText);
+        submit = findViewById(R.id.SubmitBtn);
+        dont_know=findViewById(R.id.DontKnowBtn);
+        answer = findViewById(R.id.InputEditText);
         updateView();
-        UIUtil.showKeyboard(this, answerText);
-        Button submitBtn = (Button) submitBtnView; // save the button for reference
-        Button dontKnowBtn=(Button) dont_knowBtnView;
+        showExercise(exercise);
+        user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
+        UIUtil.showKeyboard(this,answer);
+        Button submitBtn = (Button)submit; // save the button for reference
+        Button dontKnowBtn=(Button)dont_know;
         submitBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
              @Override
              public void onClick(View view) {
                  try{
-                     user_answer =  Integer.parseInt(answerText.getText().toString());
+                     user_answer =  Integer.parseInt(answer.getText().toString());
                      handleAnswer();
-                 }catch(NumberFormatException ex){ // if clicked submitBtn without input
+                 }catch(NumberFormatException ex){ // if clicked submit without input
                  }
              }
          }
@@ -62,16 +64,16 @@ public class SearchPage extends Utils {
             }
         });
 
-        answerText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        answer.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
                    try {
-                       user_answer = Integer.parseInt(answerText.getText().toString());
+                       user_answer = Integer.parseInt(answer.getText().toString());
                        handleAnswer();
                    }
                    catch (NumberFormatException ignored){}
                 }
-                UIUtil.showKeyboard(SearchPage.this, answerText);
+                UIUtil.showKeyboard(SearchPage.this,answer);
                 return true;
             }
         });
@@ -86,13 +88,9 @@ public class SearchPage extends Utils {
                 res.setTextSize(16);
             }
             public void onFinish() {
-                user.setEndSession();
-                saveUser(user);
                 searchDoneToast();
             }
         }.start();
-        showExercise(exercise);
-        user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
     }
 
     public void handleAnswer(){
@@ -103,17 +101,20 @@ public class SearchPage extends Utils {
         else{
             try {
                  user.setAnswer(exercise, user_answer);
-                if (user_answer == (exercise.result())) { /*correct answerText*/
+                if (user_answer == (exercise.result())) { /*correct answer*/
                     toastAfterAnswer(true, false, exercise);
                 }
                 else {
                     toastAfterAnswer(false, false, exercise);
                 }
-                if (!user.session_done){
+                if (user.session_type == TRAIN_MODE){
+                    searchDoneToast();
+                }
+                else{
                     if (user.total_answers % 4 == 0) {
                         saveUser(user);
                     }
-                    answerText.setText("");
+                    answer.setText("");
                     exercise = user.getNextExercise();
                     showExercise(exercise);
                 }
@@ -121,12 +122,12 @@ public class SearchPage extends Utils {
             catch (NumberFormatException ignored) {
             }
         }
-        UIUtil.showKeyboard(this, answerText);
+        UIUtil.showKeyboard(this,answer);
     }
 
     public void time_for_answer_search(View view){
         start_input_answer = System.currentTimeMillis();
-        UIUtil.showKeyboard(SearchPage.this, answerText);
+        UIUtil.showKeyboard(SearchPage.this,answer);
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
             Toast.makeText(SearchPage.this, "Think faster..(5 seconds)", Toast.LENGTH_LONG).show();
             handleOverTimeAnswer(true);
@@ -134,7 +135,7 @@ public class SearchPage extends Utils {
     }
 
     public void handleOverTimeAnswer(boolean no_answer){
-        user.setAnswer(exercise, 0); // wrong answerText
+        user.setAnswer(exercise, 0); // wrong answer
         if (user.total_answers % 4 == 0) {
             saveUser(user);
         }
@@ -144,12 +145,15 @@ public class SearchPage extends Utils {
         else{
             Toast.makeText(SearchPage.this, "Try again..(faster)", Toast.LENGTH_SHORT).show();
         }
-        answerText.setText("");
+        answer.setText("");
         // exercise = user.getNextExercise(); // if we want to change exercise after over time
         showExercise(exercise);
     }
 
     public void searchDoneToast(){
+        user.session_done = true;
+        user.session_type = TRAIN_MODE;
+        user.last_day_of_session = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
         Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
@@ -159,6 +163,8 @@ public class SearchPage extends Utils {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
+                saveUser(user);
                 finish();
             }
         });
@@ -178,9 +184,9 @@ public class SearchPage extends Utils {
     private void updateView() {
         Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
-        submitBtnView.setText(resources.getString(R.string.submit));
-        dont_knowBtnView.setText(resources.getString(R.string.dont_know));
-        answerText.setHint(resources.getString(R.string.answer));
+        submit.setText(resources.getString(R.string.submit));
+        dont_know.setText(resources.getString(R.string.dont_know));
+        answer.setHint(resources.getString(R.string.answer));
     }
 
     @Override
