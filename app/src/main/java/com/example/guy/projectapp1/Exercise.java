@@ -1,5 +1,9 @@
 package com.example.guy.projectapp1;
 
+import java.util.Random;
+
+import static com.example.guy.projectapp1.Utils.RANDOM_VAR;
+
 class Exercise {
     int mul1;
     int mul2;
@@ -27,6 +31,20 @@ class Exercise {
         return mul1*mul2;
     }
     static Double variance(Exercise exercise1, Exercise exercise2){
+        if(RANDOM_VAR){
+            return randomVariance();
+        }
+        else {
+            return commonDigitsVariance(exercise1,exercise2);
+        }
+    }
+
+    private static Double randomVariance() {
+        Random rand = new Random();
+        return rand.nextDouble();
+    }
+
+    static Double commonDigitsVariance(Exercise exercise1, Exercise exercise2){
         double count=0.0;
         String string1= (exercise1.mul1)+ String.valueOf(exercise1.mul2) + (exercise1.result());
         String string2= (exercise2.mul1)+ String.valueOf(exercise2.mul2) + (exercise2.result());
@@ -39,5 +57,6 @@ class Exercise {
         }
         return count*(-1);
     }
+
 }
 
