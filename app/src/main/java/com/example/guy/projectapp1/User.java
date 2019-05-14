@@ -297,7 +297,7 @@ class User{
     }
     protected boolean hadSessionToday(){
         // TODO - if the user doesn't connect for a week, his problem - don't care now...
-        if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))&&false){
+        if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))){
             // TODO - remove last false condition(only for debug)
             return true;
         }
@@ -331,11 +331,6 @@ class User{
             this.exerciseGroupWithMaxVar();
         }
         else{ //user.session_type = TRAIN_MODE;
-            if(fullscore){
-                for (int i=0; i< current_exercises.size(); i++){
-                    moveExercise(current_exercises,known_exercises, current_exercises.get(i));
-                }
-            }
             this.fullscore=false;
         }
     }
@@ -345,6 +340,12 @@ class User{
         this.checkDaysInRow();
         if(this.session_type==TRAIN_MODE) {
             this.checkTest();
+            for (int i=0; i< current_exercises.size(); i++){
+                current_exercises.get(i).count_trained+=1;
+                if(fullscore){
+                    moveExercise(current_exercises,known_exercises, current_exercises.get(i));
+                }
+            }
         }
         //end trophies
         this.last_day_of_session=day_format.format(Calendar.getInstance().getTime());

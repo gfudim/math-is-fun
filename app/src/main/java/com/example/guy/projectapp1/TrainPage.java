@@ -3,6 +3,7 @@ package com.example.guy.projectapp1;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -176,6 +177,7 @@ public class TrainPage extends Utils {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                startActivity(new Intent(TrainPage.this,MainActivity.class));
                 finish();
             }
         });
@@ -207,6 +209,7 @@ public class TrainPage extends Utils {
                 user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
                 saveUser(user);
                 train_counter.cancel();
+                startActivity(new Intent(TrainPage.this,MainActivity.class));
                 finish();
             }
         });

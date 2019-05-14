@@ -95,6 +95,7 @@ public class HomeFragment extends Fragment {
                         in = new Intent(getActivity(), TrainPage.class);
                     }
                     startActivity(in);
+                    getActivity().finish();
                 }
             }
         });
