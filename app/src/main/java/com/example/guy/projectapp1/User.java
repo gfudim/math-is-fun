@@ -309,10 +309,8 @@ class User{
         for (i=0;i<this.current_exercises.size(); i++){
             this.current_exercises.get(i).displayed_today = false;
         }
-        if(this.known_exercises!=null){//TODO - somehow the list is deleted and points to null in multimode
-            for (i=0;i<this.known_exercises.size(); i++){
-                this.known_exercises.get(i).displayed_today = false;
-            }
+        for (i=0;i<this.known_exercises.size(); i++){
+            this.known_exercises.get(i).displayed_today = false;
         }
         for (i=0;i<this.undefined_exercises.size(); i++){
             this.undefined_exercises.get(i).displayed_today = false;

@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -74,19 +75,33 @@ public class LoginPage extends Utils {
                 assert user_loggin != null;
                 user.id_data_base = user_loggin.getUid();
                 user.email = user_loggin.getEmail();
-                reff = FirebaseDatabase.getInstance().getReference().child("user").child(user.id_data_base);
+                reff = FirebaseDatabase.getInstance().getReference().child("user");
                 reff.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        user = dataSnapshot.getValue(User.class);
-                        if (user == null){
+                        if (!dataSnapshot.hasChild(user.id_data_base)){
                             user = new User(MULTI_MODE);
                             FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
                             assert user_loggin != null;
                             user.id_data_base = user_loggin.getUid();
                             user.email = user_loggin.getEmail();
                         }
+                        else{
+                            user = dataSnapshot.child(user.id_data_base).getValue(User.class);
+                        }
                         user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
+                        if (user.known_exercises == null){
+                            user.known_exercises = new ArrayList<>();
+                        }
+                        if (user.unknown_exercises == null){
+                            user.unknown_exercises = new ArrayList<>();
+                        }
+                        if (user.undefined_exercises == null){
+                            user.undefined_exercises = new ArrayList<>();
+                        }
+                        if (user.current_exercises == null){
+                            user.current_exercises = new ArrayList<>();
+                        }
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
