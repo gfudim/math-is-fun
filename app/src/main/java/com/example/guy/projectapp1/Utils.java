@@ -112,14 +112,14 @@ public class Utils extends AppCompatActivity {
         Toast second_toast = null;
         int color;
         if(good_answer){
-            toast = Toast.makeText(this, context.getResources().getString(R.string.Good_job_text), Toast.LENGTH_LONG);
+            toast = Toast.makeText(this, context.getResources().getString(R.string.Good_job_text), Toast.LENGTH_SHORT);
             color = Color.GREEN;
         }
         else{
             toast = Toast.makeText(this, context.getResources().getString(R.string.mistake_text), Toast.LENGTH_SHORT);
             color = Color.RED;
             if(!train_mode){
-                second_toast = Toast.makeText(this, String.format("%s %s", context.getResources().getString(R.string.show_answer), exercise.mul1 * exercise.mul2), Toast.LENGTH_LONG);
+                second_toast = Toast.makeText(this, String.format("%s %s", context.getResources().getString(R.string.show_answer), exercise.mul1 * exercise.mul2), Toast.LENGTH_SHORT);
             }
         }
         ViewGroup group = (ViewGroup) toast.getView();

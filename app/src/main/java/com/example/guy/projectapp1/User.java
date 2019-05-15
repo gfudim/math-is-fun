@@ -296,7 +296,6 @@ class User{
         return sum_var;
     }
     protected boolean hadSessionToday(){
-        // TODO - if the user doesn't connect for a week, his problem - don't care now...
         if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))&&false){
             // TODO - remove last false condition(only for debug)
             return true;

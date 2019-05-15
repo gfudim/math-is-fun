@@ -55,7 +55,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent in;
                 if(user.hadSessionToday()){ // TODO - remove last false condition(only for debug)
-                    // TODO - if the user doesn't connect for a week, his problem - don't care now...
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
                 }
