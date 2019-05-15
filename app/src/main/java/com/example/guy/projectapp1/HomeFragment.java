@@ -23,7 +23,6 @@ import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
 import static com.example.guy.projectapp1.Utils.simpleDateFormat;
 import static com.example.guy.projectapp1.Utils.user;
-import static com.example.guy.projectapp1.Utils.id_for_user;
 
 public class HomeFragment extends Fragment {
     Button startBtn;

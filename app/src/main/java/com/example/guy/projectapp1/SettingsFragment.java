@@ -43,13 +43,17 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View fragment_view = inflater.inflate(R.layout.fragment_settings, container, false);
+        age = fragment_view.findViewById(R.id.ageEditText);
+        name = fragment_view.findViewById(R.id.nameEditText);
+        reset = fragment_view.findViewById(R.id.resetBtn);
         user.start_page = true;
         updateView(fragment_view, (String) Paper.book().read("language"));
         final Button multiBtn = fragment_view.findViewById(R.id.multiModeBtn);
         final Button singleBtn = fragment_view.findViewById(R.id.singleModeBtn);
         final Button btn_sign_out = fragment_view.findViewById(R.id.signoutBtn);
+        // final Button save_details = fragment_view.findViewById(R.id.saveDetailsBtn); // TODO - need to add button
 
-        if (user.mode == SINGLE_MODE) {
+       if (user.mode == SINGLE_MODE) {
             singleBtn.setEnabled(false);
             singleBtn.getCompoundDrawables()[1].setAlpha(128);
             btn_sign_out.setEnabled(false);
@@ -66,6 +70,7 @@ public class SettingsFragment extends Fragment {
         singleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveDetails();
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
@@ -118,6 +123,7 @@ public class SettingsFragment extends Fragment {
         btn_sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                saveDetails();
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
@@ -159,7 +165,7 @@ public class SettingsFragment extends Fragment {
         resetBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
-                saveDetails(view);
+                saveDetails();
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
@@ -219,18 +225,13 @@ public class SettingsFragment extends Fragment {
         ((MainActivity)getActivity()).saveUser(user);
     }
     private void updateView(View view,String language) {
-        name = view.findViewById(R.id.nameEditText);
-        age = view.findViewById(R.id.ageEditText);
-        reset = view.findViewById(R.id.resetBtn);
         Context context = LocaleHelper.setLocale(getActivity(), language);
         Resources resources = context.getResources();
         name.setHint(resources.getString(R.string.Name));
         age.setHint(resources.getString(R.string.Age));
         reset.setText(resources.getString(R.string.reset_history));
     }
-    private void saveDetails(View view) {
-        name = view.findViewById(R.id.nameEditText);
-        age = view.findViewById(R.id.ageEditText);
+    private void saveDetails() {
         if (name != null){
             user.name = name.getText().toString();
             ((MainActivity)getActivity()).saveUser(user);
