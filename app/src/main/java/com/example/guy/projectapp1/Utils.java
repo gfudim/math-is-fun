@@ -48,14 +48,14 @@ public class Utils extends AppCompatActivity {
     protected static int NUM_OF_EXERCISES_IN_SESSION = 4;
     protected static int MAX_TIME_TO_ANSWER = 10;
 
-    final protected static int [] resID= {R.raw.ex2times2, R.raw.ex2times3, R.raw.ex2times4, R.raw.ex2times5, R.raw.ex2times6, R.raw.ex2times7, R.raw.ex2times8,R.raw.ex2times9,
+    final protected static int [][] resID = {{R.raw.ex2times2, R.raw.ex2times3, R.raw.ex2times4, R.raw.ex2times5, R.raw.ex2times6, R.raw.ex2times7, R.raw.ex2times8,R.raw.ex2times9,
             R.raw.ex3times3, R.raw.ex3times4, R.raw.ex3times5, R.raw.ex3times6, R.raw.ex3times7, R.raw.ex3times8, R.raw.ex3times9,
             R.raw.ex4times4, R.raw.ex4times5, R.raw.ex4times6, R.raw.ex4times7, R.raw.ex4times8, R.raw.ex4times9,
             R.raw.ex5times5,  R.raw.ex5times6,  R.raw.ex5times7, R.raw.ex5times8, R.raw.ex5times9,
             R.raw.ex6times6, R.raw.ex6times7, R.raw.ex6times8, R.raw.ex6times9,
             R.raw.ex7times7, R.raw.ex7times8, R.raw.ex7times9,
             R.raw.ex8times8, R.raw.ex8times9,
-            R.raw.ex9times9};
+            R.raw.ex9times9},{},{},{}};
 
     protected static String pattern = "dd/MM/yyyy_HH:mm";
     protected static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -118,10 +118,12 @@ public class Utils extends AppCompatActivity {
             color = Color.GREEN;
         }
         else{
-            toast = Toast.makeText(this, context.getResources().getString(R.string.mistake_text), Toast.LENGTH_SHORT);
             color = Color.RED;
-            if(!train_mode){
-                second_toast = Toast.makeText(this, String.format("%s %s", context.getResources().getString(R.string.show_answer), exercise.mul1 * exercise.mul2), Toast.LENGTH_SHORT);
+            if (train_mode){
+                toast = Toast.makeText(this, context.getResources().getString(R.string.mistake_text), Toast.LENGTH_SHORT);
+            }
+            else{  //search
+                toast = Toast.makeText(this, String.format("%s %s", context.getResources().getString(R.string.show_answer), exercise.mul1 * exercise.mul2), Toast.LENGTH_SHORT);
             }
         }
         ViewGroup group = (ViewGroup) toast.getView();
@@ -131,14 +133,14 @@ public class Utils extends AppCompatActivity {
         int yOffset=100;
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,yOffset);
         toast.show();
-        if(second_toast != null) {
-            group = (ViewGroup) second_toast.getView();
-            messageTextView = (TextView) group.getChildAt(0);
-            messageTextView.setTextSize(25);
-            messageTextView.setTextColor(color);
-            second_toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,yOffset);
-            second_toast.show();
-        }
+//        if(second_toast != null) {
+//            group = (ViewGroup) second_toast.getView();
+//            messageTextView = (TextView) group.getChildAt(0);
+//            messageTextView.setTextSize(25);
+//            messageTextView.setTextColor(color);
+//            second_toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,yOffset);
+//            second_toast.show();
+//        }
     }
 }
 

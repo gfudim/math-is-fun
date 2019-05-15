@@ -129,7 +129,7 @@ public class SearchPage extends Utils {
         start_input_answer = System.currentTimeMillis();
         UIUtil.showKeyboard(SearchPage.this,answer);
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
-            Toast.makeText(SearchPage.this, "Think faster..(5 seconds)", Toast.LENGTH_LONG).show();
+            Toast.makeText(SearchPage.this, "Think faster..(5 seconds)", Toast.LENGTH_SHORT).show();
             handleOverTimeAnswer(true);
         }
     }
@@ -140,7 +140,7 @@ public class SearchPage extends Utils {
             saveUser(user);
         }
         if (exercise.result() == user_answer && !no_answer){
-            Toast.makeText(SearchPage.this, "Answer correct, but it took to much time..", Toast.LENGTH_LONG).show();
+            Toast.makeText(SearchPage.this, "Answer correct, but it took to much time..", Toast.LENGTH_SHORT).show();
         }
         else{
             Toast.makeText(SearchPage.this, "Try again..(faster)", Toast.LENGTH_SHORT).show();
@@ -171,7 +171,9 @@ public class SearchPage extends Utils {
         TextView show_exercise = findViewById(R.id.ExerciseTextView);
         String temp_exercise = String.format("%s x %s", exercise.mul1, exercise.mul2);
         show_exercise.setText(temp_exercise);
-        exercise_media = MediaPlayer.create(this, Utils.resID[exercise.exercise_id]);
+        if (Utils.resID[user.lang].length > 0){
+            exercise_media = MediaPlayer.create(this, Utils.resID[user.lang][exercise.exercise_id]);
+        }
         exercise_media.start();
         exercise.time_displayed = System.currentTimeMillis();
         user_answer = 0;
