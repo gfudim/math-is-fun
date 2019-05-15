@@ -37,7 +37,7 @@ public class Utils extends AppCompatActivity {
     protected static int TRAIN_MODE = 1;
     protected static User user;
     protected static DatabaseReference reff;
-    protected static int id_for_user = 0;
+    protected static int id_for_user = 1;
     protected static long SESSION_MILLI_DURATION = 20000; // todo - change to 3 minutes - 180000
     protected static int optional_exercises = 1000;
     final protected static int ENGLISH = 0;
@@ -63,8 +63,10 @@ public class Utils extends AppCompatActivity {
 
     public void saveUser(User current_user){
         reff = FirebaseDatabase.getInstance().getReference("user");
-        if (current_user.mode == SINGLE_MODE) {
-            current_user.id_data_base = String.format("%s", id_for_user);
+        if (current_user.mode == SINGLE_MODE && (current_user.id_data_base == null || current_user.id_data_base.equals(""))) {
+            current_user.id_data_base =  String.format("%s", id_for_user);
+            reff.child("Number of single users").setValue(id_for_user);
+            id_for_user++;
         }
         reff.child(current_user.id_data_base).setValue(current_user);
     }

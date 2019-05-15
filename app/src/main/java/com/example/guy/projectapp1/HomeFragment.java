@@ -35,9 +35,7 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home,container,false);
         startBtn = view.findViewById(R.id.StartBtn);
         if(user.mode == SINGLE_MODE && (user.id_data_base == null || user.id_data_base.equals(""))){
-            user.id_data_base = String.format("%s",id_for_user);
             user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
-            id_for_user++;
             ((MainActivity)getActivity()).saveUserToDevice(user);
             ((MainActivity)getActivity()).saveUser(user);
         }
