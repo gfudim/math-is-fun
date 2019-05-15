@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 
@@ -85,6 +86,7 @@ public class LoginPage extends Utils {
                             user.id_data_base = user_loggin.getUid();
                             user.email = user_loggin.getEmail();
                         }
+                        user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
