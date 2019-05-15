@@ -13,20 +13,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 
 import io.paperdb.Paper;
 
-import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
 import static com.example.guy.projectapp1.Utils.simpleDateFormat;
@@ -44,9 +36,11 @@ public class HomeFragment extends Fragment {
         startBtn = view.findViewById(R.id.StartBtn);
         if(user.mode == SINGLE_MODE && (user.id_data_base == null || user.id_data_base.equals(""))){
             user.id_data_base = String.format("%s",id_for_user);
+            user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
             id_for_user++;
+            ((MainActivity)getActivity()).saveUserToDevice(user);
+            ((MainActivity)getActivity()).saveUser(user);
         }
-        user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
         // changes the language
         updateView((String) Paper.book().read("language"));
         if(user.hadSessionToday()){

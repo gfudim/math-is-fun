@@ -88,9 +88,12 @@ public class SettingsFragment extends Fragment {
                                         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
                                         databaseUsers.child(user.id_data_base).setValue(user);
                                         user = new User(SINGLE_MODE);
+                                        ((MainActivity)getActivity()).saveUserToDevice(user);
+                                        Intent intent = new Intent(getActivity(), LoadApp.class);
+                                        intent.putExtra("new_connection",true);
                                         btn_sign_out.setEnabled(false);
                                         btn_sign_out.getCompoundDrawables()[1].setAlpha(128);
-                                        startActivity(new Intent(getActivity(), MainActivity.class));
+                                        startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override
