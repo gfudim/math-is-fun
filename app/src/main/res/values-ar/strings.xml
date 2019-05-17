@@ -32,4 +32,6 @@
     <string name="let_try_again">33</string>
     <string name="keep_it_up">44</string>
     <string name="great_work">55</string>
+    <string name="correct_but_slow_answer">11</string>
+    <string name="save_details">22</string>
 </resources>

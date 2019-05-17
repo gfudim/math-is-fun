@@ -2,11 +2,12 @@
     <string name="app_name" translatable="false">FunMath</string>
     <string name="Name">Name:</string>
     <string name="Age">Age:</string>
-    <string name="reset_history">reset history</string>
+    <string name="reset_history">Reset history</string>
+    <string name="save_details">Save details</string>
     <string name="Good_job_text">Good job!</string>;
     <string name="mistake_text">Wrong answer…</string>;
     <string name="start_training">Started training mode</string>
-    <string name="seconds_remaining">seconds remaining:</string>;
+    <string name="seconds_remaining">Seconds remaining:</string>;
     <string name="session_done">Session done!</string>;
     <string name="show_answer">The answer is:</string>;
     <string name="training_over_today">Training is over for today</string>;

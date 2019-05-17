@@ -37,6 +37,7 @@ public class SettingsFragment extends Fragment {
     TextView name;
     TextView age;
     TextView reset;
+    TextView save_details;
 
     private DatabaseReference databaseUsers;
     @Nullable
@@ -46,6 +47,7 @@ public class SettingsFragment extends Fragment {
         age = fragment_view.findViewById(R.id.ageEditText);
         name = fragment_view.findViewById(R.id.nameEditText);
         reset = fragment_view.findViewById(R.id.resetBtn);
+        save_details = fragment_view.findViewById(R.id.saveDetailsBtn);
         user.start_page = true;
         updateView(fragment_view, (String) Paper.book().read("language"));
         final Button multiBtn = fragment_view.findViewById(R.id.multiModeBtn);
@@ -67,10 +69,17 @@ public class SettingsFragment extends Fragment {
             multiBtn.getCompoundDrawables()[1].setAlpha(128);
             singleBtn.getCompoundDrawables()[1].setAlpha(255);
         }
-        singleBtn.setOnClickListener(new View.OnClickListener() {
+
+        save_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveDetails();
+            }
+        });
+
+        singleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
@@ -123,7 +132,6 @@ public class SettingsFragment extends Fragment {
         btn_sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveDetails();
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
@@ -165,7 +173,6 @@ public class SettingsFragment extends Fragment {
         resetBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
-                saveDetails();
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);

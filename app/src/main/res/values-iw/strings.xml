@@ -18,9 +18,6 @@
     <string name="reset_notice">עומד לבצע אתחול</string>
     <string name="session_done">סבב התרגילים הסתיים!</string>
     <string name="hello">שלום</string>
-    <string name="Home" translatable="false">בית</string>
-    <string name="Settings" translatable="false">הגדרות</string>
-    <string name="Stats" translatable="false">נתונים</string>
     <string name="signout_notice">עומדים להתנתק</string>
     <string name="signout_warning">בטוח להתנתק?</string>
     <string name="training_over_today">האימון הסתיים להיום</string>
@@ -36,4 +33,5 @@
     <string name="points_won">"מספר נקודות שזכית: "</string>
     <string name="keep_it_up">המשיכו להתמיד!</string>
     <string name="great_work">עבודה מצויינת!</string>
+    <string name="save_details">שמירת פרטים</string>
 </resources>
