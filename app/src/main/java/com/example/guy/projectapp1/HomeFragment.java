@@ -21,6 +21,7 @@ import io.paperdb.Paper;
 
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
+import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
 import static com.example.guy.projectapp1.Utils.simpleDateFormat;
 import static com.example.guy.projectapp1.Utils.user;
 

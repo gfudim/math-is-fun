@@ -1,9 +1,12 @@
 package com.example.guy.projectapp1;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+import java.util.Collections;
 
 import static com.example.guy.projectapp1.Utils.MAX_NUMBER;
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
@@ -30,6 +33,7 @@ class User{
     int current_count_points_per_day;
     int max_points_per_day;
     int total_points;
+    int index;
     String last_day_of_session;
     int days_in_row;
     int max_days_in_row;
@@ -40,6 +44,8 @@ class User{
     boolean session_done;
     boolean start_page;  //true if last page was the main menu - for the "back" option
     boolean search_exercises_done;
+    boolean training_done;
+    boolean testing_done;
     boolean fullscore;
     String name;
     String id_data_base;
@@ -57,6 +63,7 @@ class User{
         this.session_type = SEARCH_MODE;
         this.first_login = simpleDateFormat.format(Calendar.getInstance().getTime());
         this.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
+        this.index = 0;
         this.session_done = false;
         this.name = "";
         this.email = "";
@@ -65,6 +72,8 @@ class User{
         this.start_page = true;
         this.last_day_of_session = "None";
         this.search_exercises_done = false;
+        this.training_done = false;
+        this.testing_done = false;
         init();
     }
 
@@ -78,10 +87,10 @@ class User{
         this.count_tests = 0;
         this.current_count_points_per_day = 0;
         this.max_points_per_day = 0;
-        this.total_points=0;
-        this.days_in_row=0;
-        this.max_days_in_row=0;
-        this.fullscore=false;
+        this.total_points = 0;
+        this.days_in_row = 0;
+        this.max_days_in_row = 0;
+        this.fullscore = false;
         this.known_exercises = new ArrayList<>();
         this.unknown_exercises = new ArrayList<>();
         this.undefined_exercises = new ArrayList<>();
@@ -104,13 +113,11 @@ class User{
         Exercise exercise;
         int counter = 0;
         if (this.session_type == Utils.TRAIN_MODE) {
-            if (this.current_exercises.size() > 0){
-                return this.current_exercises.get(rand.nextInt(this.current_exercises.size()));
-            }
+            return this.current_exercises.get(this.index % this.current_exercises.size());
         }
         else if(this.session_type == SEARCH_MODE){
             if (rand.nextInt(100) < 25 || this.search_exercises_done){  //from group A
-                if (this.known_exercises != null && this.known_exercises.size() > 0) {
+                if (this.known_exercises.size() > 0) {
                     return this.known_exercises.get(rand.nextInt(this.known_exercises.size()));
                 }
             }
@@ -140,13 +147,7 @@ class User{
         if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             exercise.count_correct_answers++;
             this.correct_answers++;
-        }
-        else{
-            exercise.count_wrong_answers++;
-            this.wrong_answers++;
-        }
-        this.total_answers = this.correct_answers + this.wrong_answers;
-        if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
+
             user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
             int points=calculatePoints(user_answer_time);
             this.current_count_points_per_day += points;
@@ -156,8 +157,12 @@ class User{
             }
         }
         else{
+            exercise.count_wrong_answers++;
+            this.wrong_answers++;
             exercise.count_correct_answers = 0; //wrong answerText or too much time
         }
+        this.total_answers = this.correct_answers + this.wrong_answers;
+
         if(this.session_type == Utils.TRAIN_MODE){
             setGroupTrainMode(exercise);
         }
@@ -167,11 +172,19 @@ class User{
             if (checkAllExercisesInGroup(unknown_exercises,current_exercises)){
                 this.search_exercises_done = true;
             }
-            for (int i=0; i<current_exercises.size(); i++){
-                if (checkExerciseInGroup(known_exercises,current_exercises.get(i))){
-                    this.exerciseGroupWithMaxVar();
-                    break;
+            else{
+                for (int i=0; i < current_exercises.size(); i++){
+                    if (checkExerciseInGroup(known_exercises,current_exercises.get(i))){
+                        this.exerciseGroupWithMaxVar();
+                        break;
+                    }
                 }
+            }
+        }
+        this.index++;
+        if (this.session_type == TRAIN_MODE){
+            if (this.index % 4 == 0){
+                Collections.shuffle(this.current_exercises);
             }
         }
     }
@@ -183,22 +196,33 @@ class User{
     private void setGroupTrainMode(Exercise exercise) {
         int i;
         if (exercise.count_wrong_answers == 1){
-            for (i=0; i< current_exercises.size(); i++){
-               current_exercises.get(i).count_wrong_answers=0;
-               current_exercises.get(i).count_correct_answers=0;
+            this.resetExercises();
+            if (!this.testing_done) {
+                this.testing_done = true;
             }
         }
         else {
-            for (i=0; i< current_exercises.size(); i++){
-                if(current_exercises.get(i).count_correct_answers<3){
-                    return;
+            if (!this.testing_done){
+                for (i=0; i < current_exercises.size(); i++){
+                    if(current_exercises.get(i).count_correct_answers < 3){
+                        return;
+                    }
                 }
+                this.testing_done = true;
+                this.fullscore = true;
+                this.training_done = true;
+                this.session_done=true;//TODO - we need to continue to search mode
             }
-            // test done!
-            this.fullscore=true;
-            this.session_done = true;
         }
     }
+
+    private void resetExercises() {
+        for (int i=0; i< current_exercises.size(); i++){
+            current_exercises.get(i).count_wrong_answers = 0;
+            current_exercises.get(i).count_correct_answers = 0;
+        }
+    }
+
     private void setGroupSearchMode(Exercise exercise) {
         if(checkExerciseInGroup(known_exercises,exercise)){
             if(exercise.count_wrong_answers == 1){
@@ -260,6 +284,7 @@ class User{
     }
 
     private void moveExercise(ArrayList<Exercise> src, ArrayList<Exercise> dst, Exercise exercise){
+        Log.e("move", "1111 move");
         exercise.count_correct_answers = 0;
         exercise.count_wrong_answers = 0;
         dst.add(exercise);
@@ -321,14 +346,16 @@ class User{
     }
     public void setStartSession() {
         this.uncheckDisplayedExercises();
-        this.session_done=false;
-        this.current_count_points_per_day=0;
+        this.session_done =false;
+        this.index = 0;
+        this.current_count_points_per_day = 0;
+
         if(this.session_type == SEARCH_MODE){
             this.search_exercises_done = false;
             this.exerciseGroupWithMaxVar();
         }
         else{ //user.session_type = TRAIN_MODE;
-            this.fullscore=false;
+            this.testing_done = false;
         }
     }
     public void setEndSession() {
@@ -338,9 +365,9 @@ class User{
         if(this.session_type==TRAIN_MODE) {
             this.checkTest();
             for (int i=0; i< current_exercises.size(); i++){
-                current_exercises.get(i).count_trained+=1;
-                if(fullscore){
-                    moveExercise(current_exercises,known_exercises, current_exercises.get(i));
+                current_exercises.get(i).count_trained++;
+                if(this.training_done){
+                    moveExercise(unknown_exercises,known_exercises, current_exercises.get(i));
                 }
             }
         }
@@ -387,11 +414,12 @@ class User{
     }
 
     private void switchMode() {//switches the user mode - TRAIN MODE <-> SEARCH MODE
-        if(this.session_type==TRAIN_MODE){
+        if(this.session_type==TRAIN_MODE&&this.training_done){
             this.session_type=SEARCH_MODE;
         }
-        else if(this.session_type==SEARCH_MODE){
+        else if(this.session_type==SEARCH_MODE&&this.search_exercises_done){
             this.session_type=TRAIN_MODE;
+            this.resetExercises();
         }
     }
 

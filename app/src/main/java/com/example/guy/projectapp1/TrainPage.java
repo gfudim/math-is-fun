@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import io.paperdb.Paper;
@@ -30,9 +29,11 @@ public class TrainPage extends Utils {
     EditText answer;
     Exercise exercise = user.getNextExercise();
     long start_input_answer;
+    long current_milli_train_timer;
     int user_answer = 0;
     CountDownTimer train_counter;
     MediaPlayer exercise_media = new MediaPlayer();
+    final Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,25 +51,9 @@ public class TrainPage extends Utils {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                train_counter = new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
-                    Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
-                    public void onTick(long millisUntilFinished) {
-                        TextView res = findViewById(R.id.ResultTextView);
-                        res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
-                        res.setTextColor(Color.BLACK);
-                        res.setTextSize(16);
-                        if(user.session_done){
-                            user.setEndSession();
-                            saveUser(user);
-                            testDoneToast();
-                        }
-                    }
-                    public void onFinish() {
-                        user.setEndSession();
-                        saveUser(user);
-                        testDoneToast();
-                    }
-                }.start();
+
+                train_counter = OurCountDownTimer(SESSION_MILLI_DURATION);
+                train_counter.start();
                 showExercise(exercise);
                 user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
             }
@@ -112,6 +97,7 @@ public class TrainPage extends Utils {
         else{
             try{
                 user.setAnswer(exercise, user_answer);
+                saveUser(user);
                 if (user_answer == (exercise.result())) { /*correct answer*/
                     toastAfterAnswer(true, true, exercise);
                 }
@@ -217,4 +203,40 @@ public class TrainPage extends Utils {
         });
         builder.show();
     }
+
+    public void timerPause() {
+        train_counter.cancel();
+    }
+    private void timerResume() {
+        train_counter = OurCountDownTimer(current_milli_train_timer);
+        train_counter.start();
+    }
+
+    public CountDownTimer OurCountDownTimer(long session_duration){
+        return new CountDownTimer(session_duration,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                current_milli_train_timer = millisUntilFinished;
+                TextView res = findViewById(R.id.ResultTextView);
+                res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
+                res.setTextColor(Color.BLACK);
+                res.setTextSize(16);
+                if (user.session_done) {
+                    user.setEndSession();
+                    saveUser(user);
+                    testDoneToast();
+                    train_counter.cancel();
+                }
+
+            }
+
+            @Override
+            public void onFinish() {
+                user.setEndSession();
+                saveUser(user);
+                testDoneToast();
+            }
+        };
+    }
 }
+

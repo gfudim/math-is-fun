@@ -1,5 +1,7 @@
 package com.example.guy.projectapp1;
 
+import android.util.Log;
+
 import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.RANDOM_VAR;
