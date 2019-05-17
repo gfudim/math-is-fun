@@ -33,7 +33,7 @@ public class TrainPage extends Utils {
     int user_answer = 0;
     CountDownTimer train_counter;
     MediaPlayer exercise_media = new MediaPlayer();
-    final Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+    MediaPlayer exercise_repeat_media = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,12 +97,32 @@ public class TrainPage extends Utils {
         else{
             try{
                 user.setAnswer(exercise, user_answer);
-                saveUser(user);
-                if (user_answer == (exercise.result())) { /*correct answer*/
-                    toastAfterAnswer(true, true, exercise);
+                if (user.index % 4 == 0){
+                    if (!user.testing_done){
+                        timerPause();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
+                        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+                        builder.setTitle(context.getResources().getString(R.string.well_done));
+                        builder.setMessage(context.getResources().getString(R.string.let_try_again));
+                        builder.setCancelable(false);
+                        builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                timerResume();
+                                exercise.time_displayed = System.currentTimeMillis();
+                            }
+                        });
+                        builder.show();
+                    }
                 }
-                else {
-                    toastAfterAnswer(false, true, exercise);
+                saveUser(user);
+                if (user.testing_done){
+                    if (user_answer == (exercise.result())) { /*correct answer*/
+                        toastAfterAnswer(true, true, exercise);
+                    }
+                    else {
+                        toastAfterAnswer(false, true, exercise);
+                    }
                 }
                 if(!user.session_done){ //backup -> && user.current_exercises.size() != 0
                     if (user.total_answers % 4 == 0) {
@@ -146,6 +166,9 @@ public class TrainPage extends Utils {
     public void showExercise(Exercise exercise){
         TextView show_exercise = findViewById(R.id.ExerciseTextView);
         String temp_exercise = String.format("%s * %s", exercise.mul1, exercise.mul2);
+        if (user.testing_done){
+            exercise_repeat_media = MediaPlayer.create(this, Utils.repeat_exercisesID[user.lang][exercise.exercise_id]);
+        }
         show_exercise.setText(temp_exercise);
         if (Utils.resID[user.lang].length > 0){
             exercise_media = MediaPlayer.create(this, Utils.resID[user.lang][exercise.exercise_id]);
@@ -213,6 +236,7 @@ public class TrainPage extends Utils {
     }
 
     public CountDownTimer OurCountDownTimer(long session_duration){
+        final Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         return new CountDownTimer(session_duration,1000) {
             @Override
             public void onTick(long millisUntilFinished) {

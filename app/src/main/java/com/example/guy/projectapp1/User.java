@@ -118,7 +118,10 @@ class User{
         else if(this.session_type == SEARCH_MODE){
             if (rand.nextInt(100) < 25 || this.search_exercises_done){  //from group A
                 if (this.known_exercises.size() > 0) {
-                    return this.known_exercises.get(rand.nextInt(this.known_exercises.size()));
+                    exercise = this.known_exercises.get(rand.nextInt(this.known_exercises.size()));
+                    if (!exercise.displayed_today){
+                        return exercise;
+                    }
                 }
             }
             if (this.current_exercises.size() > 0){
@@ -143,6 +146,7 @@ class User{
 
     void setAnswer(Exercise exercise, int answer){
         int user_answer_time;
+        exercise.displayed_today = true;
         exercise.time_answered = System.currentTimeMillis();
         if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             exercise.count_correct_answers++;
@@ -236,7 +240,7 @@ class User{
             else if(exercise.count_correct_answers == 1){
                 exercise.displayed_today = true;
             }
-            else if(exercise.count_correct_answers == 3){
+            else if(exercise.count_correct_answers == 2){
                 moveExercise(undefined_exercises, known_exercises, exercise);
             }
         }
@@ -284,7 +288,6 @@ class User{
     }
 
     private void moveExercise(ArrayList<Exercise> src, ArrayList<Exercise> dst, Exercise exercise){
-        Log.e("move", "1111 move");
         exercise.count_correct_answers = 0;
         exercise.count_wrong_answers = 0;
         dst.add(exercise);
@@ -294,14 +297,23 @@ class User{
     public void exerciseGroupWithMaxVar(){
         Random rand = new Random();
         Double current_var;
+        Exercise exercise;
         Double max_var = Double.NEGATIVE_INFINITY;
         ArrayList <Exercise> candidates = new ArrayList<>();
         candidates.addAll(undefined_exercises);
         candidates.addAll(unknown_exercises);
         for (int i=0; i< optional_exercises; i++){
             ArrayList <Exercise> temp_group = new ArrayList<>();
-            for (int j=0; j< NUM_OF_EXERCISES_IN_SESSION; j++){
-                temp_group.add(candidates.get(rand.nextInt(candidates.size())));
+            if(candidates.size()<=NUM_OF_EXERCISES_IN_SESSION){
+                temp_group=candidates;
+            }
+            else{
+                while (temp_group.size()<NUM_OF_EXERCISES_IN_SESSION){
+                    exercise = candidates.get(rand.nextInt(candidates.size()));
+                    if (!checkExerciseInGroup(temp_group, exercise)){
+                        temp_group.add(exercise);
+                    }
+                }
             }
             current_var = calculateGroupVar(temp_group);
             if (current_var > max_var){

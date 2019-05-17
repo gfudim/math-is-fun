@@ -57,6 +57,15 @@ public class Utils extends AppCompatActivity {
             R.raw.ex8times8, R.raw.ex8times9,
             R.raw.ex9times9},{},{},{}};
 
+    final protected static int [][] repeat_exercisesID = {{R.raw.ex2times2, R.raw.ex2times3, R.raw.ex2times4, R.raw.ex2times5, R.raw.ex2times6, R.raw.ex2times7, R.raw.ex2times8,R.raw.ex2times9,
+            R.raw.ex3times3, R.raw.ex3times4, R.raw.ex3times5, R.raw.ex3times6, R.raw.ex3times7, R.raw.ex3times8, R.raw.ex3times9,
+            R.raw.ex4times4, R.raw.ex4times5, R.raw.ex4times6, R.raw.ex4times7, R.raw.ex4times8, R.raw.ex4times9,
+            R.raw.ex5times5, R.raw.ex5times6,  R.raw.ex5times7, R.raw.ex5times8, R.raw.ex5times9,
+            R.raw.ex6times6, R.raw.ex6times7, R.raw.ex6times8, R.raw.ex6times9,
+            R.raw.ex7times7, R.raw.ex7times8, R.raw.ex7times9,
+            R.raw.ex8times8, R.raw.ex8times9,
+            R.raw.ex9times9},{},{},{}};
+
     protected static String pattern = "dd/MM/yyyy_HH:mm";
     protected static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
     protected static SimpleDateFormat day_format = new SimpleDateFormat("dd/MM/yyyy");
