@@ -26,4 +26,10 @@
     <string name="dont_know">4234</string>
     <string name="exit_session_warning">53535</string>
     <string name="exit_session">332</string>
+    <string name="try_again">11</string>
+    <string name="start_answer">22</string>
+    <string name="points_won">333</string>
+    <string name="let_try_again">33</string>
+    <string name="keep_it_up">44</string>
+    <string name="great_work">55</string>
 </resources>

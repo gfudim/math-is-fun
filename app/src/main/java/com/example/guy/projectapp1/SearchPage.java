@@ -32,6 +32,7 @@ public class SearchPage extends Utils {
     int user_answer = 0;
     CountDownTimer search_counter;
     MediaPlayer exercise_media = new MediaPlayer();
+    Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,8 +79,6 @@ public class SearchPage extends Utils {
         });
 
         search_counter = new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
-            Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
-
             public void onTick(long millisUntilFinished) {
                 TextView res = findViewById(R.id.ResultTextView);
                 res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
@@ -129,7 +128,7 @@ public class SearchPage extends Utils {
         start_input_answer = System.currentTimeMillis();
         UIUtil.showKeyboard(SearchPage.this,answer);
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
-            Toast.makeText(SearchPage.this, "Think faster..(5 seconds)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchPage.this, context.getResources().getString(R.string.start_answer), Toast.LENGTH_SHORT).show();
             handleOverTimeAnswer(true);
         }
     }
@@ -140,10 +139,10 @@ public class SearchPage extends Utils {
             saveUser(user);
         }
         if (exercise.result() == user_answer && !no_answer){
-            Toast.makeText(SearchPage.this, "Answer correct, but it took to much time..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchPage.this, context.getResources().getString(R.string.correct_but_slow_answer), Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(SearchPage.this, "Try again..(faster)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchPage.this, context.getResources().getString(R.string.try_again), Toast.LENGTH_SHORT).show();
         }
         answer.setText("");
         // exercise = user.getNextExercise(); // if we want to change exercise after over time
@@ -152,7 +151,6 @@ public class SearchPage extends Utils {
 
     public void searchDoneToast(){
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
-        Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.session_done));
         builder.setMessage(String.format("You just won %s points!", user.current_count_points_per_day)); // TODO - change string
@@ -180,7 +178,7 @@ public class SearchPage extends Utils {
     }
 
     private void updateView() {
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));
         dont_know.setText(resources.getString(R.string.dont_know));
@@ -189,7 +187,6 @@ public class SearchPage extends Utils {
 
     @Override
     public void onBackPressed() {
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(context.getString(R.string.exit_session));

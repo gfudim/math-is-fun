@@ -57,42 +57,40 @@ public class StatsFragment extends Fragment {
         return view;
     }
 
-
-    // TODO - switch to correct strings
     private void connectDaysRow(View view, final int id_button, int threshold) {
         if(user.max_days_in_row>=threshold){
             connectButton(view,id_button,R.string.well_done,R.string.start_training);
             view.findViewById(id_button).setAlpha(1);
         }
         else{
-            connectButton(view,id_button,R.string.more_work,R.string.start_training);
+            connectButton(view,id_button,R.string.more_work,R.string.keep_it_up);
         }
     }
     private void connectMaxPoints(View view, final int id_button, int threshold) {
         if(user.max_points_per_day>=threshold){
-            connectButton(view,id_button,R.string.well_done,R.string.start_training);
+            connectButton(view,id_button,R.string.well_done,R.string.keep_it_up);
             view.findViewById(id_button).setAlpha(1);
         }
         else{
-            connectButton(view,id_button,R.string.more_work,R.string.start_training);
+            connectButton(view,id_button,R.string.more_work,R.string.keep_it_up);
         }
     }
     private void connectTestsRow(View view, final int id_button,final int id_frame, int threshold) {
         if(user.max_correct_tests_in_row>=threshold){
-            connectButton(view,id_button,R.string.well_done,R.string.start_training);
+            connectButton(view,id_button,R.string.well_done,R.string.keep_it_up);
             view.findViewById(id_frame).setAlpha(1);
         }
         else{
-            connectButton(view,id_button,R.string.more_work,R.string.start_training);
+            connectButton(view,id_button,R.string.more_work,R.string.keep_it_up);
         }
     }
     private void connectTrophy(View view, final int id_button, int days_row_threshold, int max_points_thresold, int tests_row_threshold) {
         if(user.max_days_in_row>=days_row_threshold&&user.max_points_per_day>=max_points_thresold&&user.max_correct_tests_in_row>=tests_row_threshold){
-            connectButton(view,id_button,R.string.well_done,R.string.start_training);
+            connectButton(view,id_button,R.string.well_done,R.string.great_work);
             view.findViewById(id_button).setAlpha(1);
         }
         else{
-            connectButton(view,id_button,R.string.more_work,R.string.start_training);
+            connectButton(view,id_button,R.string.more_work,R.string.keep_it_up);
         }
     }
     private void connectButton(View view,int id_button,final int id_title,final int id_message){

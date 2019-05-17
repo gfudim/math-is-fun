@@ -34,6 +34,7 @@ public class TrainPage extends Utils {
     CountDownTimer train_counter;
     MediaPlayer exercise_media = new MediaPlayer();
     MediaPlayer exercise_repeat_media = new MediaPlayer();
+    Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,6 @@ public class TrainPage extends Utils {
         answer = findViewById(R.id.InputEditText);
         updateView();
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.start_training));
         builder.setMessage(context.getResources().getString(R.string.start_training));
@@ -101,7 +101,6 @@ public class TrainPage extends Utils {
                     if (!user.testing_done){
                         timerPause();
                         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
-                        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
                         builder.setTitle(context.getResources().getString(R.string.well_done));
                         builder.setMessage(context.getResources().getString(R.string.let_try_again));
                         builder.setCancelable(false);
@@ -142,7 +141,7 @@ public class TrainPage extends Utils {
     public void time_for_answer_train(View view){
         start_input_answer = System.currentTimeMillis();
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
-            Toast.makeText(TrainPage.this, "Think faster..(5 seconds)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TrainPage.this, context.getResources().getString(R.string.start_answer), Toast.LENGTH_SHORT).show();
             handleOverTimeAnswer(true);
         }
     }
@@ -153,10 +152,10 @@ public class TrainPage extends Utils {
             saveUser(user);
         }
         if (exercise.result() == user_answer && !no_answer){
-            Toast.makeText(TrainPage.this, "Answer correct, but it took to much time..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TrainPage.this, context.getResources().getString(R.string.correct_but_slow_answer), Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(TrainPage.this, "Try again..(faster)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TrainPage.this, context.getResources().getString(R.string.try_again), Toast.LENGTH_SHORT).show();
         }
         answer.setText("");
         // exercise = user.getNextExercise(); // if we want to change exercise after over time
@@ -180,10 +179,10 @@ public class TrainPage extends Utils {
 
     public void testDoneToast(){
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        String points = String.format("%s", user.current_count_points_per_day);
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.session_done));
-        builder.setMessage(String.format("You just won %s points!", user.current_count_points_per_day));
+        builder.setMessage(context.getResources().getString(R.string.points_won).concat(points));
         builder.setCancelable(false);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
@@ -195,7 +194,7 @@ public class TrainPage extends Utils {
         builder.show();
     }
     private void updateView() {
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));
         answer.setHint(resources.getString(R.string.answer));
@@ -203,7 +202,6 @@ public class TrainPage extends Utils {
 
     @Override
     public void onBackPressed() {
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(context.getString(R.string.exit_session));
@@ -236,7 +234,6 @@ public class TrainPage extends Utils {
     }
 
     public CountDownTimer OurCountDownTimer(long session_duration){
-        final Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         return new CountDownTimer(session_duration,1000) {
             @Override
             public void onTick(long millisUntilFinished) {

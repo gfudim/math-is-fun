@@ -29,4 +29,11 @@
     <string name="dont_know">לא יודע</string>
     <string name="exit_session_warning">בטוח לצאת?</string>
     <string name="exit_session">לקראת יציאה</string>
+    <string name="let_try_again">בואו ננסה שוב</string>
+    <string name="start_answer">הכניסו תשובה מהר יותר</string>
+    <string name="correct_but_slow_answer">תשובה נכונה, אבל לקח יותר מדי זמן..</string>
+    <string name="try_again">נסו שוב..(מהר יותר)</string>
+    <string name="points_won">"מספר נקודות שזכית: "</string>
+    <string name="keep_it_up">המשיכו להתמיד!</string>
+    <string name="great_work">עבודה מצויינת!</string>
 </resources>

@@ -1,7 +1,5 @@
 package com.example.guy.projectapp1;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
