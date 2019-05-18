@@ -53,7 +53,6 @@ public class SettingsFragment extends Fragment {
         final Button multiBtn = fragment_view.findViewById(R.id.multiModeBtn);
         final Button singleBtn = fragment_view.findViewById(R.id.singleModeBtn);
         final Button btn_sign_out = fragment_view.findViewById(R.id.signoutBtn);
-        // final Button save_details = fragment_view.findViewById(R.id.saveDetailsBtn); // TODO - need to add button
 
        if (user.mode == SINGLE_MODE) {
             singleBtn.setEnabled(false);

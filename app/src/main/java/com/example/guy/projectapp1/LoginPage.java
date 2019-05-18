@@ -76,7 +76,7 @@ public class LoginPage extends Utils {
                 user.id_data_base = user_loggin.getUid();
                 user.email = user_loggin.getEmail();
                 reff = FirebaseDatabase.getInstance().getReference().child("user");
-                reff.addValueEventListener(new ValueEventListener() {
+                reff.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (!dataSnapshot.hasChild(user.id_data_base)){

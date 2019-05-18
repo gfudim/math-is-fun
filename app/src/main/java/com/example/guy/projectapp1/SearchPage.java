@@ -32,7 +32,6 @@ public class SearchPage extends Utils {
     int user_answer = 0;
     CountDownTimer search_counter;
     MediaPlayer exercise_media = new MediaPlayer();
-    Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +78,7 @@ public class SearchPage extends Utils {
         });
 
         search_counter = new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
+            Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
             public void onTick(long millisUntilFinished) {
                 TextView res = findViewById(R.id.ResultTextView);
                 res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
@@ -125,6 +125,7 @@ public class SearchPage extends Utils {
     }
 
     public void time_for_answer_search(View view){
+        Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         start_input_answer = System.currentTimeMillis();
         UIUtil.showKeyboard(SearchPage.this,answer);
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
@@ -134,6 +135,7 @@ public class SearchPage extends Utils {
     }
 
     public void handleOverTimeAnswer(boolean no_answer){
+        Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         user.setAnswer(exercise, 0); // wrong answer
         if (user.total_answers % 4 == 0) {
             saveUser(user);
@@ -151,6 +153,7 @@ public class SearchPage extends Utils {
 
     public void searchDoneToast(){
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
+        Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.session_done));
         builder.setMessage(String.format("You just won %s points!", user.current_count_points_per_day)); // TODO - change string
@@ -178,7 +181,7 @@ public class SearchPage extends Utils {
     }
 
     private void updateView() {
-        context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));
         dont_know.setText(resources.getString(R.string.dont_know));
@@ -187,6 +190,7 @@ public class SearchPage extends Utils {
 
     @Override
     public void onBackPressed() {
+        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(context.getString(R.string.exit_session));

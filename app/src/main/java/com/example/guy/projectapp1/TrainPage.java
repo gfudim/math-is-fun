@@ -34,10 +34,10 @@ public class TrainPage extends Utils {
     CountDownTimer train_counter;
     MediaPlayer exercise_media = new MediaPlayer();
     MediaPlayer exercise_repeat_media = new MediaPlayer();
-    Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train);
         submit = findViewById(R.id.SubmitBtn);
@@ -90,6 +90,7 @@ public class TrainPage extends Utils {
     }
 
     public void handleAnswer(){
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         exercise.time_answered = System.currentTimeMillis();
         if ((exercise.time_answered - exercise.time_displayed)/1000 > MAX_TIME_TO_ANSWER){
             handleOverTimeAnswer(false);
@@ -139,6 +140,7 @@ public class TrainPage extends Utils {
     }
 
     public void time_for_answer_train(View view){
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         start_input_answer = System.currentTimeMillis();
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
             Toast.makeText(TrainPage.this, context.getResources().getString(R.string.start_answer), Toast.LENGTH_SHORT).show();
@@ -147,6 +149,7 @@ public class TrainPage extends Utils {
     }
 
     public void handleOverTimeAnswer(boolean no_answer){
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         user.setAnswer(exercise, 0); // wrong answer
         if (user.total_answers % 4 == 0) {
             saveUser(user);
@@ -178,6 +181,7 @@ public class TrainPage extends Utils {
     }
 
     public void testDoneToast(){
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         String points = String.format("%s", user.current_count_points_per_day);
         builder.setCancelable(true);
@@ -194,6 +198,7 @@ public class TrainPage extends Utils {
         builder.show();
     }
     private void updateView() {
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));
@@ -202,6 +207,7 @@ public class TrainPage extends Utils {
 
     @Override
     public void onBackPressed() {
+        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(context.getString(R.string.exit_session));
@@ -237,6 +243,7 @@ public class TrainPage extends Utils {
         return new CountDownTimer(session_duration,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
                 current_milli_train_timer = millisUntilFinished;
                 TextView res = findViewById(R.id.ResultTextView);
                 res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
