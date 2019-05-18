@@ -73,9 +73,9 @@ public class Utils extends AppCompatActivity {
     public void saveUser(User current_user){
         reff = FirebaseDatabase.getInstance().getReference("user");
         if (current_user.mode == SINGLE_MODE && (current_user.id_data_base == null || current_user.id_data_base.equals(""))) {
+            id_for_user++;
             current_user.id_data_base =  String.format("%s", id_for_user);
             reff.child("Number of single users").setValue(id_for_user);
-            id_for_user++;
         }
         reff.child(current_user.id_data_base).setValue(current_user);
     }

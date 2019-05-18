@@ -25,6 +25,8 @@ public class LoadApp extends Utils {
                startActivity(new Intent(LoadApp.this, LoginPage.class));
            }
            else{ // load FirstApp page
+               saveUser(user);
+               saveUserToDevice(user);
                Intent intent = new Intent(LoadApp.this, MainActivity.class);
                intent.putExtra("new_connection",true);
                startActivity(intent);

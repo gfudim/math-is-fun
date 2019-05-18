@@ -102,6 +102,7 @@ public class LoginPage extends Utils {
                         if (user.current_exercises == null){
                             user.current_exercises = new ArrayList<>();
                         }
+                        id_for_user = Integer.parseInt(dataSnapshot.child("Number of single users").getValue().toString());
                     }
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
