@@ -188,7 +188,7 @@ public class TrainPage extends Utils {
         String message="";
         for(int i=0;i<user.current_exercises.size();i++){
             String exercise = user.current_exercises.get(i).toString();
-            String result = String.format(": %s/100",(int)user.current_exercises.get(i).getScore()*100);
+            String result = String.format(": %s/100",(int)(user.current_exercises.get(i).getScore()*100));
             Log.e("testDoneToast",exercise);
             Log.e("testDoneToast",result);
             message=message.concat(String.format("%s) %s\t%s\n",i+1,exercise, result));
