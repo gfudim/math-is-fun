@@ -52,6 +52,16 @@ class User{
     ArrayList<Exercise> unknown_exercises;
     ArrayList<Exercise> undefined_exercises;
     ArrayList<Exercise> current_exercises;
+    private boolean new_prize;
+    private boolean sevenDays;
+    private boolean fourteenDays;
+    private boolean thirtyDays;
+    private boolean p2000;
+    private boolean p4000;
+    private boolean p6000;
+    private boolean c1;
+    private boolean c3;
+    private boolean c5;
 
     User(){} //for loading user from firebase
 
@@ -70,8 +80,7 @@ class User{
         this.start_page = true;
         this.last_day_of_session = "None";
         this.search_exercises_done = false;
-        this.training_done = false;
-        this.testing_done = false;
+
         init();
     }
 
@@ -89,6 +98,9 @@ class User{
         this.days_in_row = 0;
         this.max_days_in_row = 0;
         this.fullscore = false;
+        this.training_done = false;
+        this.testing_done = false;
+        this.new_prize=false;
         this.known_exercises = new ArrayList<>();
         this.unknown_exercises = new ArrayList<>();
         this.undefined_exercises = new ArrayList<>();
@@ -100,6 +112,19 @@ class User{
                 id++;
             }
         }
+        this.initPrizes();
+    }
+
+    private void initPrizes() {
+        this.sevenDays=false;
+        this.fourteenDays=false;
+        this.thirtyDays=false;
+        this.p2000=false;
+        this.p4000=false;
+        this.p6000=false;
+        this.c1=false;
+        this.c3=false;
+        this.c5=false;
     }
 
     void resetHistory(){
@@ -393,10 +418,74 @@ class User{
             }
         }
         //end trophies
+        this.checkIfGotNewPrize();
         this.last_day_of_session=day_format.format(Calendar.getInstance().getTime());
         this.end_session_time=simpleDateFormat.format(Calendar.getInstance().getTime());
         this.switchMode();
 
+    }
+
+    private void checkIfGotNewPrize() {
+        if(checkPrize(this.max_days_in_row,7)){
+            if(!this.sevenDays){
+                this.sevenDays=true;
+                this.new_prize=true;
+            }
+        }
+        if(checkPrize(this.max_days_in_row,14)){
+            if(!this.fourteenDays){
+                this.fourteenDays=true;
+                this.new_prize=true;
+            }
+        }
+        if(checkPrize(this.max_days_in_row,30)){
+            if(!this.thirtyDays){
+                this.thirtyDays=true;
+                this.new_prize=true;
+            }
+        }
+        if(checkPrize(this.max_points_per_day,2000)){
+            if(!this.p2000){
+                this.p2000=true;
+                this.new_prize=true;
+            }
+        }
+        if(checkPrize(this.max_points_per_day,4000)){
+            if(!this.p4000){
+                this.p4000=true;
+                this.new_prize=true;
+            }
+        }
+        if(checkPrize(this.max_points_per_day,6000)){
+            if(!this.p6000){
+                this.p6000=true;
+                this.new_prize=true;
+            }
+        }
+        if(checkPrize(this.max_correct_tests_in_row,1)){
+            if(!this.c1){
+                this.c1=true;
+                this.new_prize=true;
+            }
+        }
+        if(checkPrize(this.max_correct_tests_in_row,3)){
+            if(!this.c3){
+                this.c3=true;
+                this.new_prize=true;
+            }
+        }
+        if(checkPrize(this.max_correct_tests_in_row,5)){
+            if(!this.c5){
+                this.c5=true;
+                this.new_prize=true;
+            }
+        }
+    }
+    private boolean checkPrize(int current,int threshold){
+        if(current>=threshold){
+            return true;
+        }
+        return false;
     }
 
     private void checkTest() {
@@ -444,4 +533,11 @@ class User{
         }
     }
 
+    public boolean gotPrize() {
+        if(this.new_prize){
+            this.new_prize=false;
+            return true;
+        }
+        return false;
+    }
 }

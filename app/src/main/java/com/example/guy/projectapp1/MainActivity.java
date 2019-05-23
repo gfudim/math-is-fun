@@ -1,12 +1,15 @@
 package com.example.guy.projectapp1;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.ViewGroup;
@@ -43,6 +46,9 @@ public class MainActivity extends Utils {
         // if it's the first time, print a welcome message
         if(user.name != null && !user.name.equals("") && new_connection){
             showWelcomeMsg();
+        }
+        if(user.gotPrize()){
+            showPrizeMsg();
         }
     }
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -85,6 +91,16 @@ public class MainActivity extends Utils {
         messageTextView.setTextSize(25);
         messageTextView.setTextColor(Color.BLUE);
         toast.show();
+    }
+    private void showPrizeMsg() {
+        Context context = LocaleHelper.setLocale(MainActivity.this, (String) Paper.book().read("language"));
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setTitle(context.getResources().getString(R.string.congratulations));
+        String message=context.getResources().getString(R.string.you_got_a_prize);
+        builder.setMessage(message);
+        builder.setCancelable(false);
+        builder.setPositiveButton(context.getResources().getString(R.string.ok), null);
+        builder.show();
     }
 
 }
