@@ -1,7 +1,9 @@
 package com.example.guy.projectapp1;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.Locale;
 import java.util.Random;
 
 import static com.example.guy.projectapp1.Utils.RANDOM_VAR;
@@ -16,6 +18,8 @@ class Exercise {
     long time_displayed; // for calculating the time for answers
     long time_answered;
     boolean displayed_today;
+    int session_count_wrong;
+    int session_count_correct;
 
     Exercise(){} // for loading user from firebase
 
@@ -25,6 +29,8 @@ class Exercise {
         count_trained=0;
         count_correct_answers = 0;
         count_wrong_answers = 0;
+        session_count_wrong=0;
+        session_count_correct=0;
         exercise_id = id;
         time_displayed = 0;
         time_answered = 0;
@@ -61,6 +67,19 @@ class Exercise {
         }
         return count*(-1);
     }
+    @NonNull
+    @Override
+    public String toString() {
+        String result="";
+        result=String.format("%s * %s = %s",mul1,mul2,this.result());
+        return result;
+    }
 
+    public float getScore() {
+        if(this.session_count_correct+this.session_count_wrong==0){
+            return -1;
+        }
+        return this.session_count_correct/((float)(this.session_count_correct+this.session_count_wrong));
+    }
 }
 

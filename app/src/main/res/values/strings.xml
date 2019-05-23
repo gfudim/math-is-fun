@@ -35,7 +35,7 @@
     <string name="start_answer">Need to start answer faster</string>
     <string name="correct_but_slow_answer">Answer correct, but it took to much time..</string>
     <string name="try_again">Try again..(faster)</string>
-    <string name="points_won">Points won: </string>
+    <string name="points_won">"Points won: "</string>
     <string name="keep_it_up">Keep it up!</string>
     <string name="great_work">Great Work!</string>
 </resources>

@@ -148,6 +148,7 @@ class User{
         exercise.time_answered = System.currentTimeMillis();
         if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
             exercise.count_correct_answers++;
+            exercise.session_count_correct++;
             this.correct_answers++;
 
             user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
@@ -160,6 +161,7 @@ class User{
         }
         else{
             exercise.count_wrong_answers++;
+            exercise.session_count_wrong++;
             this.wrong_answers++;
             exercise.count_correct_answers = 0; //wrong answerText or too much time
         }
@@ -356,6 +358,7 @@ class User{
     }
     public void setStartSession() {
         this.uncheckDisplayedExercises();
+        this.resetSessionCounters();
         this.session_done =false;
         this.index = 0;
         this.current_count_points_per_day = 0;
@@ -368,6 +371,14 @@ class User{
             this.testing_done = false;
         }
     }
+
+    private void resetSessionCounters() {
+        for(int i=0;i<this.current_exercises.size();i++){
+            this.current_exercises.get(i).session_count_correct=0;
+            this.current_exercises.get(i).session_count_wrong=0;
+        }
+    }
+
     public void setEndSession() {
         this.session_done=true;
         //trophies
@@ -432,6 +443,5 @@ class User{
             this.resetExercises();
         }
     }
-
 
 }
