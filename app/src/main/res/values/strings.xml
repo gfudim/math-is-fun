@@ -38,4 +38,6 @@
     <string name="points_won">"Points won: "</string>
     <string name="keep_it_up">Keep it up!</string>
     <string name="great_work">Great Work!</string>
+    <string name="you_got_a_prize">You got a prize! see the achivments page to see the new prize!</string>
+    <string name="congratulations">Congratulations!</string>
 </resources>
