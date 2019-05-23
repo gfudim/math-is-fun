@@ -9,38 +9,47 @@
         android:orientation="vertical">
 
         <TextView
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
             android:text="@string/Name" />
 
         <EditText
             android:id="@+id/nameEditText"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text" />
+            android:inputType="text"
+            android:layout_gravity="center"
+            android:gravity="center"/>
 
         <View style="@style/Divider" />
 
         <TextView
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
             android:text="@string/Age" />
 
         <EditText
             android:id="@+id/ageEditText"
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="number" />
+            android:inputType="number"
+            android:layout_gravity="center"
+            android:gravity="center"/>
 
 
 
         <View style="@style/Divider" />
 
         <TextView
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
             android:text="Language:" />
 
         <LinearLayout
@@ -55,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_israel"
                 android:text="Hebrew"
-                android:textSize="14sp" />
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/englishBtn"
@@ -63,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_usa"
                 android:text="English"
-                android:textSize="14sp" />
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/arabicBtn"
@@ -71,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_egypt"
                 android:text="Arabic"
-                android:textSize="14sp" />
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/russianBtn"
@@ -79,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_russia"
                 android:text="Russian"
-                android:textSize="14sp" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <View style="@style/Divider" />
@@ -87,8 +96,9 @@
 
 
         <TextView
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
             android:text="Mode:" />
 
         <LinearLayout
@@ -103,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_single_mode"
                 android:text="Single"
-                android:textSize="14sp" />
+                android:textSize="15dp" />
 
             <Button
                 android:id="@+id/multiModeBtn"
@@ -111,12 +121,13 @@
                 android:layout_height="wrap_content"
                 android:drawableTop="@drawable/ic_multi_mode"
                 android:text="Multiple"
-                android:textSize="14sp" />
+                android:textSize="15dp" />
         </LinearLayout>
         <View style="@style/Divider" />
         <TextView
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
             android:text="Reset:" />
 
         <Button
@@ -125,7 +136,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/reset_history" />
-
+        <View style="@style/Divider" />
+        <TextView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save:" />
         <Button
             android:id="@+id/saveDetailsBtn"
             android:layout_width="wrap_content"
@@ -135,8 +151,9 @@
 
         <View style="@style/Divider" />
         <TextView
+            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
+            android:layout_height="wrap_content"
             android:text="Sign out:" />
         <Button
             android:id="@+id/signoutBtn"
