@@ -32,6 +32,7 @@ public class TrainPage extends Utils {
     long start_input_answer;
     long current_milli_train_timer;
     int user_answer = 0;
+    Boolean show_flag = true;
     CountDownTimer train_counter;
     MediaPlayer exercise_media = new MediaPlayer();
     MediaPlayer exercise_repeat_media = new MediaPlayer();
@@ -52,11 +53,12 @@ public class TrainPage extends Utils {
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
                 train_counter = OurCountDownTimer(SESSION_MILLI_DURATION);
                 train_counter.start();
-                showExercise(exercise);
-                user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
+                if (show_flag) {
+                    showExercise(exercise);
+                    user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
+                }
             }
         });
         UIUtil.showKeyboard(this,answer);
@@ -101,16 +103,21 @@ public class TrainPage extends Utils {
                 user.setAnswer(exercise, user_answer);
                 if (user.index % 4 == 0){
                     if (!user.testing_done){
+                        show_flag = false;
                         timerPause();
                         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
                         builder.setTitle(context.getResources().getString(R.string.well_done));
                         builder.setMessage(context.getResources().getString(R.string.let_try_again));
                         builder.setCancelable(false);
+                        TextView show_exercise = findViewById(R.id.ExerciseTextView);
+                        show_exercise.setText("-");
                         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 timerResume();
                                 exercise.time_displayed = System.currentTimeMillis();
+                                show_flag = true;
+                                showExercise(exercise);
                             }
                         });
                         builder.show();
@@ -130,8 +137,10 @@ public class TrainPage extends Utils {
                         saveUser(user);
                     }
                     answer.setText("");
-                    exercise = user.getNextExercise();
-                    showExercise(exercise);
+                    if (show_flag) {
+                        exercise = user.getNextExercise();
+                        showExercise(exercise);
+                    }
                 }
             }
             catch(NumberFormatException ignored){
@@ -163,7 +172,9 @@ public class TrainPage extends Utils {
         }
         answer.setText("");
         // exercise = user.getNextExercise(); // if we want to change exercise after over time
-        showExercise(exercise);
+        if (show_flag) {
+            showExercise(exercise);
+        }
     }
 
     public void showExercise(Exercise exercise){
