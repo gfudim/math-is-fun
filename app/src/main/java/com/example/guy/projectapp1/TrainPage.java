@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -183,10 +184,18 @@ public class TrainPage extends Utils {
     public void testDoneToast(){
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
-        String points = String.format("%s", user.current_count_points_per_day);
-        builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.session_done));
-        builder.setMessage(context.getResources().getString(R.string.points_won).concat(points));
+        String message="";
+        for(int i=0;i<user.current_exercises.size();i++){
+            String exercise = user.current_exercises.get(i).toString();
+            String result = String.format(": %s/100",(int)user.current_exercises.get(i).getScore()*100);
+            Log.e("testDoneToast",exercise);
+            Log.e("testDoneToast",result);
+            message=message.concat(String.format("%s) %s\t%s\n",i+1,exercise, result));
+        }
+        String points = String.format("%s", user.current_count_points_per_day);
+        message=message.concat(context.getResources().getString(R.string.points_won).concat(points));
+        builder.setMessage(message);
         builder.setCancelable(false);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
@@ -250,9 +259,9 @@ public class TrainPage extends Utils {
                 res.setTextColor(Color.BLACK);
                 res.setTextSize(16);
                 if (user.session_done) {
+                    testDoneToast();
                     user.setEndSession();
                     saveUser(user);
-                    testDoneToast();
                     train_counter.cancel();
                 }
 
@@ -260,9 +269,10 @@ public class TrainPage extends Utils {
 
             @Override
             public void onFinish() {
+                testDoneToast();
                 user.setEndSession();
                 saveUser(user);
-                testDoneToast();
+
             }
         };
     }
