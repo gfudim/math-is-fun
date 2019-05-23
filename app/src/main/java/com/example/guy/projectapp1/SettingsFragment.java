@@ -123,8 +123,26 @@ public class SettingsFragment extends Fragment {
         multiBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                user.mode = MULTI_MODE;
-                startActivity(new Intent(getActivity(), LoginPage.class));
+
+                Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setCancelable(true);
+                builder.setTitle(context.getString(R.string.signout_notice));
+                builder.setMessage(context.getString(R.string.signout_warning));
+                builder.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.setPositiveButton(context.getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        user.mode = MULTI_MODE;
+                        startActivity(new Intent(getActivity(), LoginPage.class));
+                    }
+                });
+                builder.show();
             }
         });
 
