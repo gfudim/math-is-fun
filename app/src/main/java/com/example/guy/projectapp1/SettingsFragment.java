@@ -67,6 +67,12 @@ public class SettingsFragment extends Fragment {
             multiBtn.setEnabled(false);
             multiBtn.getCompoundDrawables()[1].setAlpha(128);
             singleBtn.getCompoundDrawables()[1].setAlpha(255);
+            if (user.age > 0){
+                age.setText(String.format("%s",user.age));
+            }
+            if (!user.name.equals("")){
+                name.setText(user.name);
+            }
         }
 
         save_details.setOnClickListener(new View.OnClickListener() {
