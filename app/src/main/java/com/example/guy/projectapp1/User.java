@@ -482,10 +482,7 @@ class User{
         }
     }
     private boolean checkPrize(int current,int threshold){
-        if(current>=threshold){
-            return true;
-        }
-        return false;
+        return current>=threshold;
     }
 
     private void checkTest() {

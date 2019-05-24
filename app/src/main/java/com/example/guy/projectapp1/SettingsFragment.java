@@ -239,7 +239,6 @@ public class SettingsFragment extends Fragment {
                 updateLanguage(fragment_view,"ru", RUSSIAN);
             }
         });
-
         return fragment_view;
     }
     private void updateLanguage(View view,String lang, int lang_for_user) {
@@ -265,7 +264,7 @@ public class SettingsFragment extends Fragment {
                 user.age = Integer.parseInt(age.getText().toString());
                 ((MainActivity)getActivity()).saveUser(user);
             }
-            catch(NumberFormatException ex){
+            catch(NumberFormatException ignored){
             }
         }
     }

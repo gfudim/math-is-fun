@@ -120,7 +120,6 @@ public class Utils extends AppCompatActivity {
     protected void toastAfterAnswer(Boolean good_answer, Boolean train_mode, Exercise exercise){
         Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Toast toast;
-        Toast second_toast = null;
         int color;
         if(good_answer){
             toast = Toast.makeText(this, context.getResources().getString(R.string.Good_job_text), Toast.LENGTH_SHORT);
@@ -142,14 +141,6 @@ public class Utils extends AppCompatActivity {
         int yOffset=100;
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,yOffset);
         toast.show();
-//        if(second_toast != null) {
-//            group = (ViewGroup) second_toast.getView();
-//            messageTextView = (TextView) group.getChildAt(0);
-//            messageTextView.setTextSize(25);
-//            messageTextView.setTextColor(color);
-//            second_toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,yOffset);
-//            second_toast.show();
-//        }
     }
 }
 

@@ -70,7 +70,7 @@ public class TrainPage extends Utils {
                 try{
                     user_answer =  Integer.parseInt(answer.getText().toString());
                     handleAnswer();
-                }catch(NumberFormatException ex){ // if clicked submit without input
+                }catch(NumberFormatException ignored){ // if clicked submit without input
                 }
             }
         }
@@ -84,7 +84,6 @@ public class TrainPage extends Utils {
                     }
                     catch (NumberFormatException ignored){
                     }
-
                 }
                 UIUtil.showKeyboard(TrainPage.this,answer);
                 return true;
@@ -275,7 +274,6 @@ public class TrainPage extends Utils {
                     saveUser(user);
                     train_counter.cancel();
                 }
-
             }
 
             @Override
@@ -283,7 +281,6 @@ public class TrainPage extends Utils {
                 testDoneToast();
                 user.setEndSession();
                 saveUser(user);
-
             }
         };
     }

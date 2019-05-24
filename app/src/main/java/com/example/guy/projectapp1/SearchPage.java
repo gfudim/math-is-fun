@@ -50,7 +50,7 @@ public class SearchPage extends Utils {
                  try{
                      user_answer =  Integer.parseInt(answer.getText().toString());
                      handleAnswer();
-                 }catch(NumberFormatException ex){ // if clicked submit without input
+                 }catch(NumberFormatException ignored){ // if clicked submit without input
                  }
              }
          }
