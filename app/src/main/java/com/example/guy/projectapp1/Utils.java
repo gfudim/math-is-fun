@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 
 import io.paperdb.Paper;
 
@@ -37,7 +38,6 @@ public class Utils extends AppCompatActivity {
     protected static int TRAIN_MODE = 1;
     protected static User user;
     protected static DatabaseReference reff;
-    protected static int id_for_user = 0;
     protected static long SESSION_MILLI_DURATION = 35000; // todo - change to 3 minutes - 180000
     protected static int optional_exercises = 1000;
     final protected static int ENGLISH = 0;
@@ -73,9 +73,7 @@ public class Utils extends AppCompatActivity {
     public void saveUser(User current_user){
         reff = FirebaseDatabase.getInstance().getReference("user");
         if (current_user.mode == SINGLE_MODE && (current_user.id_data_base == null || current_user.id_data_base.equals(""))) {
-            id_for_user++;
-            current_user.id_data_base =  String.format("%s", id_for_user);
-            reff.child("Number of single users").setValue(id_for_user);
+            current_user.id_data_base =  String.format("%s", new Random().nextLong());
         }
         reff.child(current_user.id_data_base).setValue(current_user);
     }
