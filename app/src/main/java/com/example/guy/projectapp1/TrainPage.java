@@ -32,7 +32,7 @@ public class TrainPage extends Utils {
     long start_input_answer;
     long current_milli_train_timer;
     int user_answer = 0;
-    Boolean show_flag = true;
+    Boolean builder_flag = false;
     CountDownTimer train_counter;
     MediaPlayer exercise_media = new MediaPlayer();
     MediaPlayer exercise_repeat_media = new MediaPlayer();
@@ -55,10 +55,8 @@ public class TrainPage extends Utils {
             public void onClick(DialogInterface dialogInterface, int i) {
                 train_counter = OurCountDownTimer(SESSION_MILLI_DURATION);
                 train_counter.start();
-                if (show_flag) {
-                    showExercise(exercise);
-                    user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
-                }
+                showExercise(exercise);
+                user.start_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
             }
         });
         UIUtil.showKeyboard(this,answer);
@@ -102,24 +100,25 @@ public class TrainPage extends Utils {
                 user.setAnswer(exercise, user_answer);
                 if (user.index % 4 == 0){
                     if (!user.testing_done){
-                        show_flag = false;
                         timerPause();
                         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
                         builder.setTitle(context.getResources().getString(R.string.well_done));
                         builder.setMessage(context.getResources().getString(R.string.let_try_again));
                         builder.setCancelable(false);
-                        TextView show_exercise = findViewById(R.id.ExerciseTextView);
-                        show_exercise.setText("-");
                         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 timerResume();
                                 exercise.time_displayed = System.currentTimeMillis();
-                                show_flag = true;
+                                builder_flag = false;
+                                exercise = user.getNextExercise();
                                 showExercise(exercise);
                             }
                         });
+                        TextView show_exercise = findViewById(R.id.ExerciseTextView);
+                        show_exercise.setText("-");
                         builder.show();
+                        builder_flag = true;
                     }
                 }
                 saveUser(user);
@@ -136,7 +135,7 @@ public class TrainPage extends Utils {
                         saveUser(user);
                     }
                     answer.setText("");
-                    if (show_flag) {
+                    if (!builder_flag) {
                         exercise = user.getNextExercise();
                         showExercise(exercise);
                     }
@@ -171,9 +170,7 @@ public class TrainPage extends Utils {
         }
         answer.setText("");
         // exercise = user.getNextExercise(); // if we want to change exercise after over time
-        if (show_flag) {
-            showExercise(exercise);
-        }
+        showExercise(exercise);
     }
 
     public void showExercise(Exercise exercise){
@@ -217,8 +214,7 @@ public class TrainPage extends Utils {
         builder.show();
     }
     private void updateView() {
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
-        context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));
         answer.setHint(resources.getString(R.string.answer));
