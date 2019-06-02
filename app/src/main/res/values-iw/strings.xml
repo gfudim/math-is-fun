@@ -34,4 +34,8 @@
     <string name="keep_it_up">המשיכו להתמיד!</string>
     <string name="great_work">עבודה מצויינת!</string>
     <string name="save_details">שמירת פרטים</string>
+    <string name="single_mode">מצב פרטי</string>
+    <string name="multi_mode">מצב ציבורי</string>
+    <string name="you_got_a_prize">קיבלת פרס! לך אל עמוד ההשגים כדי לראות את הפרס החדש!</string>
+    <string name="congratulations">מזל טוב!</string>
 </resources>

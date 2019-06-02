@@ -32,12 +32,14 @@
     <string name="exit_session">About to exit</string>
     <string name="exit_session_warning">Are you sure you want to exit?</string>
     <string name="let_try_again">Lets try again</string>
-    <string name="start_answer">Need to start answer faster</string>
+    <string name="start_answer">Need to start to answer faster</string>
     <string name="correct_but_slow_answer">Answer correct, but it took to much time..</string>
     <string name="try_again">Try again..(faster)</string>
     <string name="points_won">"Points won: "</string>
     <string name="keep_it_up">Keep it up!</string>
     <string name="great_work">Great Work!</string>
-    <string name="you_got_a_prize">You got a prize! see the achivments page to see the new prize!</string>
+    <string name="you_got_a_prize">You got a prize! see the achievements page to see the new prize!</string>
     <string name="congratulations">Congratulations!</string>
+    <string name="single_mode">Single Mode</string>
+    <string name="multi_mode">Multi Mode</string>
 </resources>
