@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import io.paperdb.Paper;
 
@@ -22,7 +23,10 @@ public class StatsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stats,container,false);
+        TextView levelText=view.findViewById(R.id.levelText);
+        levelText.setText(String.format("%s",user.getLevel()));
         SeekBar levelBar = view.findViewById(R.id.levelBar);
+        levelBar.setProgress(user.getLevel());
         levelBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             int originalProgress;
