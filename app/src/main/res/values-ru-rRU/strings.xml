@@ -38,4 +38,5 @@
     <string name="multi_mode">Множественный режим</string>
     <string name="single_mode">Одиночный режим</string>
     <string name="you_got_a_prize">Вы получили приз! см. страницу достижений, чтобы увидеть новый приз!</string>
+    <string name="signout">выходе</string>
 </resources>

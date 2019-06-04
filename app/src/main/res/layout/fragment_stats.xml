@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/app_background"
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,26 +41,29 @@
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
+                android:theme="@style/OurTheme"
                 android:id="@+id/sevenDaysBtn"
                 android:src="@drawable/ic_7_days"
                 android:padding="20dp"
-                android:alpha="0.5"/>
+                android:alpha="0.2"/>
             <ImageButton
                 android:id="@+id/fourteenDaysBtn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
+                android:theme="@style/OurTheme"
                 android:src="@drawable/ic_14_days"
                 android:padding="15dp"
-                android:alpha="0.5"/>
+                android:alpha="0.2"/>
             <ImageButton
                 android:id="@+id/thirtyDaysBtn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
+                android:theme="@style/OurTheme"
                 android:src="@drawable/ic_30_days"
                 android:padding="10dp"
-                android:alpha="0.5"/>
+                android:alpha="0.2"/>
         </LinearLayout>
 
         <View style="@style/Divider" />
@@ -80,26 +84,29 @@
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
+                android:theme="@style/OurTheme"
                 android:src="@drawable/ic_two"
                 android:padding="20dp"
-                android:alpha="0.5"/>
+                android:alpha="0.2"/>
 
             <ImageButton
                 android:id="@+id/p4000Btn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
+                android:theme="@style/OurTheme"
                 android:src="@drawable/ic_four"
                 android:padding="15dp"
-                android:alpha="0.5"/>
+                android:alpha="0.2"/>
             <ImageButton
                 android:id="@+id/p6000Btn"
                 android:scaleType="fitXY"
                 android:layout_height="75dp"
                 android:layout_width="75dp"
+                android:theme="@style/OurTheme"
                 android:src="@drawable/ic_six"
                 android:padding="10dp"
-                android:alpha="0.5"/>
+                android:alpha="0.2"/>
         </LinearLayout>
 
         <View style="@style/Divider" />
@@ -118,12 +125,13 @@
                 android:id="@+id/c1Frame"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:alpha="0.5">
+                android:alpha="0.2">
             <ImageButton
                 android:id="@+id/c1Btn"
                 android:scaleType="centerCrop"
                 android:layout_height="75dp"
                 android:layout_width="60dp"
+                android:theme="@style/OurTheme"
                 android:src="@drawable/ic_exam"
                 android:paddingBottom="12dp"
                 android:paddingTop="12dp"/>
@@ -134,10 +142,11 @@
                 android:id="@+id/c3Frame"
                 android:layout_width="70dp"
                 android:layout_height="75dp"
-                android:alpha="0.5">
+                android:alpha="0.2">
                 <ImageButton
                     android:id="@+id/c3Btn"
                     android:layout_width="match_parent"
+                    android:theme="@style/OurTheme"
                     android:layout_height="match_parent"/>
                 <ImageView
                     android:layout_width="50dp"
@@ -168,10 +177,11 @@
                 android:id="@+id/c5Frame"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:alpha="0.5">
+                android:alpha="0.2">
                 <ImageButton
                     android:id="@+id/c5Btn"
                     android:layout_width="match_parent"
+                    android:theme="@style/OurTheme"
                     android:layout_height="match_parent"/>
                 <ImageView
                     android:layout_width="50dp"
@@ -235,9 +245,10 @@
                 android:scaleType="fitXY"
                 android:layout_height="120dp"
                 android:layout_width="120dp"
+                android:theme="@style/OurTheme"
                 android:src="@drawable/ic_award"
                 android:padding="12dp"
-                android:alpha="0.5"
+                android:alpha="0.2"
                 />
         </LinearLayout>
 

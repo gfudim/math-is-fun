@@ -82,8 +82,8 @@ public class SearchPage extends Utils {
             public void onTick(long millisUntilFinished) {
                 TextView res = findViewById(R.id.ResultTextView);
                 res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
-                res.setTextColor(Color.BLACK);
-                res.setTextSize(16);
+                res.setTextColor(getResources().getColor(R.color.colorAccent));
+                res.setTextSize(24);
             }
             public void onFinish() {
                 user.setEndSession();
@@ -170,8 +170,9 @@ public class SearchPage extends Utils {
 
     public void showExercise(Exercise exercise) {
         TextView show_exercise = findViewById(R.id.ExerciseTextView);
-        String temp_exercise = String.format("%s x %s", exercise.mul1, exercise.mul2);
+        String temp_exercise = String.format("%s x %s = ", exercise.mul1, exercise.mul2);
         show_exercise.setText(temp_exercise);
+        show_exercise.setTextColor(getResources().getColor(R.color.colorAccent));
         if (Utils.resID[user.lang].length > 0){
             exercise_media = MediaPlayer.create(this, Utils.resID[user.lang][exercise.exercise_id]);
         }

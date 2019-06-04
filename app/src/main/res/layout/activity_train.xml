@@ -5,6 +5,7 @@
     android:id="@+id/FirstNumEditText"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/app_background"
     tools:context=".TrainPage">
 
     <LinearLayout android:layout_width="wrap_content"
@@ -21,11 +22,9 @@
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:fontFamily="serif"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="30sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/ExerciseTextView"
@@ -49,6 +48,7 @@
             android:id="@+id/SubmitBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/OurTheme"
             android:layout_gravity="center"
             android:text="@string/submit" />
         <View

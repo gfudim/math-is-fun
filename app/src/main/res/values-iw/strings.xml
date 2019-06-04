@@ -38,4 +38,5 @@
     <string name="multi_mode">מצב ציבורי</string>
     <string name="you_got_a_prize">קיבלת פרס! לך אל עמוד ההשגים כדי לראות את הפרס החדש!</string>
     <string name="congratulations">מזל טוב!</string>
+    <string name="signout">התנתק</string>
 </resources>

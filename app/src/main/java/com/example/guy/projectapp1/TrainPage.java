@@ -175,11 +175,12 @@ public class TrainPage extends Utils {
 
     public void showExercise(Exercise exercise){
         TextView show_exercise = findViewById(R.id.ExerciseTextView);
-        String temp_exercise = String.format("%s * %s", exercise.mul1, exercise.mul2);
+        String temp_exercise = String.format("%s x %s = ", exercise.mul1, exercise.mul2);
         if (user.testing_done){
             exercise_repeat_media = MediaPlayer.create(this, Utils.repeat_exercisesID[user.lang][exercise.exercise_id]);
         }
         show_exercise.setText(temp_exercise);
+        show_exercise.setTextColor(getResources().getColor(R.color.colorAccent));
         if (Utils.resID[user.lang].length > 0){
             exercise_media = MediaPlayer.create(this, Utils.resID[user.lang][exercise.exercise_id]);
         }
@@ -262,8 +263,8 @@ public class TrainPage extends Utils {
                 current_milli_train_timer = millisUntilFinished;
                 TextView res = findViewById(R.id.ResultTextView);
                 res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
-                res.setTextColor(Color.BLACK);
-                res.setTextSize(16);
+                res.setTextColor(getResources().getColor(R.color.colorAccent));
+                res.setTextSize(24);
                 if (user.session_done) {
                     testDoneToast();
                     user.setEndSession();

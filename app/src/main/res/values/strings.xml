@@ -42,4 +42,5 @@
     <string name="congratulations">Congratulations!</string>
     <string name="single_mode">Single Mode</string>
     <string name="multi_mode">Multi Mode</string>
+    <string name="signout">Sign Out</string>
 </resources>

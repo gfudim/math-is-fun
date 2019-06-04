@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/app_background"
     android:layout_height="match_parent">
 
     <Button
@@ -8,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:theme="@style/OurTheme"
         android:drawableTop="@android:drawable/ic_media_play"
         android:text="@string/start"
         android:textSize="15dp" />

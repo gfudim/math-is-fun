@@ -89,7 +89,7 @@ class User{
         this.correct_answers = 0;
         this.wrong_answers = 0;
         this.total_answers = 0;
-        this.max_correct_tests_in_row = 3;
+        this.max_correct_tests_in_row = 0;
         this.current_correct_tests_in_row = 0;
         this.count_tests = 0;
         this.current_count_points_per_day = 0;
