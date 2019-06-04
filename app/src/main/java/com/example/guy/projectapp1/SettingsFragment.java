@@ -259,6 +259,7 @@ public class SettingsFragment extends Fragment {
         name.setHint(resources.getString(R.string.Name));
         age.setHint(resources.getString(R.string.Age));
         reset.setText(resources.getString(R.string.reset_history));
+        save_details.setText(resources.getString(R.string.save_details));
     }
     private void saveDetails() {
         if (name != null){
