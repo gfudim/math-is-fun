@@ -78,10 +78,10 @@ public class MainActivity extends Utils {
         Context context;
         context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
         if(user.lang == RUSSIAN || user.lang == ENGLISH){
-            toast = Toast.makeText(this, user.name + " " + context.getResources().getString(R.string.hello), Toast.LENGTH_LONG);
+            toast = Toast.makeText(this, context.getResources().getString(R.string.hello) + " " + user.name, Toast.LENGTH_LONG);
         }
         else{
-            toast = Toast.makeText(this, context.getResources().getString(R.string.hello) + " " + user.name, Toast.LENGTH_LONG);
+            toast = Toast.makeText(this, user.name + " " + context.getResources().getString(R.string.hello), Toast.LENGTH_LONG);
         }
         toast.setGravity(Gravity.CENTER, 0, -250);
         ViewGroup group = (ViewGroup) toast.getView();
