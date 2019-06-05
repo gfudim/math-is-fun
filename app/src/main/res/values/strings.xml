@@ -36,7 +36,10 @@
     <string name="correct_but_slow_answer">Answer correct, but it took to much time..</string>
     <string name="try_again">Try again..(faster)</string>
     <string name="points_won">"Points won: "</string>
-    <string name="keep_it_up">Keep it up!</string>
+    <string name="more_days_for_prize">more days in a row for this prize!</string>
+    <string name="more_points_for_prize">more points for this prize!</string>
+    <string name="more_tests_for_prize">more tests in a row for this prize!</string>
+    <string name="get_big_trophy">Keep it up and achieve all prizes!</string>
     <string name="great_work">Great Work!</string>
     <string name="you_got_a_prize">You got a prize! see the achievements page to see the new prize!</string>
     <string name="congratulations">Congratulations!</string>

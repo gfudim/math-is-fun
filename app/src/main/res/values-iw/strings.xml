@@ -31,7 +31,6 @@
     <string name="correct_but_slow_answer">תשובה נכונה, אבל לקח יותר מדי זמן..</string>
     <string name="try_again">נסו שוב..(מהר יותר)</string>
     <string name="points_won">"מספר נקודות שזכית: "</string>
-    <string name="keep_it_up">המשיכו להתמיד!</string>
     <string name="great_work">עבודה מצויינת!</string>
     <string name="save_details">שמירת פרטים</string>
     <string name="single_mode">מצב פרטי</string>
@@ -39,4 +38,8 @@
     <string name="you_got_a_prize">קיבלת פרס! לך אל עמוד ההשגים כדי לראות את הפרס החדש!</string>
     <string name="congratulations">מזל טוב!</string>
     <string name="signout">התנתק</string>
+    <string name="more_days_for_prize">ימים נוספים ברצף לפרס!</string>
+    <string name="more_points_for_prize">נקודות נוספות לפרס!</string>
+    <string name="more_tests_for_prize">מבחנים נוספים לפרס!</string>
+    <string name="get_big_trophy">תמשיכו להשקיע ולהשיג את כל הפרסים!</string>
 </resources>

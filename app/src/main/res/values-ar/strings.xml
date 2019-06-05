@@ -30,7 +30,6 @@
     <string name="start_answer">بحاجة للبدء في الإجابة بشكل أسرع</string>
     <string name="points_won">"النقاط التي تم ربحها: "</string>
     <string name="let_try_again">لنجرب مجددا</string>
-    <string name="keep_it_up">أبقه مرتفعا!</string>
     <string name="great_work">عمل عظيم!</string>
     <string name="correct_but_slow_answer">الإجابة صحيحة ، ولكن الأمر استغرق الكثير من الوقت ..</string>
     <string name="save_details">حفظ التفاصيل</string>
@@ -39,4 +38,8 @@
     <string name="single_mode">وضع فردي</string>
     <string name="you_got_a_prize">حصلت على جائزة! رؤية صفحة الإنجازات لرؤية الجائزة الجديدة!</string>
     <string name="signout">خروج</string>
+    <string name="more_days_for_prize">"المزيد من الأيام على التوالي لهذه الجائزة! "</string>
+    <string name="more_points_for_prize">"المزيد من النقاط لهذه الجائزة! "</string>
+    <string name="more_tests_for_prize">"المزيد من الاختبارات على التوالي لهذه الجائزة! "</string>
+    <string name="get_big_trophy">"استمروا في ذلك وتحقيق جميع الجوائز! "</string>
 </resources>
