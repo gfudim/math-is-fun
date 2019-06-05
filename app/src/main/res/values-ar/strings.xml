@@ -38,4 +38,5 @@
     <string name="multi_mode">وضع متعدد</string>
     <string name="single_mode">وضع فردي</string>
     <string name="you_got_a_prize">حصلت على جائزة! رؤية صفحة الإنجازات لرؤية الجائزة الجديدة!</string>
+    <string name="signout">خروج</string>
 </resources>

@@ -38,6 +38,9 @@ public class SettingsFragment extends Fragment {
     TextView age;
     TextView reset;
     TextView save_details;
+    TextView multi;
+    TextView single;
+    TextView sing_out;
 
     private DatabaseReference databaseUsers;
     @Nullable
@@ -48,6 +51,9 @@ public class SettingsFragment extends Fragment {
         name = fragment_view.findViewById(R.id.nameEditText);
         reset = fragment_view.findViewById(R.id.resetBtn);
         save_details = fragment_view.findViewById(R.id.saveDetailsBtn);
+        multi = fragment_view.findViewById(R.id.multiModeBtn);
+        single = fragment_view.findViewById(R.id.singleModeBtn);
+        sing_out = fragment_view.findViewById(R.id.signoutBtn);
         user.start_page = true;
         updateView(fragment_view, (String) Paper.book().read("language"));
         final Button multiBtn = fragment_view.findViewById(R.id.multiModeBtn);
@@ -260,6 +266,9 @@ public class SettingsFragment extends Fragment {
         age.setHint(resources.getString(R.string.Age));
         reset.setText(resources.getString(R.string.reset_history));
         save_details.setText(resources.getString(R.string.save_details));
+        multi.setText(resources.getString(R.string.multi_mode));
+        single.setText(resources.getString(R.string.single_mode));
+        sing_out.setText(resources.getString(R.string.signout));
     }
     private void saveDetails() {
         if (name != null){
