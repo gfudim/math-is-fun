@@ -42,4 +42,5 @@
     <string name="more_points_for_prize">"المزيد من النقاط لهذه الجائزة! "</string>
     <string name="more_tests_for_prize">"المزيد من الاختبارات على التوالي لهذه الجائزة! "</string>
     <string name="get_big_trophy">"استمروا في ذلك وتحقيق جميع الجوائز! "</string>
+    <string name="level_is">"مستواك هو "</string>
 </resources>

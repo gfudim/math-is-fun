@@ -42,4 +42,5 @@
     <string name="more_points_for_prize">"больше очков за этот приз! "</string>
     <string name="more_tests_for_prize">"больше тестов подряд на этот приз! "</string>
     <string name="get_big_trophy">Так держать и добиваться всех призов!</string>
+    <string name="level_is">"Ваш уровень "</string>
 </resources>
