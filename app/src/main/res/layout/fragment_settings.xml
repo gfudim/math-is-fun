@@ -92,7 +92,7 @@
                 android:theme="@style/OurTheme"
                 android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_egypt"
-                android:text="عربى"
+                android:text="عربي"
                 android:textSize="15dp" />
 
             <Button
