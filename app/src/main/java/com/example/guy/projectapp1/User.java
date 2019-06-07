@@ -171,12 +171,11 @@ class User{
         int user_answer_time;
         exercise.displayed_today = true;
         exercise.time_answered = System.currentTimeMillis();
-        if (exercise.result() == answer && ((exercise.time_answered - exercise.time_displayed)/1000 <= MAX_TIME_TO_ANSWER)){
+        user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
+        if (exercise.result() == answer && exercise.answerIsInTime(user_answer_time)){
             exercise.count_correct_answers++;
             exercise.session_count_correct++;
             this.correct_answers++;
-
-            user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
             int points=calculatePoints(user_answer_time);
             this.current_count_points_per_day += points;
             this.total_points+=points;

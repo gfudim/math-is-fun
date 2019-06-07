@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.Locale;
 import java.util.Random;
 
+import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
 import static com.example.guy.projectapp1.Utils.RANDOM_VAR;
 
 class Exercise {
@@ -17,6 +18,8 @@ class Exercise {
     int count_trained;
     long time_displayed; // for calculating the time for answers
     long time_answered;
+    long aggregated_time;
+    int count_displayed;
     boolean displayed_today;
     int session_count_wrong;
     int session_count_correct;
@@ -34,6 +37,8 @@ class Exercise {
         exercise_id = id;
         time_displayed = 0;
         time_answered = 0;
+        aggregated_time=7;
+        count_displayed=1;
         displayed_today = false;
     }
 
@@ -81,5 +86,24 @@ class Exercise {
         }
         return this.session_count_correct/((float)(this.session_count_correct+this.session_count_wrong));
     }
+    public void setIsInTime(int user_answer_time) {
+        this.count_displayed+=1;
+        this.aggregated_time+=user_answer_time;
+    }
+    public boolean answerIsInTime(int user_answer_time) {
+        if(user_answer_time <= MAX_TIME_TO_ANSWER&&user_answer_time<=this.getTimeLimit()){
+            return true;
+        }
+        return false;
+    }
+
+    private int averageTimeToAnswer(){
+        return (int)(this.aggregated_time/(float)this.count_displayed);
+    }
+    private int getTimeLimit(){
+        return (int)(this.averageTimeToAnswer()*1.5);
+    }
+
+
 }
 
