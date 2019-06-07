@@ -62,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:layout_weight="1">
 
@@ -70,7 +71,6 @@
                 android:theme="@style/OurTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_israel"
                 android:text="עברית"
                 android:textSize="15dp" />
@@ -79,7 +79,6 @@
                 android:id="@+id/englishBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:theme="@style/OurTheme"
                 android:drawableTop="@drawable/ic_usa"
                 android:text="English"
@@ -90,7 +89,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:theme="@style/OurTheme"
-                android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_egypt"
                 android:text="عربي"
                 android:textSize="15dp" />
@@ -100,7 +98,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:theme="@style/OurTheme"
-                android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_russia"
                 android:text="русский"
                 android:textSize="15dp" />
@@ -120,6 +117,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             android:layout_weight="1">
 
@@ -128,7 +126,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:theme="@style/OurTheme"
-                android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_single_mode"
                 android:text="@string/single_mode"
                 android:textSize="15dp" />
@@ -138,7 +135,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:theme="@style/OurTheme"
-                android:layout_margin="10dp"
                 android:drawableTop="@drawable/ic_multi_mode"
                 android:text="@string/multi_mode"
                 android:textSize="15dp" />
