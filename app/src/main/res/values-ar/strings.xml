@@ -45,4 +45,8 @@
     <string name="level_is">مستواك هو</string>
     <string name="Settings" translatable="false">الإعدادات</string>
     <string name="Stats" translatable="false">الإنجازات</string>
+    <string name="day_strike">أيام متتابعة</string>
+    <string name="max_points_per_day">أقصى قدر من النقاط في اليوم الواحد</string>
+    <string name="test_in_row">الامتحانات على التوالي</string>
+    <string name="trophy">كأس</string>
 </resources>

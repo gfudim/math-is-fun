@@ -19,7 +19,7 @@
     <string name="about_to_start_training">собирается начать обучение</string>
     <string name="hello">Привет</string>
     <string name="signout_notice">О выходе</string>
-    <string name="signout_warning">выходе</string>
+    <string name="signout_warning">выходе?</string>
     <string name="training_over_today">Тренировка на сегодня закончена</string>
     <string name="well_done">Отлично сработано!</string>
     <string name="more_work">Вам нужно тренироваться немного больше!</string>
@@ -36,11 +36,15 @@
     <string name="congratulations">Поздравляем!</string>
     <string name="multi_mode">Множественный режим</string>
     <string name="single_mode">Одиночный режим</string>
-    <string name="you_got_a_prize">Вы получили приз! см. страницу достижений, чтобы увидеть новый приз!</string>
+    <string name="you_got_a_prize">أيام متتابعة</string>
     <string name="signout">выходе</string>
     <string name="more_days_for_prize">больше дней подряд на этот приз!</string>
     <string name="more_points_for_prize">"больше очков за этот приз! "</string>
     <string name="more_tests_for_prize">"больше тестов подряд на этот приз! "</string>
     <string name="get_big_trophy">Так держать и добиваться всех призов!</string>
     <string name="level_is">"Ваш уровень "</string>
+    <string name="day_strike">Последовательные дни</string>
+    <string name="max_points_per_day">Максимальное количество очков в день</string>
+    <string name="test_in_row">экзамены в ряд</string>
+    <string name="trophy">Трофей</string>
 </resources>
