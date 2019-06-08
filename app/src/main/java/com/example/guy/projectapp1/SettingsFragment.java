@@ -84,7 +84,7 @@ public class SettingsFragment extends Fragment {
         save_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveDetails();
+                saveDetails((String) Paper.book().read("language"));
             }
         });
 
@@ -270,7 +270,9 @@ public class SettingsFragment extends Fragment {
         single.setText(resources.getString(R.string.single_mode));
         sing_out.setText(resources.getString(R.string.signout));
     }
-    private void saveDetails() {
+    private void saveDetails(String language) {
+        Context context = LocaleHelper.setLocale(getActivity(), language);
+        Resources resources = context.getResources();
         if (name != null){
             user.name = name.getText().toString();
             ((MainActivity)getActivity()).saveUser(user);
@@ -283,5 +285,6 @@ public class SettingsFragment extends Fragment {
             catch(NumberFormatException ignored){
             }
         }
+        Toast.makeText(getActivity(), resources.getString(R.string.saved_details), Toast.LENGTH_SHORT).show();
     }
 }

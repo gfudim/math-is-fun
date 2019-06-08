@@ -239,7 +239,7 @@ class User{
                 this.testing_done = true;
                 this.fullscore = true;
                 this.training_done = true;
-                this.session_done=true;//TODO - we need to continue to search mode
+                this.session_done=true;
             }
         }
     }
@@ -357,8 +357,7 @@ class User{
         return sum_var;
     }
     protected boolean hadSessionToday(){
-        if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))&&false){
-            // TODO - remove last false condition(only for debug)
+        if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))){
             return true;
         }
         else{

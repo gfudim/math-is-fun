@@ -47,4 +47,5 @@
     <string name="max_points_per_day">Максимальное количество очков в день</string>
     <string name="test_in_row">экзамены в ряд</string>
     <string name="trophy">Трофей</string>
+    <string name="saved_details">Детали сохранены</string>
 </resources>

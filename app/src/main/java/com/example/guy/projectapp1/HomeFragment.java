@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent in;
-                if(user.hadSessionToday()){ // TODO - remove last false condition(only for debug)
+                if(user.hadSessionToday()){
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
                 }

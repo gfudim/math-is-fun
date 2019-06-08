@@ -154,11 +154,14 @@ public class SearchPage extends Utils {
     }
 
     public void searchDoneToast(){
+        String message="";
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
         Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.session_done));
-        builder.setMessage(String.format("You just won %s points!", user.current_count_points_per_day)); // TODO - change string
+        String points = String.format("%s", user.current_count_points_per_day);
+        message=message.concat(context.getResources().getString(R.string.points_won).concat(points));
+        builder.setMessage(message);
         builder.setCancelable(false);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
