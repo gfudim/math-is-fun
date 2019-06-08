@@ -178,7 +178,7 @@ public class TrainPage extends Utils {
     public void showExercise(Exercise exercise){
         TextView show_exercise = findViewById(R.id.ExerciseTextView);
         String temp_exercise = String.format("%s x %s = ", exercise.mul1, exercise.mul2);
-        if (user.testing_done){
+        if (user.testing_done && Utils.repeat_exercisesID[user.lang].length > 0){
             exercise_repeat_media = MediaPlayer.create(this, Utils.repeat_exercisesID[user.lang][exercise.exercise_id]);
         }
         show_exercise.setText(temp_exercise);

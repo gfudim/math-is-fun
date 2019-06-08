@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">FunMath</string>
+    <string name="app_name" translatable="false">EasyMathic</string>
     <string name="Name">Name:</string>
     <string name="Age">Age:</string>
     <string name="reset_history">Reset history</string>
