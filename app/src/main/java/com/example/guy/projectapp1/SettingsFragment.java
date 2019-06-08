@@ -40,7 +40,11 @@ public class SettingsFragment extends Fragment {
     TextView save_details;
     TextView multi;
     TextView single;
-    TextView sing_out;
+    TextView sign_out;
+    Button setEnglishBtn;
+    Button setHebrewBtn;
+    Button setArabicBtn;
+    Button setRussianBtn;
 
     private DatabaseReference databaseUsers;
     @Nullable
@@ -53,26 +57,19 @@ public class SettingsFragment extends Fragment {
         save_details = fragment_view.findViewById(R.id.saveDetailsBtn);
         multi = fragment_view.findViewById(R.id.multiModeBtn);
         single = fragment_view.findViewById(R.id.singleModeBtn);
-        sing_out = fragment_view.findViewById(R.id.signoutBtn);
+        sign_out = fragment_view.findViewById(R.id.signoutBtn);
         user.start_page = true;
         updateView(fragment_view, (String) Paper.book().read("language"));
-        final Button multiBtn = fragment_view.findViewById(R.id.multiModeBtn);
-        final Button singleBtn = fragment_view.findViewById(R.id.singleModeBtn);
-        final Button btn_sign_out = fragment_view.findViewById(R.id.signoutBtn);
 
        if (user.mode == SINGLE_MODE) {
-            singleBtn.setEnabled(false);
-            singleBtn.getCompoundDrawables()[1].setAlpha(128);
-            btn_sign_out.setEnabled(false);
-            btn_sign_out.getCompoundDrawables()[1].setAlpha(128);
-            multiBtn.getCompoundDrawables()[1].setAlpha(255);
+           setDisable(single);
+           setDisable(sign_out);
+           setEnable(multi);
         }
         else{
-            btn_sign_out.setEnabled(true);
-            btn_sign_out.getCompoundDrawables()[1].setAlpha(255);
-            multiBtn.setEnabled(false);
-            multiBtn.getCompoundDrawables()[1].setAlpha(128);
-            singleBtn.getCompoundDrawables()[1].setAlpha(255);
+           setEnable(single);
+           setEnable(sign_out);
+           setDisable(multi);
         }
         if (user.age > 0){
             age.setText(String.format("%s",user.age));
@@ -88,7 +85,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        singleBtn.setOnClickListener(new View.OnClickListener() {
+        single.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
@@ -116,8 +113,8 @@ public class SettingsFragment extends Fragment {
                                         ((MainActivity)getActivity()).saveUserToDevice(user);
                                         Intent intent = new Intent(getActivity(), LoadApp.class);
                                         intent.putExtra("new_connection",true);
-                                        btn_sign_out.setEnabled(false);
-                                        btn_sign_out.getCompoundDrawables()[1].setAlpha(128);
+                                        sign_out.setEnabled(false);
+                                        sign_out.getCompoundDrawables()[1].setAlpha(128);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -132,7 +129,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        multiBtn.setOnClickListener(new View.OnClickListener() {
+        multi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -158,7 +155,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        btn_sign_out.setOnClickListener(new View.OnClickListener() {
+        sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
@@ -182,8 +179,8 @@ public class SettingsFragment extends Fragment {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
                                         databaseUsers.child(user.id_data_base).setValue(user);
-                                        btn_sign_out.setEnabled(false);
-                                        btn_sign_out.getCompoundDrawables()[1].setAlpha(128);
+                                        sign_out.setEnabled(false);
+                                        sign_out.getCompoundDrawables()[1].setAlpha(128);
                                         startActivity(new Intent(getActivity(), LoginPage.class));
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -198,8 +195,8 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button resetBtn = fragment_view.findViewById(R.id.resetBtn); // save the button for reference
-        resetBtn.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
+
+        reset.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
                 Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
@@ -223,32 +220,40 @@ public class SettingsFragment extends Fragment {
                 builder.show();
             }
         });
-        Button setEnglishBtn = fragment_view.findViewById(R.id.englishBtn);
+        setEnglishBtn = fragment_view.findViewById(R.id.englishBtn);
+        setHebrewBtn = fragment_view.findViewById(R.id.hebrewBtn);
+        setArabicBtn = fragment_view.findViewById(R.id.arabicBtn);
+        setRussianBtn = fragment_view.findViewById(R.id.russianBtn);
         setEnglishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"en", ENGLISH);
+                setEnableAllLanguages();
+                setDisable(setEnglishBtn);
             }
         });
-        Button setHebrewBtn = fragment_view.findViewById(R.id.hebrewBtn);
         setHebrewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"iw", HEBREW);
+                setEnableAllLanguages();
+                setDisable(setHebrewBtn);
             }
         });
-        Button setArabicBtn = fragment_view.findViewById(R.id.arabicBtn);
         setArabicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"ar", ARABIC);
+                setEnableAllLanguages();
+                setDisable(setArabicBtn);
             }
         });
-        Button setRussianBtn = fragment_view.findViewById(R.id.russianBtn);
         setRussianBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"ru", RUSSIAN);
+                setEnableAllLanguages();
+                setDisable(setRussianBtn);
             }
         });
         return fragment_view;
@@ -259,6 +264,20 @@ public class SettingsFragment extends Fragment {
         user.lang = lang_for_user;
         ((MainActivity)getActivity()).saveUser(user);
     }
+    private void setDisable(TextView textView){
+        textView.setEnabled(false);
+        textView.getCompoundDrawables()[1].setAlpha(128);
+    }
+    private void setEnable(TextView textView){
+        textView.setEnabled(true);
+        textView.getCompoundDrawables()[1].setAlpha(255);
+    }
+    private void setEnableAllLanguages(){
+        setEnable(setEnglishBtn);
+        setEnable(setHebrewBtn);
+        setEnable(setArabicBtn);
+        setEnable(setRussianBtn);
+    }
     private void updateView(View view,String language) {
         Context context = LocaleHelper.setLocale(getActivity(), language);
         Resources resources = context.getResources();
@@ -268,7 +287,7 @@ public class SettingsFragment extends Fragment {
         save_details.setText(resources.getString(R.string.save_details));
         multi.setText(resources.getString(R.string.multi_mode));
         single.setText(resources.getString(R.string.single_mode));
-        sing_out.setText(resources.getString(R.string.signout));
+        sign_out.setText(resources.getString(R.string.signout));
     }
     private void saveDetails(String language) {
         Context context = LocaleHelper.setLocale(getActivity(), language);
