@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,6 @@ public class SettingsFragment extends Fragment {
         single = fragment_view.findViewById(R.id.singleModeBtn);
         sign_out = fragment_view.findViewById(R.id.signoutBtn);
         user.start_page = true;
-        updateView(fragment_view, (String) Paper.book().read("language"));
 
        if (user.mode == SINGLE_MODE) {
            setDisable(single);
@@ -228,34 +228,27 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"en", ENGLISH);
-                setEnableAllLanguages();
-                setDisable(setEnglishBtn);
             }
         });
         setHebrewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"iw", HEBREW);
-                setEnableAllLanguages();
-                setDisable(setHebrewBtn);
             }
         });
         setArabicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"ar", ARABIC);
-                setEnableAllLanguages();
-                setDisable(setArabicBtn);
             }
         });
         setRussianBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 updateLanguage(fragment_view,"ru", RUSSIAN);
-                setEnableAllLanguages();
-                setDisable(setRussianBtn);
             }
         });
+        updateView(fragment_view, (String) Paper.book().read("language"));
         return fragment_view;
     }
     private void updateLanguage(View view,String lang, int lang_for_user) {
@@ -288,6 +281,21 @@ public class SettingsFragment extends Fragment {
         multi.setText(resources.getString(R.string.multi_mode));
         single.setText(resources.getString(R.string.single_mode));
         sign_out.setText(resources.getString(R.string.signout));
+        setEnableAllLanguages();
+        switch (user.lang){
+            case ENGLISH:
+                setDisable(setEnglishBtn);
+                break;
+            case HEBREW:
+                setDisable(setHebrewBtn);
+                break;
+            case ARABIC:
+                setDisable(setArabicBtn);
+                break;
+            case RUSSIAN:
+                setDisable(setRussianBtn);
+                break;
+        }
     }
     private void saveDetails(String language) {
         Context context = LocaleHelper.setLocale(getActivity(), language);
