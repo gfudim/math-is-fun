@@ -12,7 +12,6 @@ import static com.example.guy.projectapp1.Utils.TRAIN_MODE;
 import static com.example.guy.projectapp1.Utils.day_format;
 import static com.example.guy.projectapp1.Utils.optional_exercises;
 import static com.example.guy.projectapp1.Utils.NUM_OF_EXERCISES_IN_SESSION;
-import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
 import static com.example.guy.projectapp1.Utils.simpleDateFormat;
 
 
@@ -211,7 +210,7 @@ class User{
         }
         this.index++;
         if (this.session_type == TRAIN_MODE){
-            if (this.index % 4 == 0){
+            if (this.index % NUM_OF_EXERCISES_IN_SESSION == 0){
                 Collections.shuffle(this.current_exercises);
             }
         }

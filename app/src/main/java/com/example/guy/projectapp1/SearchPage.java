@@ -112,7 +112,7 @@ public class SearchPage extends Utils {
                     toastAfterAnswer(false, false, exercise);
                 }
                 if (!user.session_done){
-                    if (user.total_answers % 4 == 0) {
+                    if (user.total_answers % NUM_OF_EXERCISES_IN_SESSION == 0) {
                         saveUser(user);
                     }
                     answer.setText("");
@@ -139,7 +139,7 @@ public class SearchPage extends Utils {
     public void handleOverTimeAnswer(boolean no_answer){
         Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
         user.setAnswer(exercise, 0); // wrong answer
-        if (user.total_answers % 4 == 0) {
+        if (user.total_answers % NUM_OF_EXERCISES_IN_SESSION == 0) {
             saveUser(user);
         }
         if (exercise.result() == user_answer && !no_answer){

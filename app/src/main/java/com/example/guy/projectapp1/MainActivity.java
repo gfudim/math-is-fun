@@ -77,7 +77,11 @@ public class MainActivity extends Utils {
         Toast toast;
         Context context;
         context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
-        toast = Toast.makeText(this, context.getResources().getString(R.string.hello), Toast.LENGTH_LONG);
+        String str_for_toast = context.getResources().getString(R.string.hello);
+        if (user.name != null && !user.name.equals("")){
+            str_for_toast += " " + user.name;
+        }
+        toast = Toast.makeText(this, str_for_toast, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, -250);
         ViewGroup group = (ViewGroup) toast.getView();
         TextView messageTextView = (TextView) group.getChildAt(0);
