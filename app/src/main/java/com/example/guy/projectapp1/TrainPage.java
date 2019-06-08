@@ -99,7 +99,7 @@ public class TrainPage extends Utils {
         else{
             try{
                 user.setAnswer(exercise, user_answer);
-                if (user.index % 4 == 0){
+                if (user.index % NUM_OF_EXERCISES_IN_SESSION == 0){
                     if (!user.testing_done){
                         timerPause();
                         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
@@ -132,7 +132,7 @@ public class TrainPage extends Utils {
                     }
                 }
                 if(!user.session_done){ //backup -> && user.current_exercises.size() != 0
-                    if (user.total_answers % 4 == 0) {
+                    if (user.total_answers % NUM_OF_EXERCISES_IN_SESSION == 0) {
                         saveUser(user);
                     }
                     answer.setText("");
@@ -160,7 +160,7 @@ public class TrainPage extends Utils {
     public void handleOverTimeAnswer(boolean no_answer){
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         user.setAnswer(exercise, 0); // wrong answer
-        if (user.total_answers % 4 == 0) {
+        if (user.total_answers % NUM_OF_EXERCISES_IN_SESSION == 0) {
             saveUser(user);
         }
         if (exercise.result() == user_answer && !no_answer){
