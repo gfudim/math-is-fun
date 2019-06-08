@@ -2,6 +2,7 @@ package com.example.guy.projectapp1;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,12 +21,22 @@ import static com.example.guy.projectapp1.Utils.user;
 public class StatsFragment extends Fragment {
 
     int button_id;
+    TextView your_level;
+    TextView day_strike;
+    TextView max_points_per_day;
+    TextView tests_in_row;
+    TextView trophy;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_stats,container,false);
         TextView levelText=view.findViewById(R.id.levelText);
+        your_level=view.findViewById(R.id.your_level);
+        day_strike=view.findViewById(R.id.day_strike);
+        max_points_per_day=view.findViewById(R.id.max_points_per_day);
+        tests_in_row=view.findViewById(R.id.tests_in_row);
+        trophy=view.findViewById(R.id.trophyText);
         levelText.setText(String.format("%s",user.getLevel()));
         SeekBar levelBar = view.findViewById(R.id.levelBar);
         levelBar.setProgress(user.getLevel());
@@ -60,6 +71,7 @@ public class StatsFragment extends Fragment {
         connectTestsRow(view,R.id.c3Btn,R.id.c3Frame,3);
         connectTestsRow(view,R.id.c5Btn,R.id.c5Frame,5);
         connectTrophy(view,R.id.trophyBtn,30,6000,5);
+        updateView((String) Paper.book().read("language"));
         return view;
     }
 
@@ -166,5 +178,14 @@ public class StatsFragment extends Fragment {
         builder.setCancelable(false);
         builder.setPositiveButton(context.getResources().getString(R.string.ok), null);
         builder.show();
+    }
+    private void updateView(String language) {
+        Context context = LocaleHelper.setLocale(getActivity(), language);
+        Resources resources = context.getResources();
+        your_level.setText(resources.getString(R.string.level_is));
+        day_strike.setText(resources.getString(R.string.day_strike));
+        max_points_per_day.setText(resources.getString(R.string.max_points_per_day));
+        tests_in_row.setText(resources.getString(R.string.test_in_row));
+        trophy.setText(resources.getString(R.string.trophy));
     }
 }

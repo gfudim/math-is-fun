@@ -43,4 +43,9 @@
     <string name="more_tests_for_prize">מבחנים נוספים לפרס!</string>
     <string name="get_big_trophy">תמשיכו להשקיע ולהשיג את כל הפרסים!</string>
     <string name="level_is">הרמה שלך היא</string>
+    <string name="day_strike">ימים ברצף</string>
+    <string name="Settings" translatable="false">הגדרות</string>
+    <string name="max_points_per_day">סכום מקסימלי של נקודות ביום</string>
+    <string name="test_in_row">מבחנים ברצף</string>
+    <string name="trophy">גביע</string>
 </resources>

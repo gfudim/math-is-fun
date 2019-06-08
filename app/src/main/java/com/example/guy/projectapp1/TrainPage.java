@@ -92,7 +92,9 @@ public class TrainPage extends Utils {
     public void handleAnswer(){
         Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
         exercise.time_answered = System.currentTimeMillis();
-        if ((exercise.time_answered - exercise.time_displayed)/1000 > MAX_TIME_TO_ANSWER){
+        int user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
+        exercise.setIsInTime(user_answer_time);
+        if (!exercise.answerIsInTime(user_answer_time)){
             handleOverTimeAnswer(false);
         }
         else{

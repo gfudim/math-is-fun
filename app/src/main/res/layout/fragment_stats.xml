@@ -9,6 +9,7 @@
         android:orientation="vertical">
         <TextView
             android:gravity="center"
+            android:id="@+id/your_level"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/level_is" />
@@ -17,7 +18,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:text="0" />
         <SeekBar
             android:id="@+id/levelBar"
@@ -26,10 +27,11 @@
              />
         <View style="@style/Divider" />
         <TextView
+            android:id="@+id/day_strike"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Day Strike" />
+            android:text="@string/day_strike" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -68,10 +70,11 @@
 
         <View style="@style/Divider" />
         <TextView
+        android:id="@+id/max_points_per_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Max Points Per Day" />
+        android:text="@string/max_points_per_day" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -111,10 +114,11 @@
 
         <View style="@style/Divider" />
         <TextView
+            android:id="@+id/tests_in_row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Tests In A Row" />
+            android:text="@string/test_in_row" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -229,10 +233,11 @@
 
         <View style="@style/Divider" />
         <TextView
+            android:id="@+id/trophyText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Trophy" />
+            android:text="@string/trophy" />
 
         <LinearLayout
             android:layout_width="wrap_content"
