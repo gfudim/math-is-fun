@@ -4,13 +4,13 @@
     android:background="@drawable/app_background"
     android:layout_height="match_parent">
 
-    <Button
+    <ImageButton
         android:id="@+id/StartBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:theme="@style/OurTheme"
-        android:drawableTop="@android:drawable/ic_media_play"
+        android:src="@android:drawable/ic_media_play"
         android:text="@string/start"
-        android:textSize="15dp" />
+        android:textSize="15sp" />
 </RelativeLayout>

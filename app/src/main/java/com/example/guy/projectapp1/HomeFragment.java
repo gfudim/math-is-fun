@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +25,7 @@ import static com.example.guy.projectapp1.Utils.simpleDateFormat;
 import static com.example.guy.projectapp1.Utils.user;
 
 public class HomeFragment extends Fragment {
-    Button startBtn;
+    ImageButton startBtn;
     private DatabaseReference reff;
 
     @Nullable
@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
             ((MainActivity)getActivity()).saveUser(user);
         }
         // changes the language
-        updateView(getLanguage());
+        //updateView(getLanguage());
         if(user.hadSessionToday()){
             ((View)startBtn).setAlpha(.5f);
         }
@@ -74,9 +74,9 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void updateView(String language) {
-        Context context = LocaleHelper.setLocale(getActivity(), language);
-        Resources resources = context.getResources();
-        startBtn.setText(resources.getString(R.string.start));
-    }
+//    private void updateView(String language) {
+//        Context context = LocaleHelper.setLocale(getActivity(), language);
+//        Resources resources = context.getResources();
+//        startBtn.setText(resources.getString(R.string.start));
+//    }
 }
