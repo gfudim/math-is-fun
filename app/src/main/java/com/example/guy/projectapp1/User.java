@@ -356,7 +356,7 @@ class User{
         return sum_var;
     }
     protected boolean hadSessionToday(){
-        if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))){
+        if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))){//&&false
             return true;
         }
         else{
@@ -381,6 +381,7 @@ class User{
     public void setStartSession() {
         this.uncheckDisplayedExercises();
         this.resetSessionCounters();
+        this.resetExercises();
         this.session_done =false;
         this.index = 0;
         this.current_count_points_per_day = 0;

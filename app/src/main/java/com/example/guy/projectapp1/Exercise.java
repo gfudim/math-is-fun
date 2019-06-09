@@ -102,8 +102,8 @@ class Exercise {
             return MAX_TIME_TO_ANSWER;
         }
         double average=(this.aggregated_time/(float)this.count_displayed);
-        if(average<=2){
-            return 2;
+        if(average<=3){
+            return 3;
         }
         if (average>=10){
             return 10;
