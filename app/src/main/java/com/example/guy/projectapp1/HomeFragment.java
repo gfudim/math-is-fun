@@ -54,6 +54,9 @@ public class HomeFragment extends Fragment {
                 if(user.hadSessionToday()){
                     Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
+                    ((View)startBtn).setAlpha(.5f);
+                    ((MainActivity)getActivity()).saveUserToDevice(user);
+                    ((MainActivity)getActivity()).saveUser(user);
                 }
                 else{
                     user.setStartSession();
