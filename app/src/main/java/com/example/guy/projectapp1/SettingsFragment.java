@@ -180,8 +180,8 @@ public class SettingsFragment extends Fragment {
                                         databaseUsers.child(user.id_data_base).setValue(user);
                                         sign_out.setEnabled(false);
                                         sign_out.getCompoundDrawables()[1].setAlpha(128);
-//                                        user = new User(SINGLE_MODE);
-//                                        ((MainActivity)getActivity()).saveUserToDevice(user);
+                                        user = new User(SINGLE_MODE);
+                                        ((MainActivity)getActivity()).saveUserToDevice(user);
                                         startActivity(new Intent(getActivity(), LoginPage.class));
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
