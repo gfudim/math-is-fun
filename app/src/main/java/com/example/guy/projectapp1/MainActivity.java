@@ -32,12 +32,12 @@ public class MainActivity extends Utils {
         }
         // Creating new Paper book
         Intent intent = getIntent(); // gets the previously created intent
-        Boolean new_connection = intent.getBooleanExtra("new_connection", false);
 
         // if it's the first time, print a welcome message
-        if(new_connection){
-            showWelcomeMsg();
-        }
+//        Boolean new_connection = intent.getBooleanExtra("new_connection", false);
+//        if(new_connection){
+//            showWelcomeMsg();
+//        }
         if(user.gotPrize()){
             showPrizeMsg();
         }
