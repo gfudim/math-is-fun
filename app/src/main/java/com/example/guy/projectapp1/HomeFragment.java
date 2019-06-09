@@ -17,10 +17,10 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.Calendar;
 
-import io.paperdb.Paper;
 
 import static com.example.guy.projectapp1.Utils.SEARCH_MODE;
 import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
+import static com.example.guy.projectapp1.Utils.getLanguage;
 import static com.example.guy.projectapp1.Utils.simpleDateFormat;
 import static com.example.guy.projectapp1.Utils.user;
 
@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
             ((MainActivity)getActivity()).saveUser(user);
         }
         // changes the language
-        updateView((String) Paper.book().read("language"));
+        updateView(getLanguage());
         if(user.hadSessionToday()){
             ((View)startBtn).setAlpha(.5f);
         }
@@ -52,7 +52,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Intent in;
                 if(user.hadSessionToday()){
-                    Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                    Context context = LocaleHelper.setLocale(getActivity(), getLanguage());
                     Toast.makeText(getActivity(), String.format("%s", context.getResources().getString(R.string.training_over_today)), Toast.LENGTH_LONG).show();
                     ((View)startBtn).setAlpha(.5f);
                     ((MainActivity)getActivity()).saveUserToDevice(user);

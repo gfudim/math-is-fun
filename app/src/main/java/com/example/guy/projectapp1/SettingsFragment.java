@@ -23,7 +23,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import io.paperdb.Paper;
 
 import static com.example.guy.projectapp1.Utils.ARABIC;
 import static com.example.guy.projectapp1.Utils.ENGLISH;
@@ -31,7 +30,9 @@ import static com.example.guy.projectapp1.Utils.HEBREW;
 import static com.example.guy.projectapp1.Utils.MULTI_MODE;
 import static com.example.guy.projectapp1.Utils.RUSSIAN;
 import static com.example.guy.projectapp1.Utils.SINGLE_MODE;
+import static com.example.guy.projectapp1.Utils.getLanguage;
 import static com.example.guy.projectapp1.Utils.user;
+
 
 public class SettingsFragment extends Fragment {
     TextView name;
@@ -80,14 +81,14 @@ public class SettingsFragment extends Fragment {
         save_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveDetails((String) Paper.book().read("language"));
+                saveDetails(getLanguage());
             }
         });
 
         single.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                Context context = LocaleHelper.setLocale(getActivity(), getLanguage());
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
                 builder.setTitle(context.getString(R.string.signout_notice));
@@ -108,12 +109,12 @@ public class SettingsFragment extends Fragment {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
                                         databaseUsers.child(user.id_data_base).setValue(user);
+                                        //int temp_lang = user.lang;
                                         user = new User(SINGLE_MODE);
+                                        //user.lang = temp_lang;
                                         ((MainActivity)getActivity()).saveUserToDevice(user);
                                         Intent intent = new Intent(getActivity(), LoadApp.class);
                                         intent.putExtra("new_connection",true);
-                                        sign_out.setEnabled(false);
-                                        sign_out.getCompoundDrawables()[1].setAlpha(128);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -132,7 +133,7 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                Context context = LocaleHelper.setLocale(getActivity(), getLanguage());
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
                 builder.setTitle(context.getString(R.string.signout_notice));
@@ -157,7 +158,7 @@ public class SettingsFragment extends Fragment {
         sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                Context context = LocaleHelper.setLocale(getActivity(), getLanguage());
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
                 builder.setTitle(context.getString(R.string.signout_notice));
@@ -178,9 +179,9 @@ public class SettingsFragment extends Fragment {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
                                         databaseUsers.child(user.id_data_base).setValue(user);
-                                        sign_out.setEnabled(false);
-                                        sign_out.getCompoundDrawables()[1].setAlpha(128);
+                                        //int temp_lang=user.lang;
                                         user = new User(SINGLE_MODE);
+                                        //user.lang=temp_lang;
                                         ((MainActivity)getActivity()).saveUserToDevice(user);
                                         startActivity(new Intent(getActivity(), LoginPage.class));
                                     }
@@ -200,7 +201,7 @@ public class SettingsFragment extends Fragment {
         reset.setOnClickListener(new View.OnClickListener() { // create a new event after pressing the button
             @Override
             public void onClick(View view) {
-                Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+                Context context = LocaleHelper.setLocale(getActivity(), getLanguage());
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(true);
                 builder.setTitle(context.getString(R.string.reset_notice));
@@ -216,6 +217,7 @@ public class SettingsFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         user.resetHistory();
                         ((MainActivity)getActivity()).saveUser(user);
+                        ((MainActivity)getActivity()).saveUserToDevice(user);
                     }
                 });
                 builder.show();
@@ -249,20 +251,22 @@ public class SettingsFragment extends Fragment {
                 updateLanguage(fragment_view,"ru", RUSSIAN);
             }
         });
-        updateView(fragment_view, (String) Paper.book().read("language"));
+        updateView(fragment_view, getLanguage());
         return fragment_view;
     }
     private void updateLanguage(View view,String lang, int lang_for_user) {
-        Paper.book().write("language", lang);
-        updateView(view, (String)Paper.book().read("language"));
         user.lang = lang_for_user;
+        updateView(view, getLanguage());
         ((MainActivity)getActivity()).saveUser(user);
+        ((MainActivity)getActivity()).saveUserToDevice(user);
     }
     private void setDisable(TextView textView){
+        textView.setAlpha(0.5f);
         textView.setEnabled(false);
         textView.getCompoundDrawables()[1].setAlpha(128);
     }
     private void setEnable(TextView textView){
+        textView.setAlpha(1f);
         textView.setEnabled(true);
         textView.getCompoundDrawables()[1].setAlpha(255);
     }
@@ -304,11 +308,13 @@ public class SettingsFragment extends Fragment {
         if (name != null){
             user.name = name.getText().toString();
             ((MainActivity)getActivity()).saveUser(user);
+            ((MainActivity)getActivity()).saveUserToDevice(user);
         }
         if (age != null){
             try{
                 user.age = Integer.parseInt(age.getText().toString());
                 ((MainActivity)getActivity()).saveUser(user);
+                ((MainActivity)getActivity()).saveUserToDevice(user);
             }
             catch(NumberFormatException ignored){
             }

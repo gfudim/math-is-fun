@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import io.paperdb.Paper;
 
 public class MainActivity extends Utils {
 
@@ -26,7 +25,6 @@ public class MainActivity extends Utils {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setSelectedItemId(R.id.nav_home);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-
         //This if statement was added to keep the selected fragment when rotating the device
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -35,12 +33,7 @@ public class MainActivity extends Utils {
         // Creating new Paper book
         Intent intent = getIntent(); // gets the previously created intent
         Boolean new_connection = intent.getBooleanExtra("new_connection", false);
-        Paper.init(this);
-        String language = Paper.book().read("language");
-        if(language == null){
-            //default language english
-            Paper.book().write("language", "en");
-        }
+
         // if it's the first time, print a welcome message
         if(new_connection){
             showWelcomeMsg();
@@ -75,7 +68,7 @@ public class MainActivity extends Utils {
             };
     private void showWelcomeMsg() {
         Toast toast;
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(this, getLanguage());
         toast = Toast.makeText(this, context.getResources().getString(R.string.hello), Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, -250);
         ViewGroup group = (ViewGroup) toast.getView();
@@ -85,7 +78,7 @@ public class MainActivity extends Utils {
         toast.show();
     }
     private void showPrizeMsg() {
-        Context context = LocaleHelper.setLocale(MainActivity.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(MainActivity.this, getLanguage());
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle(context.getResources().getString(R.string.congratulations));
         String message=context.getResources().getString(R.string.you_got_a_prize);

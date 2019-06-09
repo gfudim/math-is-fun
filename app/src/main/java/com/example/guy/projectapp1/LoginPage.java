@@ -36,7 +36,9 @@ public class LoginPage extends Utils {
         switch_to_single_user_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //int temp_lang = user.lang;
                 user = new User(SINGLE_MODE);
+                //user.lang = temp_lang;
                 saveUserToDevice(user);
                 Intent intent = new Intent(LoginPage.this, MainActivity.class);
                 intent.putExtra("new_connection",true);

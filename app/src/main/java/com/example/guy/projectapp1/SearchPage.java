@@ -21,7 +21,6 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.Calendar;
 
-import io.paperdb.Paper;
 
 public class SearchPage extends Utils {
     TextView submit;
@@ -78,7 +77,7 @@ public class SearchPage extends Utils {
         });
 
         search_counter = new CountDownTimer(SESSION_MILLI_DURATION, 1000) {
-            Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
+            Context context = LocaleHelper.setLocale(SearchPage.this, getLanguage());
             public void onTick(long millisUntilFinished) {
                 TextView res = findViewById(R.id.ResultTextView);
                 res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
@@ -88,6 +87,7 @@ public class SearchPage extends Utils {
             public void onFinish() {
                 user.setEndSession();
                 saveUser(user);
+                saveUserToDevice(user);
                 searchDoneToast();
             }
         }.start();
@@ -114,6 +114,7 @@ public class SearchPage extends Utils {
                 if (!user.session_done){
                     if (user.total_answers % NUM_OF_EXERCISES_IN_SESSION == 0) {
                         saveUser(user);
+                        saveUserToDevice(user);
                     }
                     answer.setText("");
                     exercise = user.getNextExercise();
@@ -127,7 +128,7 @@ public class SearchPage extends Utils {
     }
 
     public void time_for_answer_search(View view){
-        Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(SearchPage.this, getLanguage());
         start_input_answer = System.currentTimeMillis();
         UIUtil.showKeyboard(SearchPage.this,answer);
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
@@ -137,10 +138,11 @@ public class SearchPage extends Utils {
     }
 
     public void handleOverTimeAnswer(boolean no_answer){
-        Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(SearchPage.this, getLanguage());
         user.setAnswer(exercise, 0); // wrong answer
         if (user.total_answers % NUM_OF_EXERCISES_IN_SESSION == 0) {
             saveUser(user);
+            saveUserToDevice(user);
         }
         if (exercise.result() == user_answer && !no_answer){
             Toast.makeText(SearchPage.this, context.getResources().getString(R.string.correct_but_slow_answer), Toast.LENGTH_SHORT).show();
@@ -156,7 +158,7 @@ public class SearchPage extends Utils {
     public void searchDoneToast(){
         String message="";
         AlertDialog.Builder builder = new AlertDialog.Builder(SearchPage.this);
-        Context context = LocaleHelper.setLocale(SearchPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(SearchPage.this, getLanguage());
         builder.setCancelable(true);
         builder.setTitle(context.getResources().getString(R.string.session_done));
         String points = String.format("%s", user.current_count_points_per_day);
@@ -187,7 +189,7 @@ public class SearchPage extends Utils {
     }
 
     private void updateView() {
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(this, getLanguage());
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));
         dont_know.setText(resources.getString(R.string.dont_know));
@@ -196,7 +198,7 @@ public class SearchPage extends Utils {
 
     @Override
     public void onBackPressed() {
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(this, getLanguage());
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(context.getString(R.string.exit_session));
@@ -212,6 +214,7 @@ public class SearchPage extends Utils {
             public void onClick(DialogInterface dialogInterface, int i) {
                 user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
                 saveUser(user);
+                saveUserToDevice(user);
                 search_counter.cancel();
                 startActivity(new Intent(SearchPage.this,MainActivity.class));
                 finish();

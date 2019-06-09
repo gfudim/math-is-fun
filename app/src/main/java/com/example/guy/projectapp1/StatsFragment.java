@@ -14,8 +14,8 @@ import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import io.paperdb.Paper;
 
+import static com.example.guy.projectapp1.Utils.getLanguage;
 import static com.example.guy.projectapp1.Utils.user;
 
 public class StatsFragment extends Fragment {
@@ -71,7 +71,7 @@ public class StatsFragment extends Fragment {
         connectTestsRow(view,R.id.c3Btn,R.id.c3Frame,3);
         connectTestsRow(view,R.id.c5Btn,R.id.c5Frame,5);
         connectTrophy(view,R.id.trophyBtn,30,6000,5);
-        updateView((String) Paper.book().read("language"));
+        updateView(getLanguage());
         return view;
     }
 
@@ -125,7 +125,7 @@ public class StatsFragment extends Fragment {
         int trophy_value_missing=0;
         int msg_for_trphy=0;
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        Context context = LocaleHelper.setLocale(getActivity(), (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(getActivity(), getLanguage());
         String body_msg = context.getResources().getString(R.string.great_work);
         builder.setTitle(context.getResources().getString(id_title));
         if (no_prize){

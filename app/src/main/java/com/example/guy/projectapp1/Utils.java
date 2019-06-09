@@ -23,8 +23,6 @@ import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 
-import io.paperdb.Paper;
-
 
 public class Utils extends AppCompatActivity {
 
@@ -116,7 +114,7 @@ public class Utils extends AppCompatActivity {
     }
 
     protected void toastAfterAnswer(Boolean good_answer, Boolean train_mode, Exercise exercise){
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(this, getLanguage());
         Toast toast;
         int color;
         if(good_answer){
@@ -139,6 +137,19 @@ public class Utils extends AppCompatActivity {
         int yOffset=100;
         toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL,0,yOffset);
         toast.show();
+    }
+    static protected String getLanguage(){
+        switch (user.lang){
+            case ENGLISH:
+                return "en";
+            case HEBREW:
+                return "iw";
+            case ARABIC:
+                return "ar";
+            case RUSSIAN:
+                return "ru";
+        }
+        return "en";
     }
 }
 

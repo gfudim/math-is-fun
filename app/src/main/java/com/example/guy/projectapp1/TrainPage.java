@@ -21,8 +21,6 @@ import net.yslibrary.android.keyboardvisibilityevent.util.UIUtil;
 
 import java.util.Calendar;
 
-import io.paperdb.Paper;
-
 
 public class TrainPage extends Utils {
     TextView submit;
@@ -38,7 +36,7 @@ public class TrainPage extends Utils {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(TrainPage.this, getLanguage());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_train);
         submit = findViewById(R.id.SubmitBtn);
@@ -89,7 +87,7 @@ public class TrainPage extends Utils {
     }
 
     public void handleAnswer(){
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(TrainPage.this, getLanguage());
         exercise.time_answered = System.currentTimeMillis();
         int user_answer_time = (int)(((exercise.time_answered - exercise.time_displayed)/1000));
         exercise.setIsInTime(user_answer_time);
@@ -123,6 +121,7 @@ public class TrainPage extends Utils {
                     }
                 }
                 saveUser(user);
+                saveUserToDevice(user);
                 if (user.testing_done){
                     if (user_answer == (exercise.result())) { /*correct answer*/
                         toastAfterAnswer(true, true, exercise);
@@ -134,6 +133,7 @@ public class TrainPage extends Utils {
                 if(!user.session_done){ //backup -> && user.current_exercises.size() != 0
                     if (user.total_answers % NUM_OF_EXERCISES_IN_SESSION == 0) {
                         saveUser(user);
+                        saveUserToDevice(user);
                     }
                     answer.setText("");
                     if (!builder_flag) {
@@ -149,7 +149,7 @@ public class TrainPage extends Utils {
     }
 
     public void time_for_answer_train(View view){
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(TrainPage.this, getLanguage());
         start_input_answer = System.currentTimeMillis();
         if ((start_input_answer - exercise.time_displayed)/1000 > 5){
             Toast.makeText(TrainPage.this, context.getResources().getString(R.string.start_answer), Toast.LENGTH_SHORT).show();
@@ -158,10 +158,11 @@ public class TrainPage extends Utils {
     }
 
     public void handleOverTimeAnswer(boolean no_answer){
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(TrainPage.this, getLanguage());
         user.setAnswer(exercise, 0); // wrong answer
         if (user.total_answers % NUM_OF_EXERCISES_IN_SESSION == 0) {
             saveUser(user);
+            saveUserToDevice(user);
         }
         if (exercise.result() == user_answer && !no_answer){
             Toast.makeText(TrainPage.this, context.getResources().getString(R.string.correct_but_slow_answer), Toast.LENGTH_SHORT).show();
@@ -191,7 +192,7 @@ public class TrainPage extends Utils {
     }
 
     public void testDoneToast(){
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(TrainPage.this, getLanguage());
         AlertDialog.Builder builder = new AlertDialog.Builder(TrainPage.this);
         builder.setTitle(context.getResources().getString(R.string.session_done));
         String message="";
@@ -216,7 +217,7 @@ public class TrainPage extends Utils {
         builder.show();
     }
     private void updateView() {
-        Context context = LocaleHelper.setLocale(this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(this, getLanguage());
         Resources resources = context.getResources();
         submit.setText(resources.getString(R.string.submit));
         answer.setHint(resources.getString(R.string.answer));
@@ -224,7 +225,7 @@ public class TrainPage extends Utils {
 
     @Override
     public void onBackPressed() {
-        Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+        Context context = LocaleHelper.setLocale(TrainPage.this, getLanguage());
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
         builder.setTitle(context.getString(R.string.exit_session));
@@ -240,6 +241,7 @@ public class TrainPage extends Utils {
             public void onClick(DialogInterface dialogInterface, int i) {
                 user.end_session_time = simpleDateFormat.format(Calendar.getInstance().getTime());
                 saveUser(user);
+                saveUserToDevice(user);
                 train_counter.cancel();
                 startActivity(new Intent(TrainPage.this,MainActivity.class));
                 finish();
@@ -260,7 +262,7 @@ public class TrainPage extends Utils {
         return new CountDownTimer(session_duration,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                Context context = LocaleHelper.setLocale(TrainPage.this, (String) Paper.book().read("language"));
+                Context context = LocaleHelper.setLocale(TrainPage.this, getLanguage());
                 current_milli_train_timer = millisUntilFinished;
                 TextView res = findViewById(R.id.ResultTextView);
                 res.setText(String.format("%s %s", context.getResources().getString(R.string.seconds_remaining), millisUntilFinished / 1000));
@@ -270,6 +272,7 @@ public class TrainPage extends Utils {
                     testDoneToast();
                     user.setEndSession();
                     saveUser(user);
+                    saveUserToDevice(user);
                     train_counter.cancel();
                 }
             }
@@ -279,6 +282,7 @@ public class TrainPage extends Utils {
                 testDoneToast();
                 user.setEndSession();
                 saveUser(user);
+                saveUserToDevice(user);
             }
         };
     }

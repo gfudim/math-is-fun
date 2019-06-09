@@ -37,8 +37,8 @@ class Exercise {
         exercise_id = id;
         time_displayed = 0;
         time_answered = 0;
-        aggregated_time=7;
-        count_displayed=1;
+        aggregated_time=0;
+        count_displayed=0;
         displayed_today = false;
     }
 
@@ -98,6 +98,9 @@ class Exercise {
     }
 
     private int averageTimeToAnswer(){
+        if (this.count_displayed==0){
+            return MAX_TIME_TO_ANSWER;
+        }
         return (int)(this.aggregated_time/(float)this.count_displayed);
     }
     private int getTimeLimit(){
