@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Name">الإسم:</string>
-    <string name="Age">العمر:</string>
+    <string name="Name">الإسم</string>
+    <string name="Age">العمر</string>
     <string name="reset_history">تصفير السجلات</string>
     <string name="Good_job_text">إجابة صحيحة!</string>
     <string name="mistake_text">إجابة غير صحيحة ..</string>

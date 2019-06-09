@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Name">имя:</string>
-    <string name="Age">возраст:</string>
+    <string name="Name">имя</string>
+    <string name="Age">возраст</string>
     <string name="reset_history">сбросить историю</string>
     <string name="Good_job_text">хорошая работа!</string>
     <string name="mistake_text">неправильный ответ..</string>

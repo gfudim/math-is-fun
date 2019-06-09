@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Name">שם:</string>
-    <string name="Age">גיל:</string>
+    <string name="Name">שם</string>
+    <string name="Age">גיל</string>
     <string name="reset_history">אתחול היסטוריה</string>
     <string name="Good_job_text">תשובה נכונה!</string>
     <string name="mistake_text">תשובה שגויה..</string>

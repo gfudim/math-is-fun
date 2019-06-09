@@ -101,7 +101,14 @@ class Exercise {
         if (this.count_displayed==0){
             return MAX_TIME_TO_ANSWER;
         }
-        return (int)(this.aggregated_time/(float)this.count_displayed);
+        double average=(this.aggregated_time/(float)this.count_displayed);
+        if(average<=2){
+            return 2;
+        }
+        if (average>=10){
+            return 10;
+        }
+        return (int)average;
     }
     private int getTimeLimit(){
         return (int)(this.averageTimeToAnswer()*1.5);
