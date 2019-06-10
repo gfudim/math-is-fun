@@ -2,7 +2,9 @@ package com.example.guy.projectapp1;
 
 import android.support.annotation.NonNull;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import static com.example.guy.projectapp1.Utils.DROR_VAR;
 import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
@@ -49,7 +51,7 @@ class Exercise {
             return randomVariance();
         }
         else if(DROR_VAR){
-            return drorVariance();
+            return drorVariance(exercise1,exercise2);
         }
         else {
             return commonDigitsVariance(exercise1,exercise2);
@@ -61,10 +63,28 @@ class Exercise {
         return rand.nextDouble();
     }
 
-    private static Double drorVariance() {
-        // TODO
-        Random rand = new Random();
-        return rand.nextDouble();
+    private static Double drorVariance(Exercise exercise1, Exercise exercise2) {
+        Set<String>hset1=new HashSet<>();
+        Set<String>hset2=new HashSet<>();
+        String string1= (exercise1.mul1)+ String.valueOf(exercise1.mul2) + (exercise1.result());
+        String string2= (exercise2.mul1)+ String.valueOf(exercise2.mul2) + (exercise2.result());
+        for(int i=0; i<string1.length();i++){
+            hset1.add(String.valueOf(string1.charAt(i)));
+        }
+        for(int i=0; i<string2.length();i++){
+            hset2.add(String.valueOf(string2.charAt(i)));
+        }
+        hset1.retainAll(hset2);
+        int size=hset1.size();
+        if(size<2){
+            return (double)0;
+        }
+        else if(size==2){
+            return -1.0;
+        }
+        else{// if(size>=3)
+            return -3.0;
+        }
     }
 
     static Double commonDigitsVariance(Exercise exercise1, Exercise exercise2){

@@ -28,7 +28,7 @@ public class Utils extends AppCompatActivity {
 
     protected static final String FILE_NAME = "DATA_FILE.txt";
     public static boolean RANDOM_VAR=false;
-    public static boolean DROR_VAR=false;
+    public static boolean DROR_VAR=true;
     public static int MAX_NUMBER = 9;
     public static int SINGLE_MODE = 0;
     public static int MULTI_MODE = 1;
