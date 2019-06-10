@@ -10,7 +10,5 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:theme="@style/OurTheme"
-        android:src="@android:drawable/ic_media_play"
-        android:text="@string/start"
-        android:textSize="15sp" />
+        android:src="@android:drawable/ic_media_play" />
 </RelativeLayout>

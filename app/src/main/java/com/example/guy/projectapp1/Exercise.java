@@ -1,11 +1,10 @@
 package com.example.guy.projectapp1;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import java.util.Locale;
 import java.util.Random;
 
+import static com.example.guy.projectapp1.Utils.DROR_VAR;
 import static com.example.guy.projectapp1.Utils.MAX_TIME_TO_ANSWER;
 import static com.example.guy.projectapp1.Utils.RANDOM_VAR;
 
@@ -49,12 +48,21 @@ class Exercise {
         if(RANDOM_VAR){
             return randomVariance();
         }
+        else if(DROR_VAR){
+            return drorVariance();
+        }
         else {
             return commonDigitsVariance(exercise1,exercise2);
         }
     }
 
     private static Double randomVariance() {
+        Random rand = new Random();
+        return rand.nextDouble();
+    }
+
+    private static Double drorVariance() {
+        // TODO
         Random rand = new Random();
         return rand.nextDouble();
     }
