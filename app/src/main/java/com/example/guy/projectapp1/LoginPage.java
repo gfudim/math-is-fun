@@ -72,7 +72,7 @@ public class LoginPage extends Utils {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_CODE){
-            if(resultCode == RESULT_OK){
+            if(true || resultCode == RESULT_OK){
                 FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
                 assert user_loggin != null;
                 user.email = user_loggin.getEmail();
