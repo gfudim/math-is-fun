@@ -356,7 +356,7 @@ class User{
         return sum_var;
     }
     protected boolean hadSessionToday(){
-        if((this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))){//&&false
+        if(false&&(this.session_done || this.last_day_of_session.equals(day_format.format(Calendar.getInstance().getTime())))){//&&false
             return true;
         }
         else{

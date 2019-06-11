@@ -75,21 +75,21 @@ public class LoginPage extends Utils {
             if(resultCode == RESULT_OK){
                 FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
                 assert user_loggin != null;
-                user.id_data_base = user_loggin.getUid();
                 user.email = user_loggin.getEmail();
+                user.id_data_base = user.email.replace(".","");
                 reff = FirebaseDatabase.getInstance().getReference().child("user");
                 reff.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (!dataSnapshot.hasChild(user.id_data_base)){
+                        if (!dataSnapshot.hasChild(user.id_data_base.replace(".",""))){
                             user = new User(MULTI_MODE);
                             FirebaseUser user_loggin = FirebaseAuth.getInstance().getCurrentUser();
                             assert user_loggin != null;
-                            user.id_data_base = user_loggin.getUid();
                             user.email = user_loggin.getEmail();
+                            user.id_data_base = user.email.replace(".","");;
                         }
                         else{
-                            user = dataSnapshot.child(user.id_data_base).getValue(User.class);
+                            user = dataSnapshot.child(user.id_data_base.replace(".","")).getValue(User.class);
                         }
                         user.last_login = simpleDateFormat.format(Calendar.getInstance().getTime());
                         if (user.known_exercises == null){

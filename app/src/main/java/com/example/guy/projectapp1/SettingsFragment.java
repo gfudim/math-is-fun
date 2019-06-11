@@ -74,7 +74,7 @@ public class SettingsFragment extends Fragment {
         if (user.age > 0){
             age.setText(String.format("%s",user.age));
         }
-        if (!user.name.equals("")){
+        if (user.name !=null && !user.name.equals("")){
             name.setText(user.name);
         }
 
@@ -178,7 +178,7 @@ public class SettingsFragment extends Fragment {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         databaseUsers = FirebaseDatabase.getInstance().getReference("user");
-                                        databaseUsers.child(user.id_data_base).setValue(user);
+                                        databaseUsers.child(user.id_data_base.replace(".","")).setValue(user);
                                         //int temp_lang=user.lang;
                                         user = new User(SINGLE_MODE);
                                         //user.lang=temp_lang;

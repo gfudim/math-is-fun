@@ -38,7 +38,7 @@ public class Utils extends AppCompatActivity {
     protected static User user;
     protected static DatabaseReference reff;
     //protected static long SESSION_MILLI_DURATION = 30000;
-    protected static long SESSION_MILLI_DURATION = 180000;
+    protected static long SESSION_MILLI_DURATION = 60000;
     protected static int optional_exercises = 1000;
     final protected static int ENGLISH = 0;
     final protected static int HEBREW = 1;
