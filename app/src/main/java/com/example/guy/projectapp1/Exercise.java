@@ -1,6 +1,6 @@
 package com.example.guy.projectapp1;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.HashSet;
 import java.util.Random;

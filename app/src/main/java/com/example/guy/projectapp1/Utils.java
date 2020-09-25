@@ -2,7 +2,7 @@ package com.example.guy.projectapp1;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.TextView;
